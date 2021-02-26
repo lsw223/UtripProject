@@ -4,9 +4,9 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="trip.mapper.HotelMapper">
 	<insert id="insert" parameterType="hotelRequest">
-		insert into hotel_request(request_no,user_id,hotel_name,address,area)
+		insert into hotel_request(request_no,user_id,hotel_name,address,area,hotel_url)
 		values(HOTEL_REQUEST_SEQ.nextval,#{user_id}, #{hotel_name},#{address},
-			(select area.area from area where area.area_name like #{area})
+			(select area.area from area where area.area_name like #{area}),#{hotel_url}
 		)
 	</insert>
 	<select id="selectById" parameterType="String" resultType="hotelRequest">
@@ -19,5 +19,16 @@
 	</select>
 	<update id="reject" parameterType="int">
 		update hotel_request set status = '반려' where request_no = #{no}
+	</update>
+	<select id="getNextNo" parameterType="String" resultType="int">
+		SELECT max(substr(hotel_no,3,4)) 
+		KEEP(DENSE_RANK FIRST ORDER BY hotel_no DESC) FROM hotel
+		where substr(hotel_no,0,2) like #{area}
+	</select>
+	<insert id="insertHotel" parameterType="hotel">
+		insert into hotel values(#{hotel_no},#{hotel_name},#{hotel_x},#{hotel_y},#{hotel_url})
+	</insert>
+	<update id="permit" parameterType="int">
+		update hotel_request set status = '신청완료' where request_no = #{no}
 	</update>
 </mapper>

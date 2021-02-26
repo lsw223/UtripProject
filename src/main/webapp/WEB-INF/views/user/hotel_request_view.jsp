@@ -51,6 +51,13 @@
 				<td></td>
 			</tr>
 			<tr>
+				<td>URL</td>
+				<td>
+					<input type="text" name="hotel_url" id="hotel_url">
+				</td>
+				<td></td>
+			</tr>
+			<tr>
 				<td></td>
 				<td></td>
 				<td id="td_btn">
@@ -88,6 +95,7 @@ $("#btn_submit").click(function(){
 	var hotel_name = $("#hotel_name").val();
 	var address = $("#address").val();
 	var area = $("#area").val();
+	var hotel_url = $("#hotel_url").val();
 	if(hotel_name.length==0){
 		alert("호텔명을 입력하세요");
 		return false;
@@ -99,7 +107,8 @@ $("#btn_submit").click(function(){
 	var data = {
 		"hotel_name":hotel_name,
 		"address":address,
-		"area":area
+		"area":area,
+		"hotel_url":hotel_url
 	}
 	$.ajax({
 		method:"get",
