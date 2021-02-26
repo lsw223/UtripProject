@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="trip.mapper.UserMapper">
+	<insert id="register" parameterType="user">
+		insert into
+		utrip_user(id,password,name,email,mbti,role)
+		values(#{id},#{password},#{name},#{email},#{mbti},#{role})
+	</insert>
+	<select id="selectById" parameterType="String" resultType="user">
+		select * from utrip_user where id like #{id}
+	</select>
+	<insert id="kakaoRegister" parameterType="user">
+		insert into
+		utrip_user(id,name,email,mbti,role)
+		values(#{id},#{name},#{email},#{mbti},#{role})
+	</insert>
+	<update id="update" parameterType="user">
+		update utrip_user set
+		name=#{name}, email=#{email}, mbti=#{mbti}
+		where id=#{id}
+	</update>
+	<select id="selectQnaList" parameterType="String"
+		resultType="trip.dto.QnaDTO">
+		select * from
+		(select q.qna_no, q.user_id, q.title, q.content, q.write_date,
+		r.response_content, r.response_date
+		from qna q left outer join qna_response r on q.qna_no = r.qna_no) where
+		user_id=#{id}
+	</select>
+	<select id="selectPopulTripList" resultType="trip.dto.TripDTO">
+		select area_name, trip_no, title, substr(content,1,30), video_url,
+		rating from
+		(select area_name, t.* from area a, trip t where substr(t.trip_no,1,2) like
+		a.area order by rating desc) t where rownum<![CDATA[<]]>=5
+	</select>
+	<select id="selectTripInfo" parameterType="String"
+		resultType="trip.dto.TripDTO">
+		select area_name, trip_no, title, content, video_url,
+		rating from trip, area where substr(trip_no,1,2) like area and trip_no
+		like #{tripNo}
+	</select>
+	<select id="selectCourseInfo" parameterType="String"
+		resultType="trip.dto.CourseDTO">
+		select c.course_no, c.place_no, p.place_name, p.place_x,
+		p.place_y from course c, place p
+		where c.place_no = p.place_no and trip_no like #{tripNo} order by course_no
+	</select>
+	<select id="selectMbtiTripInfo" parameterType="String"
+		resultType="trip.dto.TripDTO">
+		select area_name, trip_no, title, substr(content,0,20), video_url,
+		rating from
+		trip, area where substr(trip_no,1,2) like area and trip_no like
+		(select trip_no from (select * from trip_like order by #{mbti})
+		where rownum = 1)
+	</select>
+	<select id="selectAreaList" resultType="trip.dto.TripDTO">
+		select a.area_name,
+		a.trip_no, a.title, a.content from
+		(select a.area_name, substr(t.trip_no,0,2) as area, t.trip_no, t.title,
+		substr(t.content,0,20) as content, t.rating from trip t, area a where
+		a.area = substr(t.trip_no,0,2)) a,
+		(select substr(trip_no,0,2) as area, max(rating) as rating from trip group by
+		substr(trip_no,0,2)) b where a.area = b.area and a.rating = b.rating
+	</select>
+	<select id="selectHotelInfo" parameterType="String" resultType="trip.dto.HotelDTO">
+		select * from hotel where substr(hotel_no,0,2) like 
+		(select area from area where area_name=#{area_name})
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

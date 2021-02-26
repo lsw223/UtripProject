@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="trip.mapper.HotelMapper">
+	<insert id="insert" parameterType="hotelRequest">
+		insert into hotel_request(request_no,user_id,hotel_name,address,area)
+		values(HOTEL_REQUEST_SEQ.nextval,#{user_id}, #{hotel_name},#{address},
+			(select area.area from area where area.area_name like #{area})
+		)
+	</insert>
+	<select id="selectById" parameterType="String" resultType="hotelRequest">
+		select * from hotel_request where user_id like #{id}
+		order by request_no desc
+	</select>
+	<select id="selectAllRequest" resultType="hotelRequest">
+		select * from hotel_request
+		order by request_no desc
+	</select>
+	<update id="reject" parameterType="int">
+		update hotel_request set status = '반려' where request_no = #{no}
+	</update>
+</mapper>

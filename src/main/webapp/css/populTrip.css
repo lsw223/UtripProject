@@ -1,0 +1,31 @@
+@charset "UTF-8";
+header{
+	position:relative;
+	padding-left:20px;	
+}
+.total_check ul{
+	list-style: none;
+	border:1px solid black;
+}
+a{
+	text-decoration: none;
+	color:black;
+}
+img{
+	width: 150px;
+	height: 150px;
+}
+li{
+	border:1px solid black;
+	text-align: left;
+}
+span{
+	width: 300px;
+	height: 300px;
+}
+.photo{
+	box-sizing: border-box;
+}
+.txt{
+	box-sizing: border-box;
+}
