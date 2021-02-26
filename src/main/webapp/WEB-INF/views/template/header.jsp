@@ -65,7 +65,6 @@ header li a{
 	float:right;
 	background-color: #f1f1f1;
 	border-radius: 5px;
-	display: none;
 	width:200px;
 }
 header #info li{
@@ -79,11 +78,14 @@ header #info li{
 #info img{
 	width:14px;
 }
+.hidden{
+	display: none;
+}
 </style>
 <script>
 	$(function(){
 		$("#user").click(function(){
-			$("#user_dropdown").slideToggle(400);
+			$("#user_dropdown").toggleClass("hidden");
 		})
 	})
 </script>
@@ -103,15 +105,15 @@ header #info li{
 		<!-- 로그인 된 상태일때  -->
 		<div id="info">
 			<p>
-				<c:if test="${!empty sessionScope.login}">
+				<c:if test="${!empty sessionScope.user}">
 					<a href="#" id="user">안녕하세요 ${sessionScope.user.name }님!<img src="img/dropdown.png"></a>
 				</c:if>
 			<!-- 로그인 안된 상태일때  -->
-				<c:if test="${empty sessionScope.login}">
+				<c:if test="${empty sessionScope.user}">
 					<a href="loginView.do">로그인/회원가입</a>
 				</c:if>
 			</p>
-			<ul id="user_dropdown">
+			<ul id="user_dropdown" class="hidden">
 				<li><a href="infoUpdateView.do">정보변경</a></li>
 				<li><a href="logout.do">로그아웃</a></li>
 				<li><a href="#">내 보관함</a></li>
