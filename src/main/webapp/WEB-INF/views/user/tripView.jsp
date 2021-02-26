@@ -23,7 +23,14 @@
 </head>
 
 <body>
-<%@ include file="../template/header.jsp"%>
+<c:choose>
+	<c:when test="${sessionScope.user.role == 'ADMIN' }">
+		<%@include file="../template/header_admin.jsp" %>
+	</c:when>
+	<c:otherwise>
+		<%@include file="../template/header.jsp" %>
+	</c:otherwise>
+</c:choose>
   
 	<div class="container">
 	<div>
@@ -37,7 +44,7 @@
 					<a href="#">
 					<span class="image">
 						<a href="tripDetailView.do?trip_no=${list.trip_no }">
-							<img alt="" src="/img/test.jpg">
+							<img alt="" src="/img/trip/${list.trip_no}.jpg">
 						</a>
 					</span>
 					</a>
@@ -64,7 +71,7 @@
 				<div class="photo">
 					<a href="#">
 					<span class="image">
-						<img alt="" src="/img/test.jpg">
+						<img alt="" src="/img/trip/${dto.trip_no}.jpg">
 					</span>
 					</a>
 				</div>
@@ -91,7 +98,7 @@
 					<a href="#">
 					<span class="image">
 						<a href="tripDetailView.do?trip_no=${areaList.trip_no }">
-							<img alt="" src="/img/test.jpg">
+							<img alt="" src="/img/trip/${areaList.trip_no }.jpg">
 						</a>
 					</span>
 					</a>

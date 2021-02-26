@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,13 +60,36 @@
 </style>
 </head>
 <body>
-<%@ include file="../template/header.jsp"%>
+	<c:choose>
+		<c:when test="${sessionScope.user.role == 'ADMIN' }">
+			<%@include file="../template/header_admin.jsp"%>
+		</c:when>
+		<c:otherwise>
+			<%@include file="../template/header.jsp"%>
+		</c:otherwise>
+	</c:choose>
 	<div>
-	<h2>여행코스</h2>
-	<div id="map" style="width: 500px; height: 500px;"></div>
-	<p>
-		<button onclick="setBounds()">지도 범위 재설정 하기</button>
-	</p>
+		<h2>여행코스</h2>
+		<div id="map" style="width: 500px; height: 500px;"></div>
+		<p>
+			<button onclick="setBounds()">전체 코스보기</button>
+		</p>
+		<div id="content">
+			<p>${requestScope.dto.title}</p>
+			<p>${requestScope.dto.content}</p>
+			<p>${requestScope.dto.video_url}</p>
+			<p>${requestScope.dto.rating}</p>
+
+			<c:forEach var="dto" items="${requestScope.tripList }">
+				<a href="#" onclick="setOption(${dto.course_no-1});return false;">${dto.place_name}</a>
+				
+			</c:forEach>
+			<c:if test="${sessionScope.user.role == 'ADMIN' }">
+				<a href="tripUpdateView.do?dto=${requestScope.dto}">수정</a>
+				<a href="tripDelete.do">삭제</a>
+			</c:if>
+		</div>
+
 	</div>
 	<a href="hotelView.do?area=${requestScope.area}">주변 호텔정보 보러가기</a>
 
@@ -73,7 +97,7 @@
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=16b17515f471d69c146a2979295c4faf"></script>
 	<script>
 		var list = ${requestScope.list}
-		
+		var distanceOverlay;
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		mapOption = {
 			center : new kakao.maps.LatLng(
@@ -81,7 +105,7 @@
 		,
 	<%=request.getAttribute("avgY")%>
 		), // 지도의 중심좌표
-			level : 10
+			level : 5
 		// 지도의 확대 레벨
 		};
 
@@ -96,7 +120,7 @@
 			points[i] = new kakao.maps.LatLng(list[i].place_x, list[i].place_y);
 			content[i]= '<div class="customoverlay">'
 				+ '  <a href="https://map.kakao.com/link/map/11394059" target="_blank">'
-				+ '    <span class="title">'+list[i].place_name+'</span>' + '  </a>' + '</div>';
+				+ '    <span class="title">'+list[i].course_no+'.'+list[i].place_name+'</span>' + '  </a>' + '</div>';
 		}
 
 		// 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
@@ -118,11 +142,18 @@
 			// LatLngBounds 객체에 좌표를 추가합니다
 			bounds.extend(points[i]);
 		}
-
+		
 		function setBounds() {
 			// LatLngBounds 객체에 추가된 좌표들을 기준으로 지도의 범위를 재설정합니다
 			// 이때 지도의 중심좌표와 레벨이 변경될 수 있습니다
 			map.setBounds(bounds);
+		}
+		
+		//지도 좌표 이동
+		function setOption(course_no) {
+			var bounds1 = new kakao.maps.LatLngBounds();
+			bounds1.extend(points[course_no]);
+			map.setBounds(bounds1);
 		}
 
 		// 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
@@ -135,8 +166,89 @@
 			overlay.setMap(null);
 		}
 		
+		// 지도에 표시할 선을 생성합니다
+		var polyline = new kakao.maps.Polyline({
+		    path: points, // 선을 구성하는 좌표배열 입니다
+		    strokeWeight: 5, // 선의 두께 입니다
+		    strokeColor: '#FFAE00', // 선의 색깔입니다
+		    strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+		    strokeStyle: 'solid' // 선의 스타일입니다
+		});
+
+		// 지도에 선을 표시합니다 
+		polyline.setMap(map);  
+		
+		 
+		var distance = Math.round(polyline.getLength()), // 선의 총 거리를 계산합니다
+        content = '<div class="dotOverlay distanceInfo">총거리 <span class="number">' + distance + '</span>m</div>'; // 커스텀오버레이에 추가될 내용입니다
+        content = getTimeHTML(distance);
+	    // 거리정보를 지도에 표시합니다
+	    console.log(points[list.length-1])
+	    showDistance(content, points[list.length-1]);   
+		
+		//거리정보 출력
+        function showDistance(content, position) {
+	     
+	     if (distanceOverlay) { // 커스텀오버레이가 생성된 상태이면
+	         
+	         // 커스텀 오버레이의 위치와 표시할 내용을 설정합니다
+	         distanceOverlay.setPosition(position);
+	         distanceOverlay.setContent(content);
+	         
+	     } else { // 커스텀 오버레이가 생성되지 않은 상태이면
+	         
+	         // 커스텀 오버레이를 생성하고 지도에 표시합니다
+	         distanceOverlay = new kakao.maps.CustomOverlay({
+	             map: map, // 커스텀오버레이를 표시할 지도입니다
+	             content: content,  // 커스텀오버레이에 표시할 내용입니다
+	             position: position, // 커스텀오버레이를 표시할 위치입니다.
+	             xAnchor: 0,
+	             yAnchor: 0,
+	             zIndex: 3  
+	         });      
+	     }
+	 }
+        function getTimeHTML(distance) {
+
+            // 도보의 시속은 평균 4km/h 이고 도보의 분속은 67m/min입니다
+            var walkkTime = distance / 67 | 0;
+            var walkHour = '', walkMin = '';
+
+            // 계산한 도보 시간이 60분 보다 크면 시간으로 표시합니다
+            if (walkkTime > 60) {
+                walkHour = '<span class="number">' + Math.floor(walkkTime / 60) + '</span>시간 '
+            }
+            walkMin = '<span class="number">' + walkkTime % 60 + '</span>분'
+
+            // 자전거의 평균 시속은 16km/h 이고 이것을 기준으로 자전거의 분속은 267m/min입니다
+            var bycicleTime = distance / 227 | 0;
+            var bycicleHour = '', bycicleMin = '';
+
+            // 계산한 자전거 시간이 60분 보다 크면 시간으로 표출합니다
+            if (bycicleTime > 60) {
+                bycicleHour = '<span class="number">' + Math.floor(bycicleTime / 60) + '</span>시간 '
+            }
+            bycicleMin = '<span class="number">' + bycicleTime % 60 + '</span>분'
+
+            // 거리와 도보 시간, 자전거 시간을 가지고 HTML Content를 만들어 리턴합니다
+            var content = '<ul class="dotOverlay distanceInfo">';
+            content += '    <li>';
+            content += '        <span class="label">총거리</span><span class="number">' + distance + '</span>m';
+            content += '    </li>';
+            content += '    <li>';
+            content += '        <span class="label">도보</span>' + walkHour + walkMin;
+            content += '    </li>';
+            content += '    <li>';
+            content += '        <span class="label">자전거</span>' + bycicleHour + bycicleMin;
+            content += '    </li>';
+            content += '</ul>'
+
+            return content;
+        }
+	 setBounds();
+        
 	</script>
-	
+
 	<%@include file="../template/footer.jsp"%>
 </body>
 </html>
