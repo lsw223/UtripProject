@@ -20,4 +20,5 @@ public class HotelRequestDTO {
 	private String area;
 	private String status;
 	private String request_date;
+	private String hotel_url;
 }
