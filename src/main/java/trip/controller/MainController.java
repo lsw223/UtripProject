@@ -26,8 +26,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import trip.oauth.KakaoLogin;
 import trip.dto.CourseDTO;
 import trip.dto.HotelDTO;
-import trip.dto.HotelRequestDTO;
-import trip.service.AdminService;
 import trip.service.UserService;
 
 @Controller
@@ -51,6 +49,11 @@ public class MainController {
 		System.out.println("성일test2");
 		return "TripMain";
 	}
+	
+	@RequestMapping("tripMain.do")
+	public String tripMain() {
+		return "TripMain";
+	}
 
 	@RequestMapping("qna.do")
 	public String qna(HttpServletRequest request, HttpSession session) {
@@ -66,8 +69,9 @@ public class MainController {
 	}
 	
 	@RequestMapping("/tripView.do")
-	public String TripView(HttpServletRequest request, HttpSession session) {
+	public String tripView(HttpServletRequest request, HttpSession session) {
 		UserDTO userdto= (UserDTO) session.getAttribute("user");
+		
 		//String mbti="ENTJ";
 		List<TripDTO> list = userService.selectPopulTripList();
 		TripDTO dto = userService.selectMbtiTripInfo(userdto.getMbti());
@@ -79,9 +83,12 @@ public class MainController {
 	}
 	
 	@RequestMapping("/tripDetailView.do")
-	public String tripView(HttpServletRequest request) {
+	public String tripDetailView(HttpServletRequest request) {
 		String tripNo = request.getParameter("trip_no");
+		
+		//여행 정보 내용
 		TripDTO dto = userService.selectTripInfo(tripNo);
+		//여행코스 리스트
 		List<CourseDTO> list = userService.selectCourseInfo(tripNo);
 		
 		double x=0,y=0;
@@ -92,10 +99,10 @@ public class MainController {
 		x = x/list.size();
 		y = y/list.size();
 		JSONArray arr = new JSONArray(list);
-		
+		request.setAttribute("tripList", list);
 		request.setAttribute("list", arr.toString());
 		request.setAttribute("area", dto.getArea_name());
-		
+		request.setAttribute("trip_no", tripNo);
 		request.setAttribute("dto", dto);
 		request.setAttribute("avgX", x);
 		request.setAttribute("avgY", y);
