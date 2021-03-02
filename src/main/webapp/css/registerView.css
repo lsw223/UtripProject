@@ -45,15 +45,17 @@ header a{
 #p_email{
 	width:30%;
 	float:left;
+	padding-bottom: 1px;
 }
 #p_domain{
 	width:70%;
 	float:left;
 }
+#p_domain input{
+	width:150px;
+}
 #p_domain select{
 	padding:4px;
-	margin-bottom:0.9px;
-	border:none;
 	outline: none;
 }
 small{

@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
-<title>지도 범위 재설정 하기</title>
+<script src="lib/jquery-3.5.1.min .js"></script>
+<link rel="stylesheet" href="css/trip_detail_view.css">
+<title>여행 코스 :: UTrip</title>
 <style>
 .customoverlay {
 	position: relative;
@@ -58,6 +61,7 @@
 		url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')
 }
 </style>
+
 </head>
 <body>
 	<c:choose>
@@ -68,33 +72,92 @@
 			<%@include file="../template/header.jsp"%>
 		</c:otherwise>
 	</c:choose>
-	<div>
-		<h2>여행코스</h2>
-		<div id="map" style="width: 500px; height: 500px;"></div>
-		<p>
-			<button onclick="setBounds()">전체 코스보기</button>
-		</p>
+	<div id="container">
+		<div id="head">
+			<small>
+				<a href="tripView.do">대한민국</a> > <a href="areaView.do?area=${fn:substring(requestScope.dto.trip_no,0,2)}">${requestScope.dto.area_name}</a>			
+			</small><br>
+			<h2>${requestScope.dto.title}</h2>
+			<c:if test="${!empty sessionScope.user}">
+				<a href="#" id="like">
+					<span>${sessionScope.user.mbti}</span><img src="img/like2.png">
+				</a>
+				<span>${requestScope.tripLike}</span>
+			</c:if>
+			<span id="rating">
+				평점 
+				<span>${requestScope.dto.rating }</span> 
+			</span>
+			<a href="#">평가하기</a>
+		</div>
+		<hr>
 		<div id="content">
-			<p>${requestScope.dto.title}</p>
+			<h3>여행 소개</h3>
 			<p>${requestScope.dto.content}</p>
-			<p>${requestScope.dto.video_url}</p>
-			<p>${requestScope.dto.rating}</p>
-
+			<h3>여행 코스 길이</h3>
+			<div id="course_length"></div>
 			<c:forEach var="dto" items="${requestScope.tripList }">
 				<a href="#" onclick="setOption(${dto.course_no-1});return false;">${dto.place_name}</a>
-				
 			</c:forEach>
-			<c:if test="${sessionScope.user.role == 'ADMIN' }">
-				<a href="tripUpdateView.do?dto=${requestScope.dto}">수정</a>
-				<a href="tripDelete.do">삭제</a>
-			</c:if>
+			<div id="map" style="width: 800px; height: 500px;"></div>
+			<button onclick="setBounds()" id="btn_zoom">전체 코스보기</button>
+			<p id="hotel">
+				<a href="hotelView.do?area=${requestScope.area}" class="button" id="btn_hotel">주변 호텔정보 보러가기</a>
+			</p>
+			<p id="btns">
+				<c:if test="${sessionScope.user.role == 'ADMIN' }">
+					<a href="tripUpdateView.do?tripNo=${requestScope.dto.trip_no}" class="button">수정</a>
+					<a href="#" id="deleteTripInfo"class="button">삭제</a>
+				</c:if>
+				<span id="go_back">
+					<a href="#" class="button" onclick="history.back()">목록보기</a>
+				</span>
+			</p>
+		</div>
+		<div id="alert">
+			<p>
+				여행 평가하기
+				<a id="close" href="#">x</a>
+			</p>
+			<label>
+				<input type="radio" name="assess"> 💜🤍🤍🤍🤍<br>
+			</label>
+			<label>
+				<input type="radio" name="assess"> 💜💜🤍🤍🤍<br>
+			</label>
+			<label>
+				<input type="radio" name="assess"> 💜💜💜🤍🤍<br>
+			</label>
+			<label>
+				<input type="radio" name="assess"> 💜💜💜💜🤍<br>
+			</label>
+			<label>
+				<input type="radio" name="assess"> 💜💜💜💜💜<br>
+			</label>
 		</div>
 
-	</div>
-	<a href="hotelView.do?area=${requestScope.area}">주변 호텔정보 보러가기</a>
+			<div >
+			<c:if test="${sessionScope.user.role == 'ADMIN' }">
+				<a href="tripUpdateView.do?tripNo=${requestScope.dto.trip_no}">수정</a>
+				<a href="#" id="deleteTripInfo">삭제</a>
+			</c:if>
+			</div>
+		</div>
 
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=16b17515f471d69c146a2979295c4faf"></script>
+	<script>
+	$(function(){
+	$("#deleteTripInfo").click(function(){
+		if(confirm("정말 삭제하시겠습니까?")==true){
+			location="tripDeleteAction.do?trip_no=<%=request.getAttribute("trip_no")%>"
+			alert("삭제가 완료되었습니다.")
+		}else{
+			return;
+		}
+	})
+	})
+</script>
 	<script>
 		var list = ${requestScope.list}
 		var distanceOverlay;
@@ -161,6 +224,7 @@
 			overlay.setMap(map);
 		});
 
+
 		// 커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
 		function closeOverlay() {
 			overlay.setMap(null);
@@ -184,7 +248,7 @@
         content = getTimeHTML(distance);
 	    // 거리정보를 지도에 표시합니다
 	    console.log(points[list.length-1])
-	    showDistance(content, points[list.length-1]);   
+	  /*   showDistance(content, points[list.length-1]);    */
 		
 		//거리정보 출력
         function showDistance(content, position) {
@@ -233,22 +297,67 @@
             // 거리와 도보 시간, 자전거 시간을 가지고 HTML Content를 만들어 리턴합니다
             var content = '<ul class="dotOverlay distanceInfo">';
             content += '    <li>';
-            content += '        <span class="label">총거리</span><span class="number">' + distance + '</span>m';
+            content += '        <span class="label">총거리</span><span class="number">' + Math.trunc(distance/100)/10.0 + '</span>km';
             content += '    </li>';
             content += '    <li>';
-            content += '        <span class="label">도보</span>' + walkHour + walkMin;
+            content += '        <span class="label" id="walk">도보</span>' + walkHour + walkMin;
             content += '    </li>';
             content += '    <li>';
             content += '        <span class="label">자전거</span>' + bycicleHour + bycicleMin;
             content += '    </li>';
             content += '</ul>'
 
+	     	$("#course_length").html(content);
             return content;
         }
 	 setBounds();
-        
+	 
+	 
+	 //좋아요 클릭
+	 $("#like").click(function(e){
+		 e.preventDefault();
+		 $.ajax({
+			 method:"get",
+			 url:"tripLike.do",
+			 data:{
+				 "tripNo":"${param.trip_no}",
+				 "mbti":"${sessionScope.user.mbti}",
+				 "userId":"${sessionScope.user.id}"
+			 },
+			 dataType:"json",
+			 success:function(resp){
+				 if(resp.responseCode == 200){
+					 $("#like+span").html(resp.responseMessage);
+				 }
+				 else if(resp.responseCode == 201){
+					 alert(resp.responseMessage);
+				 }
+			 }
+		 })
+	 })
+	 
+	 // 별점 나타내기
+	 var rating = Math.round(${requestScope.dto.rating});
+	 var str = "";
+	for(i=0; i<rating; i++){
+		str += "💜"; 
+	}	 
+	 for(i=0; i<5-rating; i++){
+		 str += "🤍";
+	 }
+	 $("#rating").append(str);
+	 
+	 $("#rating+a").click(function(){
+		 $("#alert").show();
+	 })
+	 $("#close").click(function(){
+		 $("#alert").hide();
+	 })
 	</script>
 
 	<%@include file="../template/footer.jsp"%>
 </body>
 </html>
+
+	 setBounds();
+

@@ -6,7 +6,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="css/notice/notice_write_view.css">
+<script src="lib/jquery-3.5.1.min .js"></script>
 <script>
 	$(function(){
 		var count = 3;//첨부파일 태그 개수
@@ -22,7 +23,7 @@
 		});
 	});
 </script>
-	<%@include file="../template/header.jsp"%>
+	<%@include file="../template/header_admin.jsp" %>
 <body>
 	<div id="container">
 		<h2>글쓰기 페이지</h2>

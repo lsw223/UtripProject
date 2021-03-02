@@ -1,5 +1,55 @@
 @charset "UTF-8";
+#container{
+	width:1200px;
+	margin:0 auto;
+}
+#top{
+	position: relative;
+	margin-top:50px;
+	margin-bottom:20px;
+}
+
+#top span{
+	font-size: 40px;
+	font-weight:400;
+	color:#333333;
+	text-shadow: 2px 2px 2px #e8e8e8;
+}
 footer{
+	position:relative !important;
+	clear:both;
+}
+.card:first-child{
+	margin-left:30px;
+}
+.card{
+	position:relative;
+	width:250px;
+	height:333px;
+	box-sizing:border-box;
+	border-radius:10px;
+	float:left;
+	margin:20px 25px;
+	box-shadow: 1px 10px 10px #d8d8d8;
+	transition:all 0.3s;
+}
+.card img{
+	width:250px;
+	height:333px;
+	border-radius: 10px;
+}
+.card a{
+	z-index:3;
+}
+.card:hover{
+	box-shadow: 1px 10px 10px black;
+}
+.area{
+	color:white;
 	position:absolute;
-	bottom:0;
+	top:25px;
+	left:20px;
+	font-size: 31px;
+	font-weight: 600;
+	text-shadow: 3px 9px 9px #333333;
 }

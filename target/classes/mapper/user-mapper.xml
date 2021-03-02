@@ -68,6 +68,32 @@
 		select * from hotel where substr(hotel_no,0,2) like 
 		(select area from area where area_name=#{area_name})
 	</select>
+	<select id="selectTripByArea" parameterType="String" resultType="trip.dto.TripDTO">
+		select area_name, t.* from
+		(select * from trip where substr(trip_no,0,2) like #{area})t , area a
+		where substr(t.trip_no,0,2) like a.area
+	</select>
+	<select id="getTripLike" parameterType="map" resultType="int">
+		select ${mbti} from trip_like where trip_no like #{tripNo}
+	</select>
+	<update id="tripLike" parameterType="map">
+		update trip_like set ${mbti} = 
+		(select ${mbti} from trip_like where trip_no like #{tripNo}) + 1
+		where trip_no like #{tripNo} 
+	</update>
+	<insert id="insertTripLike" parameterType="String">
+		insert into trip_like(trip_no) values(#{trip_no})
+	</insert>
+	<select id="tripLikeCheck" parameterType="map" resultType="int">
+		select count(*) from trip_like_user
+		where trip_no like #{tripNo} and user_id like #{userId}
+	</select>
+	<insert id="insertTripLikeUser" parameterType="map">
+		insert into trip_like_user values(#{tripNo},#{userId})
+	</insert>
+	<delete id="withdraw" parameterType="String">
+		delete from utrip_user where id = #{id}
+	</delete>
 </mapper>
 
 

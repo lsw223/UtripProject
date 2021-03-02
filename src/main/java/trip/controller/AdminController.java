@@ -12,29 +12,20 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-
-import trip.dto.QnaDTO;
-import trip.dto.TripDTO;
-import trip.enums.RoleType;
-
-import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
-import trip.dto.QnaDTO;
-import trip.oauth.KakaoLogin;
 import trip.dto.CourseDTO;
 import trip.dto.FileDTO;
 import trip.dto.NoticeDTO;
 import trip.dto.QnaDTO;
+import trip.dto.TripDTO;
+import trip.enums.RoleType;
 import trip.oauth.KakaoLogin;
 import trip.service.AdminService;
 import trip.service.UserService;
@@ -43,12 +34,14 @@ import trip.vo.PaggingVO;
 @Controller
 public class AdminController {
 	private AdminService adminService;
+	private UserService userService;
 	
 	@Autowired	
 	KakaoLogin kakaoLogin;
 	
-	public AdminController(AdminService adminService) {
+	public AdminController(AdminService adminService, UserService userService) {
 		this.adminService = adminService;
+		this.userService = userService;
 	}
 	@RequestMapping("adminQna.do")
 	public String qnaAdmin(HttpServletRequest request) {
@@ -100,7 +93,13 @@ public class AdminController {
 		return "admin/admin_notice_write_view";
 	}
 	@RequestMapping("/updateNoticeview.do")
-	public String updateNotice() {
+	public String adminnoticeWriteView(HttpServletRequest request) {
+		int notice_no = Integer.parseInt(request.getParameter("notice_no"));
+		List<FileDTO> fList = adminService.selectFileList(notice_no);
+		NoticeDTO detail = adminService.selectNotice(notice_no);
+		request.setAttribute("file", fList);
+		request.setAttribute("detail", detail);
+		
 		return "admin/admin_notice_update_view";
 	}
 	@RequestMapping("/deleteNotice.do")
@@ -111,7 +110,6 @@ public class AdminController {
 		String write_date = request.getParameter("write_date");
 		String nwriter = request.getParameter("nwriter");
 		NoticeDTO dto = new NoticeDTO(notice_no, title, nwriter, content, write_date);
-		adminService.deleteNotice(dto);
 		adminService.deleteNotice(dto);
 		return "admin_notice";
 	}
@@ -149,7 +147,7 @@ public class AdminController {
 					try {
 					//파일 업로드
 					String safeFile = path + originalFileName;
-					fList.add(new FileDTO(nno, writer, originalFileName));
+					fList.add(new FileDTO(nno, notice_no, writer, originalFileName));
 					File parentPath = new File(path);
 					if(!parentPath.exists()) parentPath.mkdirs();//경로 생성
 						mf.transferTo(new File(safeFile));	
@@ -165,25 +163,24 @@ public class AdminController {
 				return new RedirectView("adminnotice.do?notice_no="+notice_no);
 	}
 	@RequestMapping("/noticeUpdateAction.do")
-	public RedirectView noticeUodateAction(MultipartHttpServletRequest request) {
-		//글번호 먼저 발급
+	public RedirectView noticeUpdateAction(MultipartHttpServletRequest request,
+			NoticeDTO dto, FileDTO fileDTO ) {
 		int notice_no = Integer.parseInt(request.getParameter("notice_no"));
-		String title = request.getParameter("title");
-		String nwriter = request.getParameter("nwriter");
-		String content = request.getParameter("content");
-		String write_date = request.getParameter("write_date");
-		adminService.updateNotice(new NoticeDTO(notice_no, title, nwriter, content, write_date));
+		String writer = request.getParameter("nwriter");
+		String nwriter = request.getParameter("writer");
+		adminService.updateNotice(dto);
 		
 		List<MultipartFile> fileList = request.getFiles("file"); 
 		System.out.println(fileList.size());
-		String path = "c:\\fileupload\\"+nwriter+"\\";
-		ArrayList<FileDTO> fList =new  ArrayList<FileDTO>();
-		
-		int nno = adminService.newnno();
-		String writer = request.getParameter("nwriter");
 		if(writer == null) {
 			writer = "test";
 		}
+		String path = "c:\\fileupload\\"+writer+"\\";
+		ArrayList<FileDTO> fList =new  ArrayList<FileDTO>();
+		
+		int nno = Integer.parseInt(request.getParameter("nno"));
+		
+		System.out.println("nno : " + nno);
 		
 		for(MultipartFile mf : fileList) {
 			String originalFileName = mf.getOriginalFilename();
@@ -194,13 +191,12 @@ public class AdminController {
 			System.err.println(mf.getContentType());
 			
 			try {
-				//파일 업로드
+			//파일 업로드
 				String safeFile = path + originalFileName;
-				fList.add(new FileDTO(nno, writer, originalFileName));
+				fList.add(new FileDTO(nno, notice_no, writer, originalFileName));
 				File parentPath = new File(path);
-				if(!parentPath.exists()) parentPath.mkdirs();//경로 생성
+			if(!parentPath.exists()) parentPath.mkdirs();//경로 생성
 				mf.transferTo(new File(safeFile));	
-				
 			} catch (IllegalStateException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -208,19 +204,19 @@ public class AdminController {
 			}
 			
 		}
-		adminService.insertFileList(fList);
+		adminService.updateFileList(fList);
 		return new RedirectView("adminnoticeView.do?notice_no="+notice_no);
 	}
 	@RequestMapping("/fileDownload.do")
 	public String fileDownload(HttpServletRequest request, HttpServletResponse response) {
 		String fileName = request.getParameter("file");
 		String writer = request.getParameter("writer");
-		String path = "c:\\fileupload\\"+writer+"\\"+fileName;
+		String path = "c:\\fileupload\\"+fileName;
 
 		File file = new File(path);
 		try {
 			FileInputStream fis = new FileInputStream(file);
-			String encodingName = URLEncoder.encode(path,"utf-8");
+//			String encodingName = URLEncoder.encode(path,"utf-8");
 			fileName = URLEncoder.encode(fileName,"utf-8");
 			response.setHeader("Content-Disposition", "attachment;filename="+fileName);
 			response.setHeader("Content-Transfer-Encode", "binary");
@@ -253,7 +249,7 @@ public class AdminController {
 		File file = new File(path);
 		try {
 			FileInputStream fis = new FileInputStream(file);
-			String encodingName = URLEncoder.encode(path,"utf-8");
+//			String encodingName = URLEncoder.encode(path,"utf-8");
 			fileName = URLEncoder.encode(fileName,"utf-8");
 			BufferedOutputStream bos = new BufferedOutputStream(response.getOutputStream());
 			byte[] buffer = new byte[1024*1024];
@@ -283,15 +279,96 @@ public class AdminController {
 			notice_no = Integer.parseInt(request.getParameter("notice_no"));
 		else
 			notice_no = (int)request.getAttribute("notice_no");
+		
+		System.out.println("notice_no : " + notice_no);
+		
 		//2. DB 해당 게시글 정보 읽어옴
 		NoticeDTO dto = adminService.selectNotice(notice_no);
 		//2-2. 첨부파일 로드 부분
 		List<FileDTO> fList = adminService.selectFileList(notice_no);
-		System.out.println(fList.toString());
 		request.setAttribute("notice", dto);
 		request.setAttribute("file", fList);
 		
+		System.out.println("req : " + request.getAttribute("file"));
+		
+		
 		return "admin/admin_notice_view";
 	}
+	@RequestMapping("tripUpdateView.do")
+	public String tripUpdateView(HttpServletRequest request, String tripNo) {
+		TripDTO dto = userService.selectTripInfo(tripNo);
+		List<CourseDTO> list = userService.selectCourseInfo(tripNo);
+		List<CourseDTO> courseList = adminService.selectCourseList(dto.getArea_name());
+		//수정할 trip,course 정보
+		request.setAttribute("dto", dto);
+		request.setAttribute("list", list);
+		//선택할 지역 코스 리스트
+		request.setAttribute("courseList", courseList);
+		return "admin/admin_trip_update_view";
+	}
+	
+	@RequestMapping("tripUpdateAction.do")
+	public RedirectView tripUpdateAction(MultipartHttpServletRequest request, HttpServletResponse response) {
+		//이미지 업로드
+		String trip_no = request.getParameter("trip_no");
+		//String filename=trip_no;
+		String fileName=trip_no+".jpg";
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
+		int x=1;
+		ArrayList<String> placeList = new ArrayList<String>();
+		String path = request.getSession().getServletContext().getRealPath("/img/trip/");
+		
+		
+		//
+		List<MultipartFile> fileList = request.getFiles("file"); 
+		System.out.println(path);
+		for(MultipartFile mf : fileList) {
+			System.out.println("A");
+			long fileSize = mf.getSize();
+			if(fileSize == 0) continue;
+			System.out.println("fileSize : "+ fileSize);
+			System.err.println(mf.getContentType());
+			
+			try {
+			//파일 업로드
+			String safeFile = path + fileName;
+			File parentPath = new File(path);
+			if(!parentPath.exists()) parentPath.mkdirs();//경로 생성
+				mf.transferTo(new File(safeFile));	
+			
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		//
+		
+		while(request.getParameter("place"+x)!=null) {
+			placeList.add(request.getParameter("place"+x));
+			x++;
+		}
+		
+		TripDTO dto = new TripDTO(trip_no, title, content);
+		int count = adminService.tripUpdateInfo(dto);
+		System.out.println(count);
+		
+		adminService.courseUpdate(placeList,trip_no);
+		return new RedirectView("tripDetailView.do?trip_no="+trip_no);
+	}
+	
+	@RequestMapping("tripDeleteAction.do")
+	public RedirectView tripDeleteAction(HttpServletRequest request,String trip_no) {
+		System.out.println(trip_no);
+		int count = adminService.deleteTripInfo(trip_no);
+		System.out.println(count);
+		return new RedirectView("tripView.do");
+	}
+	
 }
+
+
 
