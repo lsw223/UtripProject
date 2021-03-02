@@ -29,6 +29,14 @@ public class BoardService {
 		return mapper.selectCount();
 	}
 
+	public int selectSearchCount(String kind, String search) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+
+		map.put("kind", kind);
+		map.put("search", search);
+		return mapper.selectSearchCount(map);
+	}
+
 	public BoardDTO selectBoard(int boardNo) {
 		return mapper.selectBoard(boardNo);
 	}
@@ -48,7 +56,7 @@ public class BoardService {
 	public int addBoardLike(int mode, int boardNo) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("mode", mode);
-		map.put("boardno", boardNo);
+		map.put("boardNo", boardNo);
 		mapper.addBoardLike(map);
 		BoardDTO dto = mapper.selectBoard(boardNo);
 		if (mode == 0)
@@ -57,17 +65,36 @@ public class BoardService {
 		return boardNo;
 	}
 
+	/*
+	 * public int addBoardLike(int boardNo) { HashMap<String, Object> map = new
+	 * HashMap<String, Object>(); map.put("boardno", boardNo);
+	 * mapper.addBoardLike(map); BoardDTO dto = mapper.selectBoard(boardNo);
+	 * 
+	 * return dto.getBoardLike();
+	 * 
+	 * }
+	 */
+
 	public int insertComment(CommentDTO dto) {
 		return mapper.insertBoardComment(dto);
 	}
-	
-	public List<BoardDTO> selectSearchBoard(String kind, String search) {
+
+	public List<BoardDTO> selectSearchBoard(int page, String kind, String search) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
+
 		map.put("kind", kind);
 		map.put("search", search);
+		map.put("pageNo", page);
 		return mapper.selectSearchBoard(map);
+
 	}
-	
+
+	/*
+	 * public List<BoardDTO> selectSearchBoard(String kind, String search, int page)
+	 * { HashMap<String, Object> map = new HashMap<String, Object>();
+	 * map.put("kind", kind); map.put("search", search); return
+	 * mapper.selectSearchBoard(map,page); }
+	 */
 	public void addCount(int boardNo) {
 		mapper.addCount(boardNo);
 	}
@@ -82,6 +109,14 @@ public class BoardService {
 
 	public BoardDTO selectId(String id) {
 		return mapper.selectId(id);
+	}
+
+	public int deleteComment(int commentNo) {
+		return mapper.deleteComment(commentNo);
+	}
+
+	public int updateComment(CommentDTO dto) {
+		return mapper.updateComment(dto);
 	}
 
 }

@@ -19,9 +19,12 @@ public interface BoardMapper {
 	int insertBoard(BoardDTO dto);
 	void addBoardLike(HashMap<String, Object> map);
 	int insertBoardComment(CommentDTO dto);
-	List<BoardDTO> selectSearchBoard(HashMap<String, Object> map);
 	void addCount(int boardNo);
 	int deleteBoard(int boardNo);
 	int updateBoard(BoardDTO dto);
 	BoardDTO selectId(String id);
+	List<BoardDTO> selectSearchBoard(HashMap<String, Object> map);
+	int selectSearchCount(HashMap<String, Object> map);
+	int deleteComment(int commentNo);
+	int updateComment(CommentDTO dto);
 }
