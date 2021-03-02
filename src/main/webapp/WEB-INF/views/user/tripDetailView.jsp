@@ -135,13 +135,19 @@
 				<input type="radio" name="assess"> 💜💜💜💜💜<br>
 			</label>
 		</div>
+
+			<div >
+			<c:if test="${sessionScope.user.role == 'ADMIN' }">
+				<a href="tripUpdateView.do?tripNo=${requestScope.dto.trip_no}">수정</a>
+				<a href="#" id="deleteTripInfo">삭제</a>
+			</c:if>
+			</div>
 		</div>
 
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=16b17515f471d69c146a2979295c4faf"></script>
 	<script>
 	$(function(){
-		
 	$("#deleteTripInfo").click(function(){
 		if(confirm("정말 삭제하시겠습니까?")==true){
 			location="tripDeleteAction.do?trip_no=<%=request.getAttribute("trip_no")%>"
@@ -352,3 +358,6 @@
 	<%@include file="../template/footer.jsp"%>
 </body>
 </html>
+
+	 setBounds();
+

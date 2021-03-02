@@ -6,8 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-</head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="css/notice/notice_update_view.css">
+<script src="lib/jquery-3.5.1.min .js"></script>
 <script>
 	$(function(){
 		var count = 3;//첨부파일 태그 개수
@@ -23,44 +23,48 @@
 		});
 	});
 </script>
-	<%@include file="../template/header.jsp"%>
+	<%@include file="../template/header_admin.jsp" %>
+</head>
 <body>
 	<div id="container">
 		<div id="container">
-		<h2>글수정 페이지</h2>
-		<form action="noticeUpdateAction.do" enctype="multipart/form-data" method="post">
-			<table>
-				<tr>
-					<th>제목</th>
-					<td><input type="text" name="title" value="${requestScope.notice.title }"></td>
-				</tr>
-				<tr>
-					<th>작성자</th>
-					<td>
-						${requestScope.notice.nwriter }		
-					</td>
-				</tr>
-				<tr>
-					<th style="vertical-align: top;">내용</th><td><textarea name="content">${requestScope.notice.content}</textarea></td>
-				</tr>
-				<!-- 첨부 파일 -->
-				<tr>
-					<td colspan="2" id="file_form">
-						<p><input type="file" name="file"> 
-						<button type="button" id="plus">+</button> <button type="button" id="minus">-</button></p>
-						<p><input type="file" name="file"></p>
-						<p><input type="file" name="file"></p>
-					</td>
-				</tr>
-				<tr>
-					<th><a href="adminnotice.do?pageNo=${requestScope.pageNo == null ? 1 : requestScope.pageNo }" class="btn">목록보기</a></th>
-					<td style="text-align: right;">
-						<a href="javascript:history.back();" class="btn">뒤로가기</a>
-						<button class="btn">수정하기</button>
-					</td>
-				</tr>
-			</table>
-		</form>
+			<h2>글수정 페이지</h2>
+			<form action="noticeUpdateAction.do" enctype="multipart/form-data" method="post">
+				<input type="hidden" name="notice_no"	value="${requestScope.detail.notice_no }">
+				<input type="hidden" name="nno" 		value="${requestScope.file[0].nno }">
+				<table>
+					<tr>
+						<th>제목</th>
+						<td><input type="text" name="title" value="${requestScope.detail.title }"></td>
+					</tr>
+					<tr>
+						<th>작성자</th>
+						<td>
+							${requestScope.detail.nwriter }		
+						</td>
+					</tr>
+					<tr>
+						<th style="vertical-align: top;">내용</th><td><textarea name="content">${requestScope.detail.content}</textarea></td>
+					</tr>
+					<!-- 첨부 파일 -->
+					<tr>
+						<td colspan="2" id="file_form">
+							<p><input type="file" name="file"> 
+							<button type="button" id="plus">+</button> <button type="button" id="minus">-</button></p>
+							<p><input type="file" name="file"></p>
+							<p><input type="file" name="file"></p>
+						</td>
+					</tr>
+					<tr>
+						<th><a href="adminnotice.do?pageNo=${requestScope.pageNo == null ? 1 : requestScope.pageNo }" class="btn">목록보기</a></th>
+						<td style="text-align: right;">
+							<a href="javascript:history.back();" class="btn">뒤로가기</a>
+							<button class="btn">수정하기</button>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
 	</div>
 </body>
 	<%@ include file="../template/footer.jsp" %>

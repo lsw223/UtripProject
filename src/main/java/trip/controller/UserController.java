@@ -1,7 +1,9 @@
 package trip.controller;
 
 import java.io.IOException;
+import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -13,12 +15,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import trip.dto.FileDTO;
+import trip.dto.NoticeCommentDTO;
+import trip.dto.NoticeDTO;
 import trip.dto.ResponseDTO;
 import trip.dto.UserDTO;
 import trip.encryption.PasswordEncoder;
 import trip.enums.RoleType;
 import trip.oauth.KakaoLogin;
 import trip.service.UserService;
+import trip.vo.PaggingVO;
 
 @Controller
 public class UserController {
@@ -164,6 +170,84 @@ public class UserController {
 		}
 		return null;
 	}
+	@RequestMapping("/notice.do")
+	public String notice(HttpServletRequest request) {
+		int page = 1;
+		//페이지 셋팅
+		if(request.getParameter("pageNo") != null)
+			page = Integer.parseInt(request.getParameter("pageNo"));
+		List<NoticeDTO> list = userService.selectNoticeList(page);//글목록 읽어옴
+		int count = userService.selectnoticeCount();
+		PaggingVO vo = new PaggingVO(count, page);
+		request.setAttribute("list", list);
+		request.setAttribute("pagging", vo);
+		System.out.println(list.toString());
+		return "notice";
+	}
+	@RequestMapping("/noticeView.do")
+	public String noticeView(HttpServletRequest request) {
+		//게시글 하나 읽음
+		//1. request에서 게시글 번호 읽어옴
+		int notice_no = 0;
+		if(request.getParameter("notice_no") != null)
+			notice_no = Integer.parseInt(request.getParameter("notice_no"));
+		else
+			notice_no = (int)request.getAttribute("notice_no");
+		
+		System.out.println("notice_no : " + notice_no);
+		userService.addnoticeCount(notice_no);
+		System.out.println();
+		//2. DB 해당 게시글 정보 읽어옴
+		NoticeDTO dto = userService.selectNotice(notice_no);
+		List<NoticeCommentDTO> list = userService.selectNoticeComment(notice_no);
+		//2-2. 첨부파일 로드 부분
+		List<FileDTO> fList = userService.selectFileList(notice_no);
+		request.setAttribute("notice", dto);
+		request.setAttribute("noticecomment", list);
+		request.setAttribute("file", fList);
+		System.out.println("list = " + list.toString());
+		System.out.println("req : " + request.getAttribute("file"));
+		return "user/notice_view";
+	}
+	@RequestMapping("/plusLikeHate.do")
+	public String plusLikeHate(HttpServletRequest request, HttpServletResponse response) {
+		int notice_no = Integer.parseInt((String)request.getParameter("notice_no"));
+		int mode =Integer.parseInt((String)request.getParameter("mode"));
+		
+		int count = 0;
+		
+		count = userService.addNoticeLikeHate(mode, notice_no);
+		try {
+			response.getWriter().write(String.valueOf(count));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	@RequestMapping("/insertnoticeComment.do")
+	public String insertnoticeComment(HttpServletRequest request, HttpServletResponse response) {
+		
+		int notice_no = Integer.parseInt(request.getParameter("notice_no"));
+		String writer = request.getParameter("writer");
+		String content = request.getParameter("content");
+		String writeDate = request.getParameter("writeDate");
+		
+		userService.insertNoticeComment(new NoticeCommentDTO(notice_no, writer, content, writeDate));
+		return null;
+	}
+	@RequestMapping("/noticecommentLike.do")
+	public String noticecommentLike(HttpServletRequest request) {
+		int comment_no = Integer.parseInt(request.getParameter("comment_no"));
+		userService.updatenoticeCommentLike(comment_no);
+		return noticeView(request);
+	}
+	@RequestMapping("/noticecommentHate.do")
+	public String noticecommentHate(HttpServletRequest request) {
+		int comment_no = Integer.parseInt(request.getParameter("comment_no"));
+		userService.updatenoticeCommentHate(comment_no);
+		return noticeView(request);
+	}
+	
 	
 	// 계정 탈퇴
 	@RequestMapping("/withdraw.do")

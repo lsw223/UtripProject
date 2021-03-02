@@ -29,6 +29,13 @@ public class TripDTO {
 		this.content = content;
 	}
 
+	public TripDTO(String trip_no, String title, String content) {
+		super();
+		this.trip_no = trip_no;
+		this.title = title;
+		this.content = content;
+	}
+
 	public String getArea_name() {
 		return area_name;
 	}
@@ -75,3 +82,4 @@ public class TripDTO {
 	
 	
 }
+
