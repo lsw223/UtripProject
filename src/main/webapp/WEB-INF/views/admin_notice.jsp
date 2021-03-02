@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="css/notice/admin_notice.css">
 <style type="text/css">
 
 </style>
@@ -15,7 +16,7 @@
 </script>
 
 </head>
-	<%@include file="template/header.jsp" %>
+	<%@include file="template/header_admin.jsp" %>
 <body>
 		<!-- header.jsp를 현재 문서에 포함 -->
 		<div id="container">

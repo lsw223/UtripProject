@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,7 +60,14 @@
 </style>
 </head>
 <body>
-<%@ include file="../template/header.jsp"%>
+<c:choose>
+	<c:when test="${sessionScope.user.role == 'ADMIN' }">
+		<%@include file="../template/header_admin.jsp" %>
+	</c:when>
+	<c:otherwise>
+		<%@include file="../template/header.jsp" %>
+	</c:otherwise>
+</c:choose>
 	<div>
 	<h2>호텔정보</h2>
 	<div id="map" style="width: 500px; height: 500px;"></div>
@@ -83,7 +91,6 @@
 			level : 10
 		// 지도의 확대 레벨
 		};
-
 		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
 		// 버튼을 클릭하면 아래 배열의 좌표들이 모두 보이게 지도 범위를 재설정합니다 
@@ -133,7 +140,7 @@
 		function closeOverlay() {
 			overlay.setMap(null);
 		}
-		
+		setBounds();
 	</script>
 	
 	<%@include file="../template/footer.jsp"%>

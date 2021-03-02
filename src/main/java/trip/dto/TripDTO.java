@@ -1,5 +1,6 @@
 package trip.dto;
 
+
 public class TripDTO {
 	private String area_name;
 	private String trip_no;
@@ -17,9 +18,19 @@ public class TripDTO {
 		this.rating = rating;
 	}
 	
+	public TripDTO() {
+	}
+
 	public TripDTO(String area_name, String trip_no, String title, String content) {
 		super();
 		this.area_name = area_name;
+		this.trip_no = trip_no;
+		this.title = title;
+		this.content = content;
+	}
+
+	public TripDTO(String trip_no, String title, String content) {
+		super();
 		this.trip_no = trip_no;
 		this.title = title;
 		this.content = content;
@@ -30,7 +41,7 @@ public class TripDTO {
 	}
 	public void setArea_name(String area_name) {
 		this.area_name = area_name;
-	}
+	} 
 	public String getTrip_no() {
 		return trip_no;
 	}
@@ -71,3 +82,4 @@ public class TripDTO {
 	
 	
 }
+
