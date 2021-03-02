@@ -1,6 +1,8 @@
 package trip.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,6 +64,41 @@ public class UserService {
 
 	public List<HotelDTO> selectHotelInfo(String area_name) {
 		return userMapper.selectHotelInfo(area_name);
+	}
+
+	public List<TripDTO> selectTripByArea(String area) {
+		return userMapper.selectTripByArea(area);
+	}
+
+	public int getTripLike(String tripNo, String mbti) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("tripNo", tripNo);
+		map.put("mbti", mbti);
+		return userMapper.getTripLike(map);
+	}
+
+	public int tripLike(String tripNo, String mbti, String userId) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("tripNo", tripNo);
+		map.put("mbti", mbti);
+		map.put("userId", userId);
+		userMapper.insertTripLikeUser(map);
+		return userMapper.tripLike(map);
+	}
+
+	public void insertTripLike(String tripNo) {
+		userMapper.insertTripLike(tripNo);
+	}
+
+	public int tripLikeCheck(String tripNo, String userId) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("tripNo", tripNo);
+		map.put("userId", userId);
+		return userMapper.tripLikeCheck(map);
+	}
+
+	public void withdraw(String id) {
+		userMapper.withdraw(id);
 	}
 	
 }

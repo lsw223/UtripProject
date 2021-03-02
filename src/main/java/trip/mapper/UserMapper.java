@@ -1,6 +1,7 @@
 package trip.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -24,4 +25,11 @@ public interface UserMapper {
 	TripDTO selectMbtiTripInfo(String mbti);
 	public List<TripDTO> selectAreaList();
 	public List<HotelDTO> selectHotelInfo(String area_name);
+	public List<TripDTO> selectTripByArea(String area);
+	public int getTripLike(Map<String, Object> map);
+	public int tripLike(Map<String, Object> map);
+	public void insertTripLike(String tripNo);
+	public int tripLikeCheck(Map<String, Object> map);
+	public void insertTripLikeUser(Map<String, Object> map);
+	public void withdraw(String id);
 }

@@ -36,13 +36,14 @@
 			</p>
 			
 			<p id="p_domain">
+				<input type="text" value="@naver.com"  readonly>
 				<select id="domain" name="domain">
-					<option value="@naver.com">@naver.com</option>
-					<option value="@gmail.com">@gmail.com</option>
-					<option value="@daum.net">@daum.net</option>
-					<option value="@nate.com">@nate.com</option>
-					<option value="@hanmail.com">@hanmail.com</option>
-					<option id="self">직접입력</option>
+					<option value="@naver.com">naver</option>
+					<option value="@gmail.com">gmail</option>
+					<option value="@daum.net">daum</option>
+					<option value="@nate.com">nate</option>
+					<option value="@hanmail.com">hanmail</option>
+					<option value="self">직접입력</option>
 				</select>
 			</p>
 			<p id="p_mbti">
