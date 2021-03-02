@@ -8,9 +8,59 @@
 <title>글쓰기 페이지</title>
 <link rel="stylesheet" href="css/board_view.css">
 <script src="lib/jquery-3.5.1.min .js"></script>
+<!-- <script src="js/board_view.js"></script> -->
+<script type="text/javascript">
+/*댓글추가*/
+$(function() {
+		$(".comment_form textarea").keyup(function() {
+			$(this).next().text($(this).val().length + "/500");
+		});
+		$(".comment_form button").click(function() {
+			var data = $("#comment").serialize();
+			$.ajax({
+				url : "insertComment.do",
+				data : data,
+				method : "get",
+				success : function(d) {
+					alert("댓글 등록 성공 : " + d);
+					location.reload();
+				}
+			});
+		});		
+		/*좋아요 추가*/
+		$(".btn_like").click(function(){
+			var obj = $(this);
+			d = "boardno=${requestScope.board.boardNo}&mode="+$(this).index();
+			console.log(d);
+			$.ajax({
+				url : "plusLike.do",
+				data : d,
+				method : "get",
+				success:function(result){
+					result = result.trim();
+					if(result == "false"){
+						alert("로그인후 이용하실 수 있습니다.");
+						location.href="loginView.do";
+					}
+					console.log(result, result.length);
+					$(obj).children("span").html(result);
+					
+				},
+				error : function(request, status, error) {
+					/*alert(request.responseText.trim());*/
+					console.log(request.responseText.trim());
+					location.href="loginView.do";
+					
+				}
+		});
+	});
+});
+
+
+</script>
 </head>
 <body>
-	<%@ include file="template/header.jsp"%>
+	<%@ include file="../template/header_admin.jsp"%>
 	<c:if
 		test="${sessionScope.login == null || sessionScope.login == false  }">
 		<c:set var="page" target="${sessionScope }"
@@ -58,7 +108,7 @@
 						<form id="comment">
 							<input type="hidden" name="boardno" value="${requestScope.board.boardNo }"> 
 							<input type="hidden" name="id" value="${sessionScope.user.id }"> 
-							<span class="id">${sessionScope.user.id }</span>
+							<span class="id"></span>
 							<textarea name="content" maxlength="500"></textarea>
 							<p class="length">0/500</p>
 							<hr>
@@ -70,10 +120,14 @@
 				</td>
 			</tr>
 			<tr>
-				<th><a href="javascript:history.back();" class="btn">목록보기</a></th>
+				<th>
+				<a href="adminBoard.do" class="btn">목록보기</a>
+				</th>
 					<td style="text-align: right;">
+						<c:if test="${user.id eq board.id }">
 						<a href="updateBoardView.do?boardno=${requestScope.board.boardNo }" class="btn">수정</a>
-						<a href="deleteBoard.do?boardno=${requestScope.board.boardNo }" class="btn">삭제</a> 
+						</c:if>
+						<a href="deleteBoard.do?boardno=${requestScope.board.boardNo }" class="btn">삭제</a>
 						<a href="#" class="btn">이전글</a> 
 						<a href="#" class="btn">다음글</a>
 					</td>
@@ -86,11 +140,19 @@
 								<th>작성자</th>
 								<th>작성일</th>
 								<th>내용</th>
+								<th></th>
+								<th></th>
 							</tr>
 							<tr>
 								<td style="width: 100px; text-align: center;">${comment.id }</td>
 								<td style="width: 120px; text-align: center;">${comment.writeDate }</td>
-								<td colspan="4" style="width: 250px; text-align: left;">${comment.content }</td>
+								<td colspan="4" style="width: 350px; text-align: center;">${comment.content }</td>
+								<td style="width: 50px; text-align: center;">
+								<c:if test="${user.id eq comment.id }">
+									<a href="#" class="comment_btn">수정</a>
+								</c:if>
+									<a href="deleteComment.do?commentno=${comment.commentNo }&boardno=${requestScope.board.boardNo }" class="comment_btn">삭제</a>
+								</td>
 							</tr>
 						</table>
 					</c:forEach>
@@ -98,8 +160,7 @@
 			</tr>
 		</table>
 	</div>
-	<script src="js/board_view.js"></script>
-	<%@include file="template/footer.jsp"%>
+	<%@include file="../template/footer.jsp"%>
 </body>
 </html>
 

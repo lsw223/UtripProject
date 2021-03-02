@@ -98,7 +98,7 @@ header #info li{
 			<li><a href="#">QnA</a></li>
 			<li><a href="#">여행정보</a></li>
 			<li><a href="qna.do">QnA</a></li>
-			<li><a href="board.do">커뮤니티</a></li>
+			<li><a href="adminBoard.do">커뮤니티</a></li>
 			<li><a href="hotelRequestAdminView.do">제휴관리</a></li>
 		</ul>
 		
