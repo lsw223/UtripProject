@@ -45,6 +45,9 @@ header ul{
 	float:left;
 	list-style-type: none;
 }
+header>ul a:hover{
+	color:#816bff;
+}
 header li{
 	width:100px;
 	float:left;
@@ -97,7 +100,6 @@ header #info li{
 		<ul>
 			<li><a href="notice.do">공지사항</a></li> <!-- 임시 -->
 			<li><a href="qna.do">QnA</a></li>
-			<li><a href="tripView.do">여행정보</a></li>
 			<li><a href="board.do">커뮤니티</a></li>
 			<li><a href="hotelRequestView.do">제휴신청</a></li>
 		</ul>

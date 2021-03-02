@@ -32,6 +32,17 @@
 				}
 			})			
 		})
+		$("#btn1").click(function(){
+			if(${empty sessionScope.user}){
+				location.href="/";
+				return false;
+			}
+			var result = confirm("정말 탈퇴 하시겠습니까?");
+			if(result){
+				alert("계정이 삭제되었습니다");
+				location.href="withdraw.do";
+			}
+		})
 	})
 </script>
 </head>
@@ -47,7 +58,7 @@
 				</tr>
 				<tr>
 					<td>이메일</td>
-					<td><input type="text" id="email"value="${sessionScope.user.email }" readonly></td>
+					<td><input type="text" id="email"value="${sessionScope.user.email }" ></td>
 				</tr>
 				<tr>
 					<td>MBTI</td>

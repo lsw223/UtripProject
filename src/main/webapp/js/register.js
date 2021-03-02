@@ -59,6 +59,17 @@ $("#btn_reg").click(function(){
 	$("#frm_register").submit();
 })
 
+$("#p_domain select").change(function(){
+	if($("#p_domain select").val() == "self"){
+		$("#p_domain input").removeAttr("readonly");
+		$("#p_domain input").val("@");
+		$("#p_domain input").focus();
+		return false;
+	}
+	$("#p_domain input").attr("readonly","readonly");
+	$("#p_domain input").val($("#p_domain select").val());
+})
+
 
 
 

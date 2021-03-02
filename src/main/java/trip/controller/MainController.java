@@ -1,18 +1,26 @@
 package trip.controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import trip.dto.QnaDTO;
+import trip.dto.ResponseDTO;
 import trip.dto.TripDTO;
 import trip.dto.UserDTO;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import trip.oauth.KakaoLogin;
@@ -92,6 +100,18 @@ public class MainController {
 		request.setAttribute("avgX", x);
 		request.setAttribute("avgY", y);
 
+		// 로그인 된 상태일경우 해당 trip, 해당 유저mbti유형의 좋아요 갯수를 session에 포함시킨다
+		HttpSession session = request.getSession();
+		if(session.getAttribute("user") != null) {
+			UserDTO user = (UserDTO)session.getAttribute("user");
+			int tripLike = 0;
+			try {
+				tripLike = userService.getTripLike(tripNo,user.getMbti());
+			} catch (Exception e) {
+				userService.insertTripLike(tripNo);
+			}
+			request.setAttribute("tripLike", tripLike);
+		}
 		return "user/tripDetailView";
 	}
 	
@@ -112,6 +132,52 @@ public class MainController {
 		request.setAttribute("avgY", y);
 		
 		return "user/hotelDetailView";
+	}
+	
+	@RequestMapping("/areaView.do")
+	public String tripAreaView(String area,HttpServletRequest req) {
+		List<TripDTO> list = userService.selectTripByArea(area);
+		System.out.println(list);
+		req.setAttribute("list", list);
+		return "user/areaView";
+	}
+	
+	// tripDetailView에서 따봉 클릭시 
+	@RequestMapping("/tripLike.do")
+	public String tripLike(String tripNo,String mbti,String userId, HttpServletResponse response) {
+		ResponseDTO<String> resp = new ResponseDTO<String>();
+		// 이미 해당 trip 에 따봉을 누른 유저인지 체크
+		int check = userService.tripLikeCheck(tripNo,userId);
+		// 이미 해당 trip 에 따봉을 누른 유저일때
+		if(check > 0) {
+			response.setContentType("html/text;charset=utf-8");
+			resp.setResponseCode(201);
+			resp.setResponseMessage("좋아요는 한번만 가능 합니다");
+			JSONObject json = new JSONObject(resp);
+			try {
+				response.getWriter().write(json.toString());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+		// 해당 trip 에 처음 따봉을 누른 유저일때
+		int count = userService.tripLike(tripNo,mbti,userId);
+		if(count==1) {
+			resp.setResponseCode(200);
+		}else {
+			resp.setResponseCode(500);
+		}
+		int tripLike = userService.getTripLike(tripNo,mbti);
+		resp.setResponseMessage(""+tripLike);
+		response.setContentType("html/text;charset=utf-8");
+		JSONObject json = new JSONObject(resp);
+		try {
+			response.getWriter().write(json.toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 }

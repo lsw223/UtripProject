@@ -249,4 +249,12 @@ public class UserController {
 	}
 	
 	
+	// 계정 탈퇴
+	@RequestMapping("/withdraw.do")
+	public String withdraw(HttpSession session) {
+		UserDTO user = (UserDTO) session.getAttribute("user");
+		userService.withdraw(user.getId());
+		return "redirect:/logout.do";
+	}
+	
 }

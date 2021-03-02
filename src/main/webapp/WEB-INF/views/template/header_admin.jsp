@@ -53,6 +53,9 @@ header li{
 header li a{
 	font-size: 14px;
 }
+header>ul a:hover{
+	color:rgba(255, 255, 255, 0.7);
+}
 /****************************/
 #info{
 	width:45%;
@@ -93,9 +96,8 @@ header #info li{
 		<ul>
 			<li><a href="adminnotice.do">공지사항</a></li> <!-- 임시 -->
 			<li><a href="qna.do">QnA</a></li>
-			<li><a href="tripView.do">여행정보</a></li>
 			<li><a href="board.do">커뮤니티</a></li>
-			<li><a href="hotelRequestAdminView.do">호텔제휴</a></li>
+			<li><a href="hotelRequestAdminView.do">제휴관리</a></li>
 		</ul>
 		
 		<!-- 로그인 된 상태일때  -->
