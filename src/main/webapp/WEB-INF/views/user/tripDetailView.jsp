@@ -58,6 +58,7 @@
 		url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')
 }
 </style>
+
 </head>
 <body>
 	<c:choose>
@@ -84,10 +85,12 @@
 				<a href="#" onclick="setOption(${dto.course_no-1});return false;">${dto.place_name}</a>
 				
 			</c:forEach>
+			<div >
 			<c:if test="${sessionScope.user.role == 'ADMIN' }">
-				<a href="tripUpdateView.do?dto=${requestScope.dto}">수정</a>
-				<a href="tripDelete.do">삭제</a>
+				<a href="tripUpdateView.do?tripNo=${requestScope.dto.trip_no}">수정</a>
+				<a href="#" id="deleteTripInfo">삭제</a>
 			</c:if>
+			</div>
 		</div>
 
 	</div>
@@ -95,6 +98,16 @@
 
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=16b17515f471d69c146a2979295c4faf"></script>
+	<script>
+	$("#deleteTripInfo").click(function(){
+		if(confirm("정말 삭제하시겠습니까?")==true){
+			location="tripDeleteAction.do?trip_no=<%=request.getAttribute("trip_no")%>"
+			alert("삭제가 완료되었습니다.")
+		}else{
+			return;
+		}
+	})
+</script>
 	<script>
 		var list = ${requestScope.list}
 		var distanceOverlay;
@@ -246,9 +259,3 @@
             return content;
         }
 	 setBounds();
-        
-	</script>
-
-	<%@include file="../template/footer.jsp"%>
-</body>
-</html>

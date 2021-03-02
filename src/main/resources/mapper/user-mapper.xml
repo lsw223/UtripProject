@@ -68,6 +68,84 @@
 		select * from hotel where substr(hotel_no,0,2) like 
 		(select area from area where area_name=#{area_name})
 	</select>
+	<select resultType="trip.dto.NoticeDTO" parameterType="trip.dto.NoticeDTO" id="selectNoticeList">
+		select a.notice_no -- 글번호 
+			 , a.title -- 제목 
+			 , a.content -- 내용
+			 , to_char(a.write_date, 'yyyy-mm-dd') as write_date -- 작성일 
+			 , a.nwriter -- 작성자
+			 , a.notice_count --댓글 count 
+			 , a.nlike -- 좋아요
+			 , a.nhate -- 싫어요
+			 , b.num
+		  from notice a /* 공지사항 */ 
+		 inner join (
+		select rownum as num -- 순번 
+			 , notice_no -- 글번호 
+		from notice) b /* 공지사항 */ 
+		on a.notice_no = b.notice_no
+		where b.num between ((#{pageNo} * 7) - 6) and (#{pageNo} * 7) 
+	</select>
+	<select resultType="int" id="selectnoticeCount">
+		select count(*) from notice 
+	</select>
+	<select resultType="trip.dto.NoticeDTO" parameterType="int" id="selectNotice">
+		select * from notice 
+		 where notice_no = #{notice_no} 
+	</select>
+	<select resultType="trip.dto.FileDTO" parameterType="int" id="selectFileList">
+		select * 
+		  from notice_file_list 
+		 where notice_no = #{notice_no}
+	</select>
+	<update id="addNoticeLikeHate" parameterType="map">
+		update notice set 
+		<choose>
+			<when test="mode == 0">
+				nlike = nlike + 1
+			</when>
+			<otherwise>
+				nhate = nhate + 1
+			</otherwise>
+		</choose>
+		where notice_no = #{notice_no}
+	</update>
+	<insert id="insertNoticeComment" parameterType="trip.dto.NoticeCommentDTO">
+		insert into 
+			   notice_comment(
+			   comment_no
+			 , notice_no
+			 , writer
+			 , content
+			 , write_date
+			 ) 
+	   values( notice_comment_seq.nextval
+			 , #{notice_no}
+			 , #{writer}
+			 , #{content}
+			 , sysdate
+			 )
+	</insert>
+	<update id="addnoticeCount" parameterType="int">
+		update notice set notice_count = notice_count+1 where notice_no = #{notice_no}
+	</update>
+	<select id="selectNoticeComment" parameterType="int" resultType="noticecomment">
+		select comment_no
+		     , notice_no
+		     , writer
+		     , content
+		     , write_date
+		     , clike
+		     , chate
+		  from notice_comment where notice_no = #{notice_no}
+		 order by comment_no
+	</select>
+	<update id="updatenoticeCommentLike" parameterType="int">
+		update notice_comment set clike = clike + 1 where comment_no = #{comment_no}  
+	</update>
+	<update id="updatenoticeCommentHate" parameterType="int">
+		update notice_comment set chate = chate+ 1 where comment_no = #{comment_no}  
+	</update>
 </mapper>
 
 

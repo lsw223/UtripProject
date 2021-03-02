@@ -1,13 +1,17 @@
 package trip.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import trip.dto.CourseDTO;
+import trip.dto.FileDTO;
 import trip.dto.HotelDTO;
 import trip.dto.HotelRequestDTO;
+import trip.dto.NoticeCommentDTO;
+import trip.dto.NoticeDTO;
 import trip.dto.QnaDTO;
 import trip.dto.TripDTO;
 import trip.dto.UserDTO;
@@ -62,6 +66,57 @@ public class UserService {
 
 	public List<HotelDTO> selectHotelInfo(String area_name) {
 		return userMapper.selectHotelInfo(area_name);
+	}
+
+	public List<NoticeDTO> selectNoticeList(int page) {
+		return userMapper.selectNoticeList(page);
+	}
+
+	public int selectnoticeCount() {
+		return userMapper.selectnoticeCount();
+	}
+
+	public NoticeDTO selectNotice(int notice_no) {
+		return userMapper.selectNotice(notice_no);
+	}
+
+	public List<FileDTO> selectFileList(int notice_no) {
+		return userMapper.selectFileList(notice_no);
+	}
+
+	public int addNoticeLikeHate(int mode, int notice_no) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("mode", mode);
+		map.put("notice_no", notice_no);
+		userMapper.addNoticeLikeHate(map);
+		NoticeDTO dto = userMapper.selectNotice(notice_no);
+		if(mode == 0)
+			return dto.getNlike();
+		else
+			return dto.getNhate();
+	}
+
+	public int insertNoticeComment(NoticeCommentDTO dto) {
+		return userMapper.insertNoticeComment(dto); 
+		
+	}
+
+	public void addnoticeCount(int notice_no) {
+		userMapper.addnoticeCount(notice_no);
+		
+	}
+
+	public List<NoticeCommentDTO> selectNoticeComment(int notice_no) {
+		return userMapper.selectNoticeComment(notice_no);
+	}
+
+	public int updatenoticeCommentLike(int comment_no) {
+		return userMapper.updatenoticeCommentLike(comment_no);
+		
+	}
+
+	public int updatenoticeCommentHate(int comment_no) {
+		return userMapper.updatenoticeCommentHate(comment_no);
 	}
 	
 }
