@@ -41,10 +41,6 @@ public class UserService {
 		return userMapper.update(user);
 	}
 	
-	public List<QnaDTO> selectQnaList(String id) {
-		return userMapper.selectQnaList(id);
-	}
-	
 	public List<TripDTO> selectPopulTripList() {
 		return userMapper.selectPopulTripList();
 	}
@@ -101,6 +97,7 @@ public class UserService {
 
 	public void withdraw(String id) {
 		userMapper.withdraw(id);
+	}
 	public List<NoticeDTO> selectNoticeList(int page) {
 		return userMapper.selectNoticeList(page);
 	}

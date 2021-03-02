@@ -37,7 +37,6 @@ public class UserController {
 	private PasswordEncoder encoder;
 	
 	
-	
 	// 로그인 화면으로 이동
 	@RequestMapping("/loginView.do")
 	public String loginView() {
