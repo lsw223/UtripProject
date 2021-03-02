@@ -92,7 +92,7 @@ header #info li{
 		</div>
 		<ul>
 			<li><a href="adminnotice.do">공지사항</a></li> <!-- 임시 -->
-			<li><a href="qna.do">QnA</a></li>
+			<li><a href="#">QnA</a></li>
 			<li><a href="#">여행정보</a></li>
 			<li><a href="board.do">커뮤니티</a></li>
 			<li><a href="hotelRequestAdminView.do">호텔제휴</a></li>

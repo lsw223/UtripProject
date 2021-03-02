@@ -43,19 +43,6 @@ public class MainController {
 		System.out.println("성일test2");
 		return "TripMain";
 	}
-
-	@RequestMapping("qna.do")
-	public String qna(HttpServletRequest request, HttpSession session) {
-		UserDTO userdto= (UserDTO) session.getAttribute("user"); 
-		String id=userdto.getId();
-		System.out.println(id);
-		//유저 아이디를 기반으로 문의한 내용
-		List<QnaDTO> list = userService.selectQnaList(id);
-		System.out.println(list.toString());
-		request.setAttribute("list", list);
-		
-		return "user/qna";
-	}
 	
 	@RequestMapping("/tripView.do")
 	public String TripView(HttpServletRequest request, HttpSession session) {

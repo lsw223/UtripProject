@@ -22,12 +22,8 @@
 		where id=#{id}
 	</update>
 	<select id="selectQnaList" parameterType="String"
-		resultType="trip.dto.QnaDTO">
-		select * from
-		(select q.qna_no, q.user_id, q.title, q.content, q.write_date,
-		r.response_content, r.response_date
-		from qna q left outer join qna_response r on q.qna_no = r.qna_no) where
-		user_id=#{id}
+		resultType="user">
+		select * from utrip_user where id like #{id}
 	</select>
 	<select id="selectPopulTripList" resultType="trip.dto.TripDTO">
 		select area_name, trip_no, title, substr(content,1,30), video_url,
