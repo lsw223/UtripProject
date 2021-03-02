@@ -101,6 +101,7 @@ public class UserService {
 
 	public void withdraw(String id) {
 		userMapper.withdraw(id);
+	}
 	public List<NoticeDTO> selectNoticeList(int page) {
 		return userMapper.selectNoticeList(page);
 	}
