@@ -6,6 +6,7 @@
 <head>
 <meta charset="utf-8">
 <title>지도 범위 재설정 하기</title>
+<link rel="stylesheet" href="css/hotel_detail_view.css">
 <style>
 .customoverlay {
 	position: relative;
@@ -68,12 +69,17 @@
 		<%@include file="../template/header.jsp" %>
 	</c:otherwise>
 </c:choose>
-	<div>
+	<div id="container">
+	<div id="content">
 	<h2>호텔정보</h2>
-	<div id="map" style="width: 500px; height: 500px;"></div>
-	<p>
-		<button onclick="setBounds()">지도 범위 재설정 하기</button>
+	<div id="map" style="width: 800px; height: 500px;"></div>
+	<p class="back_btn">
+		<button onclick="setBounds()" id="btn_zoom" class="button">지도 범위 재설정 하기</button>
+		<span id="go_back">
+					<a href="#" id="back_btn" class="button" onclick="history.back()">뒤로가기</a>
+		</span>
 	</p>
+	</div>
 	</div>
 
 	<script type="text/javascript"
