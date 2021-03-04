@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="css/board.css">
+<link rel="stylesheet" href="css/admin_board.css">
 <title>커뮤니티 :: UTrip</title>
 </head>
 <body>
@@ -53,7 +53,7 @@
 					<c:if test="${pagging.nextPageGroup }">
 						<a href="adminBoardSerach.do?pageNo=${pagging.endPageOfPageGroup + 1 }&kind=${requestScope.kind}&search=${requestScope.search}">▶</a>
 					</c:if>
-					<a href="boardWriteView.do" class="btn_writer">글쓰기</a>
+					<a href="adminBoardWriteView.do" class="btn_writer">글쓰기</a>
 				</div>
 			</form>
 		</div>

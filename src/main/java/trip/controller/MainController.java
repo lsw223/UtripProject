@@ -1,18 +1,22 @@
 package trip.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import trip.dto.QnaDTO;
+import trip.dto.ResponseDTO;
 import trip.dto.TripDTO;
 import trip.dto.UserDTO;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import trip.oauth.KakaoLogin;

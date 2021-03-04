@@ -44,6 +44,9 @@ public class BoardService {
 	public int newBoardNo() {
 		return mapper.newBoardNo();
 	}
+	public int newCommentNo() {
+		return mapper.newCommentNo();
+	}
 
 	public List<CommentDTO> selectBoardComment(int boardNo) {
 		return mapper.selectBoardComment(boardNo);
@@ -65,16 +68,6 @@ public class BoardService {
 		return boardNo;
 	}
 
-	/*
-	 * public int addBoardLike(int boardNo) { HashMap<String, Object> map = new
-	 * HashMap<String, Object>(); map.put("boardno", boardNo);
-	 * mapper.addBoardLike(map); BoardDTO dto = mapper.selectBoard(boardNo);
-	 * 
-	 * return dto.getBoardLike();
-	 * 
-	 * }
-	 */
-
 	public int insertComment(CommentDTO dto) {
 		return mapper.insertBoardComment(dto);
 	}
@@ -89,12 +82,6 @@ public class BoardService {
 
 	}
 
-	/*
-	 * public List<BoardDTO> selectSearchBoard(String kind, String search, int page)
-	 * { HashMap<String, Object> map = new HashMap<String, Object>();
-	 * map.put("kind", kind); map.put("search", search); return
-	 * mapper.selectSearchBoard(map,page); }
-	 */
 	public void addCount(int boardNo) {
 		mapper.addCount(boardNo);
 	}

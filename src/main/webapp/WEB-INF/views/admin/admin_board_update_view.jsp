@@ -10,7 +10,7 @@
 <script src="lib/jquery-3.5.1.min .js"></script>
 </head>
 <body>
-	<%@ include file="../template/header.jsp"%>
+	<%@ include file="../template/header_admin.jsp"%>
 	<c:if
 		test="${sessionScope.user.id != requestScope.board.id || sessionScope.login == false || sessionScope.login == null }">
 		<c:set var="page" target="${sessionScope }"
@@ -26,7 +26,7 @@
 
 	<div id="container">
 		<h2>게시글 수정 페이지</h2>
-		<form action="updateBoard.do" enctype="multipart/form-data"
+		<form action="adminUpdateBoard.do" enctype="multipart/form-data"
 			method="post">
 			<table>
 				<tr>
