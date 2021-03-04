@@ -2,6 +2,8 @@ package trip.dto;
 
 public class NoticeDTO {
 	private int num;
+	private int next_notice_no;
+	private int pre_notice_no;
 	private int notice_no;
 	private String title;
 	private String content;
@@ -12,6 +14,22 @@ public class NoticeDTO {
 	private int nhate;
 	
 	
+
+	public NoticeDTO(int num, int next_notice_no, int pre_notice_no, int notice_no, String title, String content,
+			String write_date, String nwriter, int notice_count, int nlike, int nhate) {
+		super();
+		this.num = num;
+		this.next_notice_no = next_notice_no;
+		this.pre_notice_no = pre_notice_no;
+		this.notice_no = notice_no;
+		this.title = title;
+		this.content = content;
+		this.write_date = write_date;
+		this.nwriter = nwriter;
+		this.notice_count = notice_count;
+		this.nlike = nlike;
+		this.nhate = nhate;
+	}
 
 	public NoticeDTO(int num, int notice_no, String title, String nwriter, String content, String write_date, int nlike,
 			int nhate, int notice_count) {
@@ -114,13 +132,32 @@ public class NoticeDTO {
 	public void setNotice_count(int notice_count) {
 		this.notice_count = notice_count;
 	}
+	
+	public int getNext_notice_no() {
+		return next_notice_no;
+	}
+	
+	public void setNext_notice_no(int next_notice_no) {
+		this.next_notice_no = next_notice_no;
+	}
+	
+	public int getPre_notice_no() {
+		return pre_notice_no;
+	}
+	
+	public void setPre_notice_no(int pre_notice_no) {
+		this.pre_notice_no = pre_notice_no;
+	}
 
 	@Override
 	public String toString() {
-		return "NoticeDTO [num=" + num + ", notice_no=" + notice_no + ", title=" + title + ", nwriter=" + nwriter
-				+ ", content=" + content + ", write_date=" + write_date + ", nlike=" + nlike + ", nhate=" + nhate
-				+ ", notice_count=" + notice_count + "]";
+		return "NoticeDTO [num=" + num + ", next_notice_no=" + next_notice_no + ", pre_notice_no=" + pre_notice_no
+				+ ", notice_no=" + notice_no + ", title=" + title + ", content=" + content + ", write_date="
+				+ write_date + ", nwriter=" + nwriter + ", notice_count=" + notice_count + ", nlike=" + nlike
+				+ ", nhate=" + nhate + "]";
 	}
+
+	
 	
 	
 	

@@ -11,7 +11,9 @@ import trip.dto.FileDTO;
 import trip.dto.NoticeDTO;
 import trip.dto.QnaDTO;
 import trip.dto.TripDTO;
+import trip.enums.RoleType;
 import trip.mapper.AdminMapper;
+import trip.vo.PaggingVO;
 
 @Service
 public class AdminService {
@@ -117,4 +119,29 @@ public class AdminService {
 		return mapper.deleteResponse(qna_no);
 	}
 
+	public List<String> selectAreaList() {
+		return mapper.selectAreaList();
+	}
+
+	public String searchTripNo(String area) {
+		return mapper.searchTripNo(area);
+	}
+
+	public int tripInsertInfo(TripDTO dto) {
+		return mapper.tripInsertInfo(dto);
+	}
+
+	public int courseInsertInfo(ArrayList<String> placeList, String trip_no) {
+		int count=0;
+		for(int i=0; i<placeList.size(); i++) {
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("place_no", placeList.get(i));
+			map.put("course_no", i+1);
+			map.put("trip_no", trip_no);
+			mapper.courseInsertInfo(map);
+			count++;
+		}
+		return count;
+	}
+	
 }

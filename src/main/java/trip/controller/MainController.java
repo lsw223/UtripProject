@@ -1,26 +1,18 @@
 package trip.controller;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import trip.dto.QnaDTO;
-import trip.dto.ResponseDTO;
 import trip.dto.TripDTO;
 import trip.dto.UserDTO;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import trip.oauth.KakaoLogin;
@@ -49,6 +41,7 @@ public class MainController {
 		System.out.println("성일test2");
 		return "TripMain";
 	}
+
 	
 	@RequestMapping("tripMain.do")
 	public String tripMain() {
@@ -94,18 +87,6 @@ public class MainController {
 		request.setAttribute("avgX", x);
 		request.setAttribute("avgY", y);
 
-		// 로그인 된 상태일경우 해당 trip, 해당 유저mbti유형의 좋아요 갯수를 session에 포함시킨다
-		HttpSession session = request.getSession();
-		if(session.getAttribute("user") != null) {
-			UserDTO user = (UserDTO)session.getAttribute("user");
-			int tripLike = 0;
-			try {
-				tripLike = userService.getTripLike(tripNo,user.getMbti());
-			} catch (Exception e) {
-				userService.insertTripLike(tripNo);
-			}
-			request.setAttribute("tripLike", tripLike);
-		}
 		return "user/tripDetailView";
 	}
 	
@@ -171,6 +152,39 @@ public class MainController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return null;
+	}
+	
+	// tripDetailView 에서 별점 매겼을때 실행되는 메서드
+	@RequestMapping("/assess.do")
+	public String assess(int score,String trip_no,String user_id,HttpServletResponse res) {
+		ResponseDTO<Double> resp = new ResponseDTO<>();
+		// 해당 trip 에 별점을 이미 매긴 유저인지 체크
+		int count = userService.tripRatingCheck(user_id,trip_no);
+		if(count >= 1) {
+			ResponseDTO<String> resp2 = new ResponseDTO<>();
+			resp2.setResponseCode(201);
+			resp2.setResponseMessage("평가는 한번만 하실수 있습니다");
+			res.setContentType("html/text;charset=utf-8");
+			try {
+				res.getWriter().write((new JSONObject(resp2)).toString());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+		double rating = 0.0;
+		rating = userService.assessment(score,trip_no,user_id);
+		resp.setResponseCode(200);
+		resp.setResponseMessage(rating);
+		res.setContentType("html/text;charset=utf-8");
+		try {
+			res.getWriter().write((new JSONObject(resp)).toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
 		return null;
 	}
 	

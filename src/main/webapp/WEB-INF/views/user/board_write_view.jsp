@@ -10,7 +10,7 @@
 <script src="lib/jquery-3.5.1.min .js"></script>
 </head>
 <body>
-	<%@ include file="template/header.jsp"%>
+	<%@ include file="../template/header.jsp"%>
 	<c:if
 		test="${sessionScope.login == null || sessionScope.login == false  }">
 		<c:set var="page" target="${sessionScope }"
@@ -52,6 +52,6 @@
 			</table>
 		</form>
 	</div>
-	<%@include file="template/footer.jsp"%>
+	<%@include file="../template/footer.jsp"%>
 </body>
 </html>

@@ -148,5 +148,33 @@ public class UserService {
 	public int updatenoticeCommentHate(int comment_no) {
 		return userMapper.updatenoticeCommentHate(comment_no);
 	}
+
+	public double assessment(int score, String trip_no, String user_id) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("score",score);
+		map.put("trip_no", trip_no);
+		int count = userMapper.assessment(map);
+		if(count == 0) {
+			userMapper.insertTripRating(trip_no);
+			userMapper.assessment(map);
+		}
+		double rating = userMapper.getRating(trip_no);
+		rating = Math.round(rating*10.0)/10.0;
+		map.put("rating",rating);
+		userMapper.updateTripRating(map);
+		map.put("user_id", user_id);
+		userMapper.insertTripRatingUser(map);
+		return rating;
+	}
+	
+	// 해당 trip 에 별점을 이미 매긴 유저인지 체크
+	public int tripRatingCheck(String user_id, String trip_no) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("user_id", user_id);
+		map.put("trip_no", trip_no);
+		return userMapper.tripRatingCheck(map);
+	public int nextnotice(int notice_no) {
+		return userMapper.nextnotice(notice_no);
+	}
 	
 }

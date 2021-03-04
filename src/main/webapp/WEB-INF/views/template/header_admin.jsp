@@ -94,10 +94,10 @@ header #info li{
 			<a href="/">UTrip 관리자</a>
 		</div>
 		<ul>
-			<li><a href="notice.do">공지사항</a></li> <!-- 임시 -->
+			<li><a href="adminnotice.do">공지사항</a></li>
 			<li><a href="adminQna.do">QnA</a></li>
 			<li><a href="#">여행정보</a></li>
-			<li><a href="board.do">커뮤니티</a></li>
+			<li><a href="adminBoard.do">커뮤니티</a></li>
 			<li><a href="hotelRequestAdminView.do">제휴관리</a></li>
 		</ul>
 		

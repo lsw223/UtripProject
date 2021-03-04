@@ -11,7 +11,7 @@
 <title>커뮤니티 :: UTrip</title>
 </head>
 <body>
-	<%@ include file="template/header.jsp"%>
+	<%@ include file="../template/header.jsp"%>
 	<div id="container">
 		<table class="board">
 			<tr>
@@ -44,32 +44,32 @@
 			<form>
 				<div class="page_bar">
 					<c:if test="${pagging.previousPageGroup }">
-						<a href="board.do?pageNo=${pagging.startPageOfPageGroup - 1 }">◀</a>
+						<a href="boardSerach.do?pageNo=${pagging.startPageOfPageGroup - 1 }&kind=${requestScope.kind}&search=${requestScope.search}">◀</a>
 					</c:if>
 					<c:forEach var="i" begin="${pagging.startPageOfPageGroup}"
 						end="${pagging.endPageOfPageGroup}">
-						<a href="board.do?pageNo=${i }">${ i}</a>
+						<a href="boardSerach.do?pageNo=${i }&kind=${requestScope.kind}&search=${requestScope.search}">${ i}</a>
 					</c:forEach>
 
 					<c:if test="${pagging.nextPageGroup }">
-						<a href="board.do?pageNo=${pagging.endPageOfPageGroup + 1 }">▶</a>
+						<a href="boardSerach.do?pageNo=${pagging.endPageOfPageGroup + 1 }&kind=${requestScope.kind}&search=${requestScope.search}">▶</a>
 					</c:if>
 					<a href="boardWriteView.do" class="btn_writer">글쓰기</a>
 				</div>
 			</form>
 		</div>
 		<div id="search_bar">
-			<form id="search">
+			<form action="boardSerach.do" id="search">
 				<select name="kind">
-					<option value="title">제목</option>
-					<option value="id">아이디</option>
-					<option value="content">내용</option>
-				</select> <input type="text" name="search">
+					<option value="title" <c:if test="${kind eq 'title'}">selected</c:if>>제목</option>
+					<option value="id" <c:if test="${kind eq 'id'}">selected</c:if>>아이디</option>
+					<option value="content" <c:if test="${kind eq 'content'}">selected</c:if>>내용</option>
+				</select> <input type="text" name="search" value="${search}">
 				<button id="btn_submit">검색</button>
 			</form>
 		</div>
 	</div>
-	<script src="js/board.js"></script>
-	<%@include file="template/footer.jsp"%>
+	<!-- <script src="js/board.js"></script> -->
+	<%@include file="../template/footer.jsp"%>
 </body>
 </html>

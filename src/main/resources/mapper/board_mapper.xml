@@ -25,6 +25,21 @@
 	<select id="selectCount" resultType="int">
 		select count(*) from board
 	</select>
+	
+	<select id="selectSearchCount" resultType="int" parameterType="map">
+		select count(*) from board where 
+		<choose>
+			<when test="kind.equals('title')">
+				title like '%'||#{search}||'%'
+			</when>
+			<when test="kind.equals('id')">
+				upper(user_id) like ('%'||upper(#{search})||'%')
+			</when>
+			<otherwise>
+				content like '%'||#{search}||'%'
+			</otherwise>
+		</choose> 
+	</select>
 
 	<select id="selectBoard" parameterType="int" resultType="trip.dto.BoardDTO">
 		select * from board where board_no = #{boardNo}
@@ -46,49 +61,37 @@
 	</insert>
 	
 	<update id="addBoardLike" parameterType="map">
-		update board set 
-		<choose>
-			<when test="mode == 0">
-				board_like = board_like + 1
-			</when>
-		</choose>
-		where board_no = #{boardNo}
+		update board set board_like = board_like + 1 where board_no = #{boardNo}
 	</update>
 	
+	<delete id="deleteComment" parameterType="int">
+		delete from board_comment where comment_no = #{commentNo}
+	</delete>
+	
+<!-- 	<update id="updateComment" parameterType="trip.dto.CommentDTO">
+		update board_comment set content=#{content} where comment_no={contentNo} and user_id = #{id}
+	</update> -->
+	
 	<select id="selectSearchBoard" parameterType="map" resultType="trip.dto.BoardDTO">
-		select board_no, user_id, title, content, write_date, board_like, board_count from board where
-		<choose>
-			<when test="kind.equals('title')">
-				title like '%'||#{search}||'%' order by board_no desc
-			</when>
-			<when test="kind.equals('id')">
-				upper(user_id) like ('%'||upper(#{search})||'%') order by board_no desc
-			</when>
-			<otherwise>
-				content like '%'||#{search}||'%' order by board_no desc
-			</otherwise>
-		</choose>
-	</select>
-	<!-- <select id="selectSearchBoard" parameterType="map" resultType="trip.dto.BoardDTO">
 		select board_no,user_id,title,content,write_date,board_like,board_count,comment_count
     	from (select ceil (rownum /7) as pagenum,board_no,user_id,title,content,write_date,board_like,board_count,comment_count
    	 	from (select b.*, nvl(c.comment_count,0) as comment_count 
     	from board b,(select board_no, count(*) as comment_count 
     	from board_comment group by board_no) c
-    	where b.board_no = c.board_no(+) order by b.board_no desc)
+    	where b.board_no = c.board_no(+) order by b.board_no desc) where
     	<choose>
 			<when test="kind.equals('title')">
-				where title like '%'||#{search}||'%' order by board_no desc)
+				title like '%'||#{search}||'%' order by board_no desc)
 			</when>
 			<when test="kind.equals('id')">
-				where upper(user_id) like ('%'||upper(#{search})||'%') order by board_no desc)
+				upper(user_id) like ('%'||upper(#{search})||'%') order by board_no desc)
 			</when>
 			<otherwise>
-				where content like '%'||#{search}||'%' order by board_no desc)
+				content like '%'||#{search}||'%' order by board_no desc)
 			</otherwise>
 		</choose>
     	where pagenum = #{pageNo}
-	</select> -->
+	</select>
 	
 	<update id="addCount" parameterType="int">
 		update board set board_count = board_count+1 where board_no = #{boardNo}
@@ -97,4 +100,7 @@
 	<delete id="deleteBoard" parameterType="int">
 		delete from board where board_no = #{boardNo}
 	</delete>
+	<update id="updateBoard" parameterType="trip.dto.BoardDTO">
+		update board set title=#{title}, content=#{content} where board_no=#{boardNo} and user_id = #{id}
+	</update>
 </mapper>
