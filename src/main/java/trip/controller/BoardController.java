@@ -42,9 +42,10 @@ public class BoardController {
 		System.out.println(list.toString());
 		return "user/board";
 	}
+
 	@RequestMapping("adminBoard.do")
 	public String adminBoard(HttpServletRequest request) {
-		
+
 		int page = 1;
 		// 페이지 셋팅
 		if (request.getParameter("pageNo") != null)
@@ -54,7 +55,7 @@ public class BoardController {
 		PaggingVO vo = new PaggingVO(count, page);
 		request.setAttribute("list", list);
 		request.setAttribute("pagging", vo);
-		
+
 		System.out.println(list.toString());
 		return "admin/admin_board";
 	}
@@ -80,6 +81,7 @@ public class BoardController {
 
 		return "user/board_view";
 	}
+
 	@RequestMapping("/adminBoardView.do")
 	public String AdminBoardView(HttpServletRequest request) {
 		// 게시글 하나 읽음
@@ -98,7 +100,7 @@ public class BoardController {
 		// 3. request에 BoardDTO, CommentList 저장
 		request.setAttribute("board", dto);
 		request.setAttribute("comment", list);
-		
+
 		return "admin/admin_board_view";
 	}
 
@@ -117,16 +119,34 @@ public class BoardController {
 		boardService.insertBoard(new BoardDTO(boardNo, id, title, content));
 		request.setAttribute("boardno", boardNo);
 
-		return new RedirectView("user/boardView.do?boardno=" + boardNo);
+		return new RedirectView("boardView.do?boardno=" + boardNo);
+	}
+
+	@RequestMapping("/adminBoardWriteView.do")
+	public String adminBoardWriteView() {
+		return "admin/admin_board_write_view";
+	}
+
+	@RequestMapping("/adminBoardWriteAction.do")
+	public RedirectView adminBoardWriteAction(HttpServletRequest request) { // 글번호 먼저 발급 int boardNo =
+		int boardNo = boardService.newBoardNo();
+
+		String id = request.getParameter("id");
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
+		boardService.insertBoard(new BoardDTO(boardNo, id, title, content));
+		request.setAttribute("boardno", boardNo);
+
+		return new RedirectView("adminBoardView.do?boardno=" + boardNo);
 	}
 
 	@RequestMapping("/plusLike.do")
 	public String plusLike(HttpServletRequest request, HttpServletResponse response) {
 		int boardNo = Integer.parseInt((String) request.getParameter("boardno"));
 		int mode = Integer.parseInt((String) request.getParameter("mode"));
-		
+
 		int count = 0;
-		
+
 		count = boardService.addBoardLike(mode, boardNo);
 		try {
 			response.getWriter().write(String.valueOf(count));
@@ -138,12 +158,12 @@ public class BoardController {
 
 	@RequestMapping("/insertComment.do")
 	public String insertComment(HttpServletRequest request, HttpServletResponse response) {
-
+		int commentNo = boardService.newCommentNo();
 		int boardNo = Integer.parseInt(request.getParameter("boardno"));
 		String id = request.getParameter("id");
 		String content = request.getParameter("content");
 
-		boardService.insertComment(new CommentDTO(boardNo, id, content));
+		boardService.insertComment(new CommentDTO(commentNo, boardNo, id, content));
 
 		return null;
 	}
@@ -172,28 +192,29 @@ public class BoardController {
 
 		return "user/board";
 	}
+
 	@RequestMapping("adminBoardSerach.do")
 	public String AdminBoardSerach(HttpServletRequest request) {
-		
+
 		String kind = request.getParameter("kind");
 		String search = request.getParameter("search");
-		
+
 		int page = 1; // 페이지 셋팅
 		if (request.getParameter("pageNo") != null)
 			page = Integer.parseInt(request.getParameter("pageNo"));
 		int count = boardService.selectSearchCount(kind, search);
-		
+
 		List<BoardDTO> list = boardService.selectSearchBoard(page, kind, search);
 		PaggingVO vo = new PaggingVO(count, page);
-		
+
 		request.setAttribute("list", list);
 		request.setAttribute("pagging", vo);
-		
+
 		request.setAttribute("kind", kind);
 		request.setAttribute("search", search);
-		
+
 		System.out.println(list.toString());
-		
+
 		return "admin/admin_board";
 	}
 
@@ -205,6 +226,22 @@ public class BoardController {
 			response.setContentType("text/html; charset=UTF-8");
 			response.getWriter().write(count + "");
 			response.getWriter().println("<script>alert('게시글을 삭제가 완료되었습니다.'); location.href='board.do';</script>");
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	@RequestMapping("/adminDeleteBoard.do")
+	public String adminDeleteBoard(HttpServletRequest request, HttpServletResponse response) {
+		int boardNo = Integer.parseInt(request.getParameter("boardno"));
+		int count = boardService.deleteBoard(boardNo);
+		try {
+			response.setContentType("text/html; charset=UTF-8");
+			response.getWriter().write(count + "");
+			response.getWriter().println("<script>alert('게시글을 삭제가 완료되었습니다.'); location.href='adminBoard.do';</script>");
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -244,20 +281,31 @@ public class BoardController {
 		}
 		return null;
 	}
-	@RequestMapping("/updateComment.do")
-	public String updateComment(HttpServletRequest request, HttpServletResponse response) {
-		int commentNo = Integer.parseInt(request.getParameter("commentno"));
+
+	@RequestMapping("/adminUpdateBoardView.do")
+	public String adminUpdateBoardView(HttpServletRequest request) {
+
+		int boardNo = Integer.parseInt(request.getParameter("boardno"));
+		BoardDTO dto = boardService.selectBoard(boardNo);
+		request.setAttribute("board", dto);
+
+		return "admin/admin_board_update_view";
+	}
+
+	@RequestMapping("/adminUpdateBoard.do")
+	public String adminUpdateBoard(HttpServletRequest request, HttpServletResponse response) {
 		int boardNo = Integer.parseInt(request.getParameter("boardno"));
 		String id = request.getParameter("id");
+		String title = request.getParameter("title");
 		String content = request.getParameter("content");
-		
-		CommentDTO dto = new CommentDTO(commentNo, boardNo, id, content);
-		int count = boardService.updateComment(dto);
+
+		BoardDTO dto = new BoardDTO(boardNo, id, title, content);
+		int count = boardService.updateBoard(dto);
 		try {
 			if (count == 1) {
 				response.setContentType("text/html; charset=utf-8");
-				response.getWriter().println("<script>alert('댓글 수정 완료했습니다.');"
-						+ "location.href='http://localhost:9999/boardView.do?boardno=" + boardNo + "';</script>");
+				response.getWriter().println("<script>alert('게시글 수정 완료했습니다.');"
+						+ "location.href='http://localhost:9999/adminBoardView.do?boardno=" + boardNo + "';</script>");
 			} else
 				response.getWriter().write("false");
 		} catch (IOException e) {
@@ -265,7 +313,61 @@ public class BoardController {
 		}
 		return null;
 	}
-	
+
+	@RequestMapping("/updateComment.do")
+	public String updateComment(HttpServletRequest request, HttpServletResponse response) {
+		int commentNo = Integer.parseInt(request.getParameter("commentno"));
+		int boardNo = Integer.parseInt(request.getParameter("boardno"));
+		String id = request.getParameter("id");
+		String content = request.getParameter("content");
+
+		CommentDTO dto = new CommentDTO(commentNo, boardNo, id, content);
+		boardService.updateComment(dto);
+
+		int count = boardService.updateComment(dto);
+
+		try {
+			if (count == 1) {
+				response.setContentType("text/html; charset=utf-8");
+				response.getWriter().println("<script>alert('댓글 수정 완료했습니다.');"
+						+ "location.href='http://localhost:9999/boardView.do?boardno=" + boardNo + "';</script>");
+				System.out.println(dto.toString());
+			} else
+				response.getWriter().write("false");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	@RequestMapping("/adminUpdateComment.do")
+	public String adminUpdateComment(HttpServletRequest request, HttpServletResponse response) {
+		int commentNo = Integer.parseInt(request.getParameter("commentno"));
+		int boardNo = Integer.parseInt(request.getParameter("boardno"));
+		String id = request.getParameter("id");
+		String content = request.getParameter("content");
+
+		CommentDTO dto = new CommentDTO(commentNo, boardNo, id, content);
+		boardService.updateComment(dto);
+
+		int count = boardService.updateComment(dto);
+
+		try {
+			if (count == 1) {
+				response.setContentType("text/html; charset=utf-8");
+				response.getWriter().println("<script>alert('댓글 수정 완료했습니다.');"
+						+ "location.href='http://localhost:9999/adminBoardView.do?boardno=" + boardNo + "';</script>");
+				System.out.println(dto.toString());
+			} else
+				response.getWriter().write("false");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
 	@RequestMapping("/deleteComment.do")
 	public String deleteComment(HttpServletRequest request, HttpServletResponse response) {
 		int boardNo = Integer.parseInt(request.getParameter("boardno"));
@@ -283,6 +385,7 @@ public class BoardController {
 
 		return null;
 	}
+
 	@RequestMapping("/adminDeleteComment.do")
 	public String adminDeleteComment(HttpServletRequest request, HttpServletResponse response) {
 		int boardNo = Integer.parseInt(request.getParameter("boardno"));
@@ -293,11 +396,11 @@ public class BoardController {
 			response.getWriter().write(count + "");
 			response.getWriter().println("<script>alert('댓글 삭제가 완료되었습니다.');"
 					+ "location.href='http://localhost:9999/adminBoardView.do?boardno=" + boardNo + "';</script>");
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		return null;
 	}
 }

@@ -22,17 +22,23 @@ $(function() {
 				data : data,
 				method : "get",
 				success : function(d) {
-					alert("댓글 등록 성공 : " + d);
+					alert("댓글 등록 성공 ");
 					location.reload();
 				}
 			});
 		});
 		//댓글 수정 창 보여주기
-		$("#comment_update_btn").click(function(){
-			/* var content = ("#comment_content").val(); */
-			$(".comment_update_content").show();
-			$(".comment_update_content_btn").show();
-		
+		$(document).on("click","#comment_update_btn",function(){ 
+			var commentno=$(this).parent().parent().find("input[name=commentno]").val();
+			
+		    $(this).parent().parent().after("<tr><td colspan='3' style='text-align: center';><input type='hidden' name='commentno' value='"+commentno+"'><input style='width : 450px;' type='text' class='comment_update_content' name='content'></td>"
+		    				+"<td><button href='#' class='comment_update_content_btn' id='update_comment'>수정</button>"
+							+"<a href='#' class='comment_update_content_btn' id='close_update_comment_btn'>닫기</a></td></tr>");
+				 	//댓글 수정 창 닫기
+					$("#close_update_comment_btn").click(function(){
+						$(this).parent().parent().remove();
+					});
+			
 		});
 		/*좋아요 추가*/
 		$(".btn_like").click(function(){
@@ -61,19 +67,6 @@ $(function() {
 				}
 			});
 		});
-		
-/* 		$("#updatecomment").click(function() {
-			var data = $("#comment_list").serialize();
-			$.ajax({
-				url : "updateComment.do",
-				data : "commentno=${requestScope.comment.commentNo}&"+data,
-				method : "get",
-				success : function(d) {
-					alert("댓글 수정 성공 : " + d);
-					location.reload();
-				}
-			});
-		}); */
 });
 </script>
 </head>
@@ -114,18 +107,17 @@ $(function() {
 				<td>${requestScope.board.content }</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="text_center"><a href="#" class="btn_like"> 
-				<img src="${pageContext.request.contextPath }/img/like.png"> <!-- 좋아요 개수 -->
-				<span>${requestScope.board.boardLike }</span>
-				</a>
-				</td>
+				<td colspan="2" class="text_center"><a href="#"
+					class="btn_like"> <img
+						src="${pageContext.request.contextPath }/img/like.png"> <!-- 좋아요 개수 -->
+						<span>${requestScope.board.boardLike }</span>
+				</a></td>
 			</tr>
 			<tr>
 				<td colspan="2">
 					<div class="comment_form">
 						<form id="comment">
-							<input type="hidden" name="boardno" value="${requestScope.board.boardNo }"> 
-							<input type="hidden" name="id" value="${sessionScope.user.id }"> 
+							<input type="hidden" name="boardno" value="${requestScope.board.boardNo }"> <input type="hidden" name="id" value="${sessionScope.user.id }">
 							<span class="id"></span>
 							<textarea name="content" maxlength="500"></textarea>
 							<p class="length">0/500</p>
@@ -138,51 +130,50 @@ $(function() {
 				</td>
 			</tr>
 			<tr>
-				<th>
-				<a href="board.do" class="btn">목록보기</a>
-				</th>
-					<td style="text-align: right;">
-						<c:if test="${user.id eq board.id }">
-						<a href="updateBoardView.do?boardno=${requestScope.board.boardNo }" class="btn">수정</a>
-						<a href="deleteBoard.do?boardno=${requestScope.board.boardNo }" class="btn">삭제</a>
-						</c:if> 
-						<a href="#" class="btn">이전글</a> 
-						<a href="#" class="btn">다음글</a>
-					</td>
+				<th><a href="board.do" class="btn">목록보기</a></th>
+				<td style="text-align: right;"><c:if test="${user.id eq board.id }">
+						<a href="updateBoardView.do?boardno=${requestScope.board.boardNo }"
+							class="btn">수정</a>
+						<a href="deleteBoard.do?boardno=${requestScope.board.boardNo }"
+							class="btn">삭제</a>
+					</c:if> <!-- 	<a href="#" class="btn">이전글</a> 
+						<a href="#" class="btn">다음글</a> --></td>
 			</tr>
 			<tr>
 
 				<td colspan="2"><c:forEach var="comment" items="${requestScope.comment }">
-							<form id="comment_list">
-								<table class="comment">
-									<tr>
-										<th>작성자</th>
-										<th>작성일</th>
-										<th>내용</th>
-									
-									</tr>
-									<tr>
-										<td style="width: 100px; text-align: center;">${comment.id }</td>
-										<td style="width: 120px; text-align: center;">${comment.writeDate }</td>
-										<td colspan="4" style="width: 350px; text-align: center;" id="comment_content">${comment.content }</td>
-										<td style="width: 100px;">
-										<c:if test="${user.id eq comment.id }">
-											<a href="#" class="comment_btn" id="comment_update_btn">수정</a>
-											<a href="deleteComment.do?commentno=${comment.commentNo }&boardno=${requestScope.board.boardNo }" class="comment_btn">삭제</a>
-										</c:if>
-										</td>
-									</tr>
-									<tr>
-										<td style="width: 100px; text-align: center;" class="comment_update_content">${comment.id }</td>
-										<td style="width: 120px; text-align: center;" class="comment_update_content">${comment.writeDate }</td>
-										<td colspan="6"><input type="text" class="comment_update_content" name="upcontent"></td>
-										<td><a href="#" class="comment_update_content_btn" id="updatecomment">수정</a>
-										<a href="#" class="comment_update_content_btn">닫기</a></td>
-									</tr>
-								</table>
-							</form>
-					</c:forEach>
-				</td>
+						<form id="comment_list" action="updateComment.do">
+							<table class="comment">
+								<tr>
+									<th>작성자</th>
+									<th>작성일</th>
+									<th>내용</th>
+									<th></th>
+								</tr>
+								<tr>
+									<td style="width: 100px;">
+									<input type="hidden" class="comment_update_content" name="commentno" value="${comment.commentNo }">${comment.id }</td>
+									<td style="width: 120px;">${comment.writeDate }</td>
+									<td style="width: 450px;" id="comment_content">${comment.content }</td>
+									<c:choose>
+										<c:when test="${user.id eq comment.id }">
+											<td style="width: 30px;"><a href="#" class="comment_btn" id="comment_update_btn">수정</a> 
+											<a href="deleteComment.do?commentno=${comment.commentNo }&boardno=${requestScope.board.boardNo }" class="comment_btn">삭제</a></td>
+										</c:when>
+										<c:otherwise>
+											<td></td>
+										</c:otherwise>
+									</c:choose>
+								</tr>
+								<tr>
+									<td><input type="hidden" class="comment_update_content"
+										name="boardno" value="${requestScope.board.boardNo }"></td>
+									<td><input type="hidden" class="comment_update_content"
+										name="id" value="${comment.id }"></td>
+								</tr>
+							</table>
+						</form>
+					</c:forEach></td>
 			</tr>
 		</table>
 	</div>

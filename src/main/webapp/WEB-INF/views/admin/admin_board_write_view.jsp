@@ -10,40 +10,36 @@
 <script src="lib/jquery-3.5.1.min .js"></script>
 </head>
 <body>
-	<%@ include file="../template/header.jsp"%>
+	<%@ include file="../template/header_admin.jsp"%>
 	<c:if
-		test="${sessionScope.user.id != requestScope.board.id || sessionScope.login == false || sessionScope.login == null }">
+		test="${sessionScope.login == null || sessionScope.login == false  }">
 		<c:set var="page" target="${sessionScope }"
 			value="${pageContext.request.requestURI}${pageContext.request.queryString }"
 			property="resultPage" scope="session" />
 		${pageContext.request.requestURI}${pageContext.request.queryString }
 		<script>
-			alert("작성자만 수정 할 수 있습니다.");
-			location.href = "javascript:history.back()";
+			alert("로그인을 하셔야 이용할수 있습니다.");
+			location.href = "loginView.do";
 		</script>
 	</c:if>
 
-
 	<div id="container">
-		<h2>게시글 수정 페이지</h2>
-		<form action="updateBoard.do" enctype="multipart/form-data"
+		<h2>글쓰기 페이지</h2>
+		<form action="adminBoardWriteAction.do" enctype="multipart/form-data"
 			method="post">
 			<table>
 				<tr>
 					<th>제목</th>
-					<td><input type="text" name="title"
-						value="${requestScope.board.title }">
-						<input type="hidden" name="boardno"
-						value="${requestScope.board.boardNo }"></td>
+					<td><input type="text" name="title"></td>
 				</tr>
 				<tr>
 					<th>작성자</th>
-					<td><input type="hidden" name="id"
-						value="${requestScope.board.id }"> ${requestScope.board.id }</td>
+					<td><input type="hidden" name="id" value="${sessionScope.user.id }">
+						${sessionScope.user.id }</td>
 				</tr>
 				<tr>
 					<th style="vertical-align: top;">내용</th>
-					<td><textarea name="content">${requestScope.board.content }</textarea></td>
+					<td><textarea name="content"></textarea></td>
 				</tr>
 				<tr>
 					<th><a
@@ -51,7 +47,7 @@
 						class="btn">목록보기</a></th>
 					<td style="text-align: right;"><a
 						href="javascript:history.back();" class="btn">뒤로가기</a>
-						<button class="btn">수정하기</button></td>
+						<button class="btn">글쓰기</button></td>
 				</tr>
 			</table>
 		</form>
