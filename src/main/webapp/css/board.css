@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 #container {
-	padding-top:100px;
+	padding-top: 100px;
 	height: 600px;
 	/* background-color: lime; */
 }
@@ -42,9 +42,9 @@
 	width: 200px;
 }
 
-#pagging{
+#pagging {
 	margin: 0 auto;
-	width : 1012px;
+	width: 1012px;
 }
 
 .page_bar {
@@ -60,7 +60,11 @@
 	margin-right: 10px;
 }
 
-.page_bar a:hover {
+.page_bar a:hover{
+	font-weight: bold;
+	color: red;
+}
+.page_bar a:focus{
 	font-weight: bold;
 	color: red;
 }
@@ -69,22 +73,25 @@
 	float: right;
 }
 
-#search_bar{
-	width:1200px;
+#search_bar {
+	width: 1200px;
 	box-sizing: border-box;
 	text-align: center;
 }
-#search_bar > select{
-	width:150px;
-	padding:5px;
-	margin-right:5px;
+
+#search_bar>select {
+	width: 150px;
+	padding: 5px;
+	margin-right: 5px;
 }
-#search_bar > input{
-	width:200px;
-	padding:5px;
-	margin-right:5px;
+
+#search_bar>input {
+	width: 200px;
+	padding: 5px;
+	margin-right: 5px;
 }
-#search_bar > button{
-	width:100px;
-	padding:5px;
+
+#search_bar>button {
+	width: 100px;
+	padding: 5px;
 }
