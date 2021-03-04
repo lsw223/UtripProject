@@ -41,12 +41,12 @@ public class MainController {
 		System.out.println("성일test2");
 		return "TripMain";
 	}
+
 	
 	@RequestMapping("tripMain.do")
 	public String tripMain() {
 		return "TripMain";
 	}
-	
 	@RequestMapping("/tripView.do")
 	public String tripView(HttpServletRequest request, HttpSession session) {
 		UserDTO userdto= (UserDTO) session.getAttribute("user");
@@ -106,6 +106,85 @@ public class MainController {
 		request.setAttribute("avgY", y);
 		
 		return "user/hotelDetailView";
+	}
+	
+	@RequestMapping("/areaView.do")
+	public String tripAreaView(String area,HttpServletRequest req) {
+		List<TripDTO> list = userService.selectTripByArea(area);
+		System.out.println(list);
+		req.setAttribute("list", list);
+		return "user/areaView";
+	}
+	
+	// tripDetailView에서 따봉 클릭시 
+	@RequestMapping("/tripLike.do")
+	public String tripLike(String tripNo,String mbti,String userId, HttpServletResponse response) {
+		ResponseDTO<String> resp = new ResponseDTO<String>();
+		// 이미 해당 trip 에 따봉을 누른 유저인지 체크
+		int check = userService.tripLikeCheck(tripNo,userId);
+		// 이미 해당 trip 에 따봉을 누른 유저일때
+		if(check > 0) {
+			response.setContentType("html/text;charset=utf-8");
+			resp.setResponseCode(201);
+			resp.setResponseMessage("좋아요는 한번만 가능 합니다");
+			JSONObject json = new JSONObject(resp);
+			try {
+				response.getWriter().write(json.toString());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+		// 해당 trip 에 처음 따봉을 누른 유저일때
+		int count = userService.tripLike(tripNo,mbti,userId);
+		if(count==1) {
+			resp.setResponseCode(200);
+		}else {
+			resp.setResponseCode(500);
+		}
+		int tripLike = userService.getTripLike(tripNo,mbti);
+		resp.setResponseMessage(""+tripLike);
+		response.setContentType("html/text;charset=utf-8");
+		JSONObject json = new JSONObject(resp);
+		try {
+			response.getWriter().write(json.toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	// tripDetailView 에서 별점 매겼을때 실행되는 메서드
+	@RequestMapping("/assess.do")
+	public String assess(int score,String trip_no,String user_id,HttpServletResponse res) {
+		ResponseDTO<Double> resp = new ResponseDTO<>();
+		// 해당 trip 에 별점을 이미 매긴 유저인지 체크
+		int count = userService.tripRatingCheck(user_id,trip_no);
+		if(count >= 1) {
+			ResponseDTO<String> resp2 = new ResponseDTO<>();
+			resp2.setResponseCode(201);
+			resp2.setResponseMessage("평가는 한번만 하실수 있습니다");
+			res.setContentType("html/text;charset=utf-8");
+			try {
+				res.getWriter().write((new JSONObject(resp2)).toString());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+		double rating = 0.0;
+		rating = userService.assessment(score,trip_no,user_id);
+		resp.setResponseCode(200);
+		resp.setResponseMessage(rating);
+		res.setContentType("html/text;charset=utf-8");
+		try {
+			res.getWriter().write((new JSONObject(resp)).toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return null;
 	}
 	
 }

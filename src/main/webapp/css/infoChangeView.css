@@ -1,5 +1,9 @@
 @charset "UTF-8";
+html,body{
+	height:100%;
+}
 #container{
+	min-height:73%;
 	padding-top:150px;
 }
 #user_info{

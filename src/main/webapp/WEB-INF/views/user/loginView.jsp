@@ -22,7 +22,10 @@
 			</p>
 			<button id="btn_login">로그인</button>
 			<button type="button" id="btn_register" onclick="location.href='registerView.do'">회원가입</button>
-			<a href="https://kauth.kakao.com/oauth/authorize?client_id=38ad5f7eaf5e40dc6b4d7274dabc0268&redirect_uri=http://localhost:9999/kakaoLogin.do&response_type=code&prompt=login">
+			<a href="https://kauth.kakao.com/oauth/authorize?
+							client_id=38ad5f7eaf5e40dc6b4d7274dabc0268
+							&redirect_uri=http://nam2626.synology.me:32772/kakaoLogin.do  
+							&response_type=code&prompt=login">
 				<img src="img/kakao_login_medium_wide.png">
 			</a>
 		</form>

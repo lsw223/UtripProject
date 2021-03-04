@@ -46,6 +46,12 @@ public interface UserMapper {
 	public int updatenoticeCommentLike(int comment_no);
 	public int updatenoticeCommentHate(int comment_no);
 	public void addNoticeLikeHate(HashMap<String, Object> map);
+	public int assessment(Map<String, Object> map);
+	public void insertTripRating(String trip_no);
+	public double getRating(String trip_no);
+	public void updateTripRating(Map<String, Object> map);
+	public int tripRatingCheck(Map<String, Object> map);
+	public void insertTripRatingUser(Map<String, Object> map);
 	public int nextnotice(int notice_no);
 
 }
