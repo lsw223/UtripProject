@@ -116,24 +116,26 @@
 		</div>
 		<div id="alert">
 			<p>
-				여행 평가하기
+				평가하기
 				<a id="close" href="#">x</a>
 			</p>
 			<label>
-				<input type="radio" name="assess"> 💜🤍🤍🤍🤍<br>
+				<input type="radio" name="assess"value=5 checked> 💜💜💜💜💜<br>
 			</label>
 			<label>
-				<input type="radio" name="assess"> 💜💜🤍🤍🤍<br>
+				<input type="radio" name="assess"value=4> 💜💜💜💜🤍<br>
 			</label>
 			<label>
-				<input type="radio" name="assess"> 💜💜💜🤍🤍<br>
+				<input type="radio" name="assess"value=3> 💜💜💜🤍🤍<br>
 			</label>
 			<label>
-				<input type="radio" name="assess"> 💜💜💜💜🤍<br>
+				<input type="radio" name="assess"value=2> 💜💜🤍🤍🤍<br>
 			</label>
 			<label>
-				<input type="radio" name="assess"> 💜💜💜💜💜<br>
+				<input type="radio" name="assess" value=1> 💜🤍🤍🤍🤍<br>
 			</label>
+			<input type="hidden" value=5>
+			<a href="#" class="button" >확인</a>
 		</div>
 
 			<div >
@@ -348,16 +350,46 @@
 	 $("#rating").append(str);
 	 
 	 $("#rating+a").click(function(){
+		 if(${sessionScope.user==null}){
+			 if(confirm("로그인이 필요한 작업입니다,\n로그인 하시겠습니까?")){
+				 location.href="loginView.do";
+			 }
+			 return false;
+		 }
 		 $("#alert").show();
 	 })
 	 $("#close").click(function(){
 		 $("#alert").hide();
+	 })
+	 
+	 $("#alert input").click(function(){
+		 $("#alert input[type=hidden]").val($(this).val());
+	 })
+	 $("#alert .button").click(function(e){
+		 e.preventDefault();
+		 $.ajax({
+			 method:"get",
+			 url:"assess.do",
+			 data:{
+				"score":$("#alert input[type=hidden]").val(),
+				"trip_no":"${param.trip_no}",
+				"user_id":"${sessionScope.user.id}"
+			 },
+			 dataType:"json",
+			 success:function(resp){
+				 if(resp.responseCode==201){
+					 alert(resp.responseMessage);
+					 $("#alert").hide();
+					 return false;
+				 }
+				 alert("평가 해주셔서 감사합니다");
+				 location.href="tripDetailView.do?trip_no=${param.trip_no}";
+				 $("#alert").hide();
+			 }
+		 })
 	 })
 	</script>
 
 	<%@include file="../template/footer.jsp"%>
 </body>
 </html>
-
-	 setBounds();
-

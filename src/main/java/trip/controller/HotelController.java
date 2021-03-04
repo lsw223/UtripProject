@@ -41,13 +41,12 @@ public class HotelController {
 		if(user!=null) {
 			hotelRequestDto.setUser_id(user.getId());
 		}
-		System.out.println(hotelRequestDto);
 		int count = service.insert(hotelRequestDto);
 		if(count == 1) {
 			response.setResponseCode(200);
 			response.setResponseMessage("신청 성공");
 		}else {
-			response.setResponseCode(201);
+			response.setResponseCode(400);
 			response.setResponseMessage("신청 실패");
 		}
 		JSONObject json = new JSONObject(response);

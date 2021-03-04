@@ -52,18 +52,6 @@ public class MainController {
 		return "TripMain";
 	}
 
-	@RequestMapping("qna.do")
-	public String qna(HttpServletRequest request, HttpSession session) {
-		UserDTO userdto= (UserDTO) session.getAttribute("user"); 
-		String id=userdto.getId();
-		System.out.println(id);
-		//유저 아이디를 기반으로 문의한 내용
-		List<QnaDTO> list = userService.selectQnaList(id);
-		System.out.println(list.toString());
-		request.setAttribute("list", list);
-		
-		return "user/qna";
-	}
 	
 	@RequestMapping("/tripView.do")
 	public String TripView(HttpServletRequest request, HttpSession session) {
@@ -177,6 +165,39 @@ public class MainController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return null;
+	}
+	
+	// tripDetailView 에서 별점 매겼을때 실행되는 메서드
+	@RequestMapping("/assess.do")
+	public String assess(int score,String trip_no,String user_id,HttpServletResponse res) {
+		ResponseDTO<Double> resp = new ResponseDTO<>();
+		// 해당 trip 에 별점을 이미 매긴 유저인지 체크
+		int count = userService.tripRatingCheck(user_id,trip_no);
+		if(count >= 1) {
+			ResponseDTO<String> resp2 = new ResponseDTO<>();
+			resp2.setResponseCode(201);
+			resp2.setResponseMessage("평가는 한번만 하실수 있습니다");
+			res.setContentType("html/text;charset=utf-8");
+			try {
+				res.getWriter().write((new JSONObject(resp2)).toString());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+		double rating = 0.0;
+		rating = userService.assessment(score,trip_no,user_id);
+		resp.setResponseCode(200);
+		resp.setResponseMessage(rating);
+		res.setContentType("html/text;charset=utf-8");
+		try {
+			res.getWriter().write((new JSONObject(resp)).toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
 		return null;
 	}
 	

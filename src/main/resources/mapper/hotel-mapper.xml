@@ -6,8 +6,7 @@
 	<insert id="insert" parameterType="hotelRequest">
 		insert into hotel_request(request_no,user_id,hotel_name,address,area,hotel_url)
 		values(HOTEL_REQUEST_SEQ.nextval,#{user_id}, #{hotel_name},#{address},
-			(select area.area from area where area.area_name like #{area}),#{hotel_url}
-		)
+			(select area.area from area where area.area_name like #{area}),#{hotel_url})
 	</insert>
 	<select id="selectById" parameterType="String" resultType="hotelRequest">
 		select * from hotel_request where user_id like #{id}
