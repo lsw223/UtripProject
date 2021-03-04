@@ -51,6 +51,7 @@ $(function(){
 	});
 	
 	var sel_file;
+	
 	$(document).ready(function(){
 		$("#input_img").on("change",handleImgFileSelect);
 		$("#area").on("change",function(e){

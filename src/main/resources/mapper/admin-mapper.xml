@@ -20,7 +20,7 @@
 		select * from qna where qna_no = #{qna_no}
 	</select>
 	<select id="selectqnaCount" resultType="int">
-		select count(*) as cnt from qna
+		select count(*) from qna
 	</select>
 	<select id="selectQnaResponse" parameterType="int" resultType="trip.dto.QnaDTO">
 	 	select * from qna_response where qna_no = #{qna_No}
@@ -31,7 +31,7 @@
 	<select resultType="trip.dto.NoticeDTO" parameterType="trip.dto.NoticeDTO" id="selectNoticeList">
 		select a.notice_no -- 글번호 
 			 , a.title -- 제목 
-			 , to_char(a.write_date, 'yyyy-mm-dd') as write_date -- 작성일 
+			 , a.write_date -- 작성일 
 			 , a.nwriter -- 작성자 
 			 , b.num
 		  from notice a /* 공지사항 */ 
@@ -66,8 +66,8 @@
 			 , #{nwriter}
 			 ) 
 	 </insert>
-	<insert parameterType="trip.dto.FileDTO" id="insertFileList">
-		insert into notice_file_list values(#{nno},#{writer},#{fileName},#{notice_no}) 
+	<insert parameterType="trip.dto.NoticeDTO" id="insertFileList">
+		insert into notice_file_list values(#{nno},#{writer},#{fileName}) 
 	</insert>
 	<delete parameterType="trip.dto.NoticeDTO" id="deleteNotice">
 		delete from notice where notice_no = #{notice_no}
@@ -76,8 +76,7 @@
 		select * from notice where notice_no = #{notice_no} 
 	</select>
 	<select resultType="trip.dto.FileDTO" parameterType="int" id="selectFileList">
-		<!-- select nno, writer, filename, notice_no from notice_file_list where notice_no = #{notice_no} -->
-		select * from notice_file_list where notice_no = #{notice_no}
+		select * from notice_file_list where nno = #{nno}
 	</select>
 	<update parameterType="trip.dto.NoticeDTO" id="updateNotice">
 		update notice set
@@ -85,25 +84,32 @@
 		     , content = #{content}
 		 where notice_no = #{notice_no} 
 	 </update>
-	<update parameterType="trip.dto.FileDTO" id="updateFileList">
-		update notice_file_list set
-			   nno = #{nno}
-			 , writer = #{writer}
-			 , filename = #{fileName}
-		 where notice_no = #{notice_no} 
-	 </update>
-	 <select resultType="trip.dto.CourseDTO" parameterType="String" id="selectCourseList">
-	 	select x.area_name, p.* from place p,(select a.area_name, c.* from course c, area a where a.area like substr(c.trip_no,0,2) and area_name=#{area_name}) x where p.place_no like x.place_no 
+	 <select id="selectCourseList" parameterType="String" resultType="trip.dto.CourseDTO">
+	 	select x.area_name, p.* from place p,
+        (select a.area_name, c.* from course c, area a where a.area like substr(c.trip_no,0,2) and a.area_name=#{areaName}) x where p.place_no like x.place_no
 	 </select>
- 	 <update parameterType="trip.dto.TripDTO" id="tripUpdateInfo">
- 	 	update trip set title=#{title}, content=#{content} where trip_no = #{trip_no} 
- 	 </update>
-	 <update parameterType="map" id="courseUpdate">
-	 	update course set place_no=#{place_no} where trip_no=#{trip_no} and course_no=#{course_no} 
+	 <update id="tripUpdateInfo" parameterType="trip.dto.TripDTO">
+	 	update trip set title=#{title}, content=#{content} where trip_no = #{trip_no}
 	 </update>
-	 <delete parameterType="String" id="deleteTripInfo">
-	 	delete trip where trip_no=#{trip_no} 
+	 <update id="courseUpdate" parameterType="map">
+	 	update course set place_no=#{place_no} where trip_no=#{trip_no} and course_no=#{course_no}
+	 </update>
+	 <delete id="deleteTripInfo" parameterType="String">
+	 	delete trip where trip_no=#{trip_no}
 	 </delete>
+	 <select id="selectAreaList" resultType="String">
+	 	select area_name from area
+	 </select>
+	 <select id="searchTripNo" parameterType="String" resultType="String">
+        select concat(substr(trip_no,1,2),(cast(substr(trip_no,3,4) as int)+1)) as num from (
+        select trip_no from trip where substr(trip_no,0,2) like (select area from area where area_name=#{area}) order by trip_no desc) where rownum = 1
+	</select>
+	<insert id="tripInsertInfo" parameterType="trip.dto.TripDTO">
+		insert into trip (trip_no,title,content) values(#{trip_no},#{title},#{content})
+	</insert>
+	<insert id="courseInsertInfo" parameterType="map">
+		insert into course values(#{trip_no},#{course_no},#{place_no})
+	</insert>
 </mapper>
 
 
