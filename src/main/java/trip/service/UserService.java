@@ -101,6 +101,7 @@ public class UserService {
 
 	public void withdraw(String id) {
 		userMapper.withdraw(id);
+	}
 	public List<NoticeDTO> selectNoticeList(int page) {
 		return userMapper.selectNoticeList(page);
 	}
@@ -150,6 +151,10 @@ public class UserService {
 
 	public int updatenoticeCommentHate(int comment_no) {
 		return userMapper.updatenoticeCommentHate(comment_no);
+	}
+
+	public int nextnotice(int notice_no) {
+		return userMapper.nextnotice(notice_no);
 	}
 	
 }

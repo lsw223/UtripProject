@@ -46,5 +46,6 @@ public interface UserMapper {
 	public int updatenoticeCommentLike(int comment_no);
 	public int updatenoticeCommentHate(int comment_no);
 	public void addNoticeLikeHate(HashMap<String, Object> map);
+	public int nextnotice(int notice_no);
 
 }

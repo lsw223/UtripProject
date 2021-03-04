@@ -48,6 +48,7 @@
 					</tr>
 					<!-- 첨부 파일 -->
 					<tr>
+						<th></th>
 						<td colspan="2" id="file_form">
 							<p><input type="file" name="file"> 
 							<button type="button" id="plus">+</button> <button type="button" id="minus">-</button></p>

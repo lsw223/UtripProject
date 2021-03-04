@@ -65,5 +65,8 @@ textarea {
 }
 
 p input {
-	width: 80% !important;
+	width: 90% !important;
+}
+#file_form{
+	width: 100%;
 }
