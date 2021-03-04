@@ -41,10 +41,6 @@ public class UserService {
 		return userMapper.update(user);
 	}
 	
-	public List<QnaDTO> selectQnaList(String id) {
-		return userMapper.selectQnaList(id);
-	}
-	
 	public List<TripDTO> selectPopulTripList() {
 		return userMapper.selectPopulTripList();
 	}

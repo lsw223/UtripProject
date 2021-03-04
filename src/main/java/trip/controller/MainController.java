@@ -47,6 +47,7 @@ public class MainController {
 	public String tripMain() {
 		return "TripMain";
 	}
+	
 	@RequestMapping("/tripView.do")
 	public String tripView(HttpServletRequest request, HttpSession session) {
 		UserDTO userdto= (UserDTO) session.getAttribute("user");

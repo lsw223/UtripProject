@@ -22,7 +22,6 @@ public interface UserMapper {
 	public UserDTO selectById(String id);
 	public int kakaoRegister(UserDTO user);
 	public int update(UserDTO user);
-	List<QnaDTO> selectQnaList(String id);
 	List<TripDTO> selectPopulTripList();
 	TripDTO selectTripInfo(String tripNo);
 	List<CourseDTO> selectCourseInfo(String tripNo);

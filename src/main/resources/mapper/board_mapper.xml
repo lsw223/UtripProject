@@ -100,9 +100,7 @@
 	<delete id="deleteBoard" parameterType="int">
 		delete from board where board_no = #{boardNo}
 	</delete>
-	
 	<update id="updateBoard" parameterType="trip.dto.BoardDTO">
 		update board set title=#{title}, content=#{content} where board_no=#{boardNo} and user_id = #{id}
 	</update>
-	
 </mapper>
