@@ -71,15 +71,23 @@ public class AdminController {
 		return "admin/admin_qna";
 	}
 	
+	
 	//관리자 QnA 리스트 화면에서 제목 눌렀을 시 이동
 	@RequestMapping("/adminQnAView.do")
-	public String adminQnaView(HttpServletRequest request) {
-		int qna_no = Integer.parseInt(request.getParameter("qna_no"));
-		System.out.println(qna_no);
-  }
+    public String adminQnaView(HttpServletRequest request) {
+        int qna_no = Integer.parseInt(request.getParameter("qna_no"));
+        System.out.println(qna_no);
+        QnaDTO dto = adminService.selectQna(qna_no);
+        QnaDTO response = adminService.selectQnaResponse(qna_no);
+        request.setAttribute("dto", dto);
+        System.out.println(dto);
+        request.setAttribute("response", response);
+        return "admin/admin_qna_view"; 
+        }
+
 
 	@RequestMapping("/adminQnADtailView.do")
-	public String adminQnaView(HttpServletRequest request) {
+	public String adminQnADtailView(HttpServletRequest request) {
 		int qna_no = 0;
 		if (request.getParameter("qna_no") != null)
 			qna_no = Integer.parseInt(request.getParameter("qna_no"));

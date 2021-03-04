@@ -173,6 +173,7 @@ public class UserService {
 		map.put("user_id", user_id);
 		map.put("trip_no", trip_no);
 		return userMapper.tripRatingCheck(map);
+	}
 	public int nextnotice(int notice_no) {
 		return userMapper.nextnotice(notice_no);
 	}

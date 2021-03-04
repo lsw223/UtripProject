@@ -74,11 +74,6 @@ public class AdminService {
 		return mapper.selectFileList(notice_no);
 	}
 
-	public void updateFileList(ArrayList<FileDTO> fList) {
-		for (int i = 0; i < fList.size(); i++)
-			mapper.updateFileList(fList.get(i));
-	}
-
 	public int noticeno() {
 		return mapper.noticeno();
 	}
