@@ -16,6 +16,7 @@ public interface BoardMapper {
 	BoardDTO selectBoard(int boardNo);
 	List<CommentDTO> selectBoardComment(int boardNo);
 	int newBoardNo();
+	int newCommentNo();
 	int insertBoard(BoardDTO dto);
 	void addBoardLike(HashMap<String, Object> map);
 	int insertBoardComment(CommentDTO dto);

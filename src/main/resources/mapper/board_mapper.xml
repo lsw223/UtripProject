@@ -49,16 +49,21 @@
 		select * from board_comment where board_no = #{boardNo}
 	</select>
 
-	<insert id="insertBoardComment" parameterType="trip.dto.CommentDTO">
-		insert into board_comment(comment_no, board_no, user_id, content) values(board_comment_seq.nextval, #{boardNo}, #{id}, #{content})
-	</insert>
 
-	<select id="newBoardNo" resultType="int">
-		select board_no_seq.nextval from dual
-	</select>
 	<insert id="insertBoard" parameterType="trip.dto.BoardDTO">
 		insert into board(board_no,user_id,title,content) values(#{boardNo},#{id},#{title},#{content})
 	</insert>
+	<select id="newBoardNo" resultType="int">
+		select board_no_seq.nextval from dual
+	</select>
+	
+	<insert id="insertBoardComment" parameterType="trip.dto.CommentDTO">
+		insert into board_comment(comment_no, board_no, user_id, content) values(#{commentNo}, #{boardNo}, #{id}, #{content})
+	</insert>
+	
+	<select id="newCommentNo" resultType="int">
+		select board_comment_seq.nextval from dual
+	</select>
 	
 	<update id="addBoardLike" parameterType="map">
 		update board set board_like = board_like + 1 where board_no = #{boardNo}
@@ -68,9 +73,9 @@
 		delete from board_comment where comment_no = #{commentNo}
 	</delete>
 	
-<!-- 	<update id="updateComment" parameterType="trip.dto.CommentDTO">
-		update board_comment set content=#{content} where comment_no={contentNo} and user_id = #{id}
-	</update> -->
+	<update id="updateComment" parameterType="trip.dto.CommentDTO">
+		update board_comment set content=#{content} where comment_no=#{commentNo} and user_id = #{id}
+	</update> 
 	
 	<select id="selectSearchBoard" parameterType="map" resultType="trip.dto.BoardDTO">
 		select board_no,user_id,title,content,write_date,board_like,board_count,comment_count
