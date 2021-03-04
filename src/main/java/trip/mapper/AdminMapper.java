@@ -1,5 +1,6 @@
 package trip.mapper;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,10 +18,12 @@ public interface AdminMapper {
 	List<QnaDTO> selectQnaList(String id);
 	QnaDTO selectQna(int qna_no);
 	int selectqnaCount();
-	int selectnoticeCount();
 	List<QnaDTO> selectQnaAdminList(int page);
+	int insertResponse(QnaDTO qnaDto);
+	int deleteResponse(int qna_no);
 	List<NoticeDTO> selectNoticeList(int page);
 	int newnno();
+	int selectnoticeCount();
 	int insertNotice(NoticeDTO dto);
 	void insertFileList(FileDTO fileDTO);
 	NoticeDTO selectNotice(int notice_no);
@@ -29,9 +32,13 @@ public interface AdminMapper {
 	QnaDTO selectQnaResponse(int qna_no);
 	void deleteNotice(NoticeDTO dto);
 	int updateNotice(NoticeDTO dto);
-	void updateFileList(FileDTO fileDTO);
 	List<CourseDTO> selectCourseList(String area_name);
 	int tripUpdateInfo(TripDTO dto);
 	void courseUpdate(HashMap<String, Object> map);
 	int deleteTripInfo(String trip_no);
+	List<String> selectAreaList();
+	String searchTripNo(String area);
+	int tripInsertInfo(TripDTO dto);
+	void courseInsertInfo(HashMap<String, Object> map);
+	
 }

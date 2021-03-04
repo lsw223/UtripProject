@@ -11,5 +11,6 @@ public interface QnaMapper {
 
 	List<QnaDTO> selectQnaList(String user_id);
 	int insertQna(QnaDTO qnaDto);
+	int deleteQna(int qna_no);
 
 }

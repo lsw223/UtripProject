@@ -83,7 +83,7 @@
 				</tr>
 			</table>
 			<p id="btns">
-				<a id="btn1" href="#">계정탈퇴</a>
+				<a id="btn1" href="#" >계정탈퇴</a>
 				<a id="btn2" href="#">저장</a>
 			</p>
 		</div>

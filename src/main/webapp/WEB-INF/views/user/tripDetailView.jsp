@@ -97,10 +97,10 @@
 			<h3>여행 코스 길이</h3>
 			<div id="course_length"></div>
 			<c:forEach var="dto" items="${requestScope.tripList }">
-				<a href="#" onclick="setOption(${dto.course_no-1});return false;">${dto.place_name}</a>
+				<a href="#" onclick="setOption(${dto.course_no-1});return false;" class="button">${dto.place_name}</a>
 			</c:forEach>
 			<div id="map" style="width: 800px; height: 500px;"></div>
-			<button onclick="setBounds()" id="btn_zoom">전체 코스보기</button>
+			<button onclick="setBounds()" id="btn_zoom" class="button">전체 코스보기</button>
 			<p id="hotel">
 				<a href="hotelView.do?area=${requestScope.area}" class="button" id="btn_hotel">주변 호텔정보 보러가기</a>
 			</p>
@@ -116,32 +116,28 @@
 		</div>
 		<div id="alert">
 			<p>
-				여행 평가하기
+				평가하기
 				<a id="close" href="#">x</a>
 			</p>
 			<label>
-				<input type="radio" name="assess"> 💜🤍🤍🤍🤍<br>
+				<input type="radio" name="assess"value=5 checked> 💜💜💜💜💜<br>
 			</label>
 			<label>
-				<input type="radio" name="assess"> 💜💜🤍🤍🤍<br>
+				<input type="radio" name="assess"value=4> 💜💜💜💜🤍<br>
 			</label>
 			<label>
-				<input type="radio" name="assess"> 💜💜💜🤍🤍<br>
+				<input type="radio" name="assess"value=3> 💜💜💜🤍🤍<br>
 			</label>
 			<label>
-				<input type="radio" name="assess"> 💜💜💜💜🤍<br>
+				<input type="radio" name="assess"value=2> 💜💜🤍🤍🤍<br>
 			</label>
 			<label>
-				<input type="radio" name="assess"> 💜💜💜💜💜<br>
+				<input type="radio" name="assess" value=1> 💜🤍🤍🤍🤍<br>
 			</label>
+			<input type="hidden" value=5>
+			<a href="#" class="button" >확인</a>
 		</div>
 
-			<div >
-			<c:if test="${sessionScope.user.role == 'ADMIN' }">
-				<a href="tripUpdateView.do?tripNo=${requestScope.dto.trip_no}">수정</a>
-				<a href="#" id="deleteTripInfo">삭제</a>
-			</c:if>
-			</div>
 		</div>
 
 	<script type="text/javascript"
@@ -348,10 +344,43 @@
 	 $("#rating").append(str);
 	 
 	 $("#rating+a").click(function(){
+		 if(${sessionScope.user==null}){
+			 if(confirm("로그인이 필요한 작업입니다,\n로그인 하시겠습니까?")){
+				 location.href="loginView.do";
+			 }
+			 return false;
+		 }
 		 $("#alert").show();
 	 })
 	 $("#close").click(function(){
 		 $("#alert").hide();
+	 })
+	 
+	 $("#alert input").click(function(){
+		 $("#alert input[type=hidden]").val($(this).val());
+	 })
+	 $("#alert .button").click(function(e){
+		 e.preventDefault();
+		 $.ajax({
+			 method:"get",
+			 url:"assess.do",
+			 data:{
+				"score":$("#alert input[type=hidden]").val(),
+				"trip_no":"${param.trip_no}",
+				"user_id":"${sessionScope.user.id}"
+			 },
+			 dataType:"json",
+			 success:function(resp){
+				 if(resp.responseCode==201){
+					 alert(resp.responseMessage);
+					 $("#alert").hide();
+					 return false;
+				 }
+				 alert("평가 해주셔서 감사합니다");
+				 location.href="tripDetailView.do?trip_no=${param.trip_no}";
+				 $("#alert").hide();
+			 }
+		 })
 	 })
 	</script>
 
@@ -359,5 +388,4 @@
 </body>
 </html>
 
-	 setBounds();
 

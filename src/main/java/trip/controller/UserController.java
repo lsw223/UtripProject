@@ -37,7 +37,6 @@ public class UserController {
 	private PasswordEncoder encoder;
 	
 	
-	
 	// 로그인 화면으로 이동
 	@RequestMapping("/loginView.do")
 	public String loginView() {
@@ -61,7 +60,6 @@ public class UserController {
 		JSONObject kakaoUser = kakaoLogin.getKakaoUser(token);
 		String id = "kakao_"+kakaoUser.getInt("id");
 		kakaoUser.put("utripId", id);
-		System.out.println(kakaoUser.toString());
 		session.setAttribute("kakaoUser", kakaoUser);
 		UserDTO user = userService.selectById(id);
 		if(user==null) {
@@ -83,12 +81,11 @@ public class UserController {
 	@RequestMapping("/login.do")
 	public String login(String id, String password, HttpSession session) {
 		password = encoder.encrypt(password);
-		System.out.println(password);
 		UserDTO user = userService.selectById(id);
 		System.out.println(user);
 		if(user == null) {
 			return "redirect:/idIncorrect";
-		}else if(password.equals(user.getPassword())){
+		}else if(!password.equals(user.getPassword())){
 			return "redirect:/passIncorrect";
 		}
 		session.setAttribute("login", true);
@@ -117,7 +114,6 @@ public class UserController {
 	// 카카오 계정으로 회원가입
 	@RequestMapping("/kakaoRegister.do")
 	public String kakaoRegister(String mbti, HttpSession session) {
-		System.out.println(mbti);
 		JSONObject kakaoUser = (JSONObject) session.getAttribute("kakaoUser");
 		System.out.println(kakaoUser);
 		UserDTO user = UserDTO.builder()
@@ -129,7 +125,6 @@ public class UserController {
 		try {
 			user.setEmail(kakaoUser.getJSONObject("kakao_account").getString("email"));
 		}catch (Exception e) {}
-		System.out.println(user);
 		int count = userService.kakaoRegister(user);
 		if(count == 1) {
 			session.setAttribute("login", true);
@@ -256,5 +251,6 @@ public class UserController {
 		userService.withdraw(user.getId());
 		return "redirect:/logout.do";
 	}
+	
 	
 }

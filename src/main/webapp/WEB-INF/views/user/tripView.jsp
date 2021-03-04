@@ -1,120 +1,67 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="lib/jquery-3.5.1.min .js"></script>
-<script src="lib/jquery-ui.js"></script>
-<link rel="stylesheet" href="css/jquery-ui.css">
-<!-- <link rel="stylesheet" href="css/populTrip.css">
-<style type="text/css">
-	#container {
-	padding-top:100px;
-	height: 100%;
-	/* background-color: lime; */
-}
-
-	
-</style>
- -->
+<link rel="stylesheet" href="css/tripView.css">
 </head>
 
-<body>
 <c:choose>
 	<c:when test="${sessionScope.user.role == 'ADMIN' }">
-		<%@include file="../template/header_admin.jsp" %>
+		<%@include file="../template/header_admin.jsp"%>
 	</c:when>
 	<c:otherwise>
-		<%@include file="../template/header.jsp" %>
+		<%@include file="../template/header.jsp"%>
 	</c:otherwise>
 </c:choose>
-  
-	<div class="container">
-	<div>
-		<h2>인기 여행코스</h2>
-	</div>
-	<div class="total_check">
-		<ul>
-			<c:forEach var="list" items="${requestScope.list }">
-			<li>
-				<div class="photo">
-					<a href="#">
-					<span class="image">
-						<a href="tripDetailView.do?trip_no=${list.trip_no }">
+		
+<body>
+	<div id="container">
+			
+			<div id="top">
+					<small>UTrip 투어</small>
+					<c:choose>
+			<c:when test="${sessionScope.user.role == 'ADMIN' }">
+				<button onclick="javascript:location.href='/tripInsertView.do';">여행정보
+					추가</button>
+			</c:when>
+		</c:choose>
+					<h2>인기 투어</h2>
+			</div>
+			<div class="for_slick single-item">
+				<c:forEach var="list" items="${requestScope.list }">
+						<div class="slide">
+							<a href="tripDetailView.do?trip_no=${list.trip_no }" class="trip"> 
 							<img alt="" src="/img/trip/${list.trip_no}.jpg">
-						</a>
-					</span>
-					</a>
+							
+							<div class="info">
+								<small>${list.area_name}</small><br>
+								<span class="title">${list.title }</span> <span class="rating">${list.rating}</span><br>
+								<span class="content">${list.content}</span>
+							</div>								
+							</a>
+						</div>
+				</c:forEach>
+				<div id="top">
+					<h2>MBTI 추천 코스</h2><small>${sessionScope.user.mbti }</small>
 				</div>
-				<div class="txt">
-					<div><a href="tripDetailView.do?trip_no=${list.trip_no }"><h3>${list.title }</h3></a></div>
-					<div>
-						<p>${list.area_name }</p>
-						<p>${list.content }
-					</div>
+				<div class="slide">
+							<a href="tripDetailView.do?trip_no=${dto.trip_no }" class="trip"> 
+							<img alt="" src="/img/trip/${dto.trip_no}.jpg">
+							
+							<div class="info">
+								<small>${dto.area_name}</small><br>
+								<span class="title">${dto.title }</span> <span class="rating">${dto.rating}</span><br>
+								<span class="content">${dto.content}</span>
+							</div>								
+							</a>
 				</div>
-			</li>
-			</c:forEach>
-		</ul>
+			</div>
 	</div>
-	</div>
-	<div>
-	<div>
-		<h2>MBTI에 맞는 추천 여행코스</h2>
-	</div>
-	<div class="total_check">
-		<ul>
-			<li>
-				<div class="photo">
-					<a href="#">
-					<span class="image">
-						<img alt="" src="/img/trip/${dto.trip_no}.jpg">
-					</span>
-					</a>
-				</div>
-				<div class="txt">
-					<div><a href="tripDetailView.do?trip_no=${dto.trip_no }"><h3>${dto.title }</h3></a></div>
-					<div>
-						<p>${dto.area_name }</p>
-						<p>${dto.content }
-					</div>
-				</div>
-			</li>
-		</ul>
-	</div>
-	</div>
-	<div class="container">
-	<div>
-		<h2>지역별 여행코스</h2>
-	</div>
-	<div class="total_check">
-		<ul>
-			<c:forEach var="areaList" items="${requestScope.areaList }">
-			<li>
-				<div class="photo">
-					<a href="#">
-					<span class="image">
-						<a href="tripDetailView.do?trip_no=${areaList.trip_no }">
-							<img alt="" src="/img/trip/${areaList.trip_no }.jpg">
-						</a>
-					</span>
-					</a>
-				</div>
-				<div class="txt">
-					<div><a href="tripDetailView.do?trip_no=${areaList.trip_no }"><h3>${areaList.title }</h3></a></div>
-					<div>
-						<p>${areaList.area_name }</p>
-						<p>${areaList.content }
-					</div>
-				</div>
-			</li>
-			</c:forEach>
-		</ul>
-	</div>
-	</div>
-	<%@include file="../template/footer.jsp"%>
 </body>
+<%@include file="../template/footer.jsp"%>
 </html>

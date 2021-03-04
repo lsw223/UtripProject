@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import trip.dto.BoardDTO;
 import trip.dto.QnaDTO;
 import trip.mapper.QnaMapper;
 
@@ -24,6 +25,10 @@ public class QnaService {
 
 	public int insertQna(QnaDTO qnaDto) {
 		return mapper.insertQna(qnaDto);
+	}
+
+	public int deleteQna(int qna_no) {
+		return mapper.deleteQna(qna_no);
 	}
 
 }

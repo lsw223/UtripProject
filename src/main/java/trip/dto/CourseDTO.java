@@ -4,9 +4,18 @@ public class CourseDTO {
 	
 	private int course_no;//코스 순서
 	private int place_no;//관광장소 식별자
+	private String area_name;
 	private String place_name;
 	private double place_x; 
 	private double place_y;
+	public CourseDTO(String area_name, int place_no,  String place_name, double place_x, double place_y) {
+		super();
+		this.area_name = area_name;
+		this.place_no = place_no;
+		this.place_name = place_name;
+		this.place_x = place_x;
+		this.place_y = place_y;
+	}
 	public CourseDTO(int course_no, int place_no, String place_name, double place_x, double place_y) {
 		super();
 		this.course_no = course_no;
@@ -14,6 +23,13 @@ public class CourseDTO {
 		this.place_name = place_name;
 		this.place_x = place_x;
 		this.place_y = place_y;
+	}
+	
+	public String getArea_name() {
+		return area_name;
+	}
+	public void setArea_name(String area_name) {
+		this.area_name = area_name;
 	}
 	public int getCourse_no() {
 		return course_no;
@@ -47,9 +63,8 @@ public class CourseDTO {
 	}
 	@Override
 	public String toString() {
-		return "courseDTO [course_no=" + course_no + ", place_no=" + place_no + ", place_name=" + place_name
-				+ ", place_x=" + place_x + ", place_y=" + place_y + "]";
-	} 
-	
+		return "CourseDTO [course_no=" + course_no + ", place_no=" + place_no + ", area_name=" + area_name
+				+ ", place_name=" + place_name + ", place_x=" + place_x + ", place_y=" + place_y + "]";
+	}
 	
 }

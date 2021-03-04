@@ -43,6 +43,7 @@
 					</td>
 				</tr>
 				<tr>
+					<th></th>
 					<td colspan="2">
 						첨부파일<br>
 						<c:forEach var="f" items="${requestScope.file }">
