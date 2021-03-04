@@ -46,6 +46,25 @@ title_faq:before{
 .accordio_box ol li.on h4{
 	background: url("../img/dropdown.png") no-repeat right 11px;
 }
+.accordio_box ol li h4 span{
+	display: inline-block;
+	margin-right: 10px;
+	font-weight: 900; 
+}
+.accordio_box ol li p{
+	height: 0;
+	visibility: hidden;
+	opacity: 0;
+}
+.accordio_box ol li.on p{
+	height: auto;
+	padding: 30px 100px 70px 200px;
+	background-color: #eee;
+	background-size: 100px auto;
+	background-repeat: no-repeat;
+	visibility: visible;
+	opacity: 1;
+}
 
 
 

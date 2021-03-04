@@ -12,6 +12,13 @@ public class QnaDTO {
 	public QnaDTO() {
 		
 	}
+	
+	public QnaDTO(String user_id, String title, String content) {
+		super();
+		this.user_id = user_id;
+		this.title = title;
+		this.content = content;
+	}
 
 	public QnaDTO(int qna_no, String user_id, String title, String content, String write_date, String response_content,
 			String response_date) {
@@ -24,7 +31,27 @@ public class QnaDTO {
 		this.response_content = response_content;
 		this.response_date = response_date;
 	}
+	
+	public QnaDTO(int qna_no, String user_id, String title, String content) {
+		super();
+		this.qna_no = qna_no;
+		this.user_id = user_id;
+		this.title = title;
+		this.content = content;
+	}
+	
+	public QnaDTO(String title, String content) {
+		super();
+		this.title = title;
+		this.content = content;
+	}
+	
 
+	public QnaDTO(int qna_no, String response_content) {
+		super();
+		this.qna_no = qna_no;
+		this.response_content = response_content;
+	}
 
 	public int getqna_no() {
 		return qna_no;

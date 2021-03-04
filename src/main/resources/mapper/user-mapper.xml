@@ -23,7 +23,7 @@
 	</update>
 	<select id="selectQnaList" parameterType="String"
 		resultType="user">
-		select * from utrip_user where id like #{id}
+		select * from utrip_user where id like #{user_id}
 	</select>
 	<select id="selectPopulTripList" resultType="trip.dto.TripDTO">
 		select area_name, trip_no, title, substr(content,1,30), video_url,
