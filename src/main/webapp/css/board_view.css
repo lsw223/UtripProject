@@ -132,3 +132,33 @@ hr {
 	text-align: center !important;
 	box-sizing: border-box;
 }
+
+.comment_btn {
+	text-decoration: none;
+	width: 40px;
+	display: inline-block;
+	padding: 5px 0px;
+	font-weight: normal;
+	border-radius: none;
+	text-align: center;
+	color: blue;
+	font-size: 10px;
+	box-sizing: border-box;
+}
+
+.comment_update_content {
+	display:none;
+}
+.comment_update_content_btn {
+	display:none;
+	text-decoration: none;
+	background-color: #e8e8e8;
+	width: 80px;
+	padding: 5px 0px;
+	font-weight: normal;
+	border-radius:none;
+	text-align: center;
+	color: black;
+	font-size: 14px;
+	box-sizing: border-box;
+}
