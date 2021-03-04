@@ -36,8 +36,8 @@
 				<tr>
 					<th>작성자</th>
 					<td>
-						<input type="hidden" name="nwriter" value="${sessionScope.user.id }">
-						${sessionScope.user.id }
+						<input type="hidden" name="nwriter" value="${sessionScope.user.name }">
+						${sessionScope.user.name }
 					</td>
 				</tr>
 				<tr>
@@ -45,6 +45,7 @@
 				</tr>
 				<!-- 첨부 파일 -->
 				<tr>
+					<th></th>
 					<td colspan="2" id="file_form">
 						<p><input type="file" name="file"> 
 						<button type="button" id="plus">+</button> <button type="button" id="minus">-</button></p>

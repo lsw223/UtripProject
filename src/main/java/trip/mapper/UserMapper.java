@@ -52,4 +52,6 @@ public interface UserMapper {
 	public void updateTripRating(Map<String, Object> map);
 	public int tripRatingCheck(Map<String, Object> map);
 	public void insertTripRatingUser(Map<String, Object> map);
+	public int nextnotice(int notice_no);
+
 }

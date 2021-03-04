@@ -1,0 +1,68 @@
+@charset "UTF-8";
+.title_faq{
+	color: fff;
+	position: relative;
+}
+title_faq strong{
+	font-size: 25px;
+	padding-right: 10px;
+}
+title_faq span{
+	font-size: 14px;
+	font-weight: 400;
+}
+title_faq:before{
+	content: "";
+	display: block;
+	position: absolute;
+	width: 120px;
+	height: 150px;
+	background: url(../img/speach_bubble.png) no-repeat;
+	right: 0px;
+	top: 36px;
+}
+
+.content_wrap{
+	margin-top: 30px;
+}
+
+.accordio_box{
+	margin-top: 50px;
+}
+.accordio_box ol li {
+	width: 100%;
+	background-color: #fff;
+	border-top: 4px solid #30e5bc;;
+}
+.accordio_box ol li h4{
+	display: block;
+	padding: 0px 20px 20px 0px;
+	margin: 20px 20px 0 30px;
+	cursor: pointer;
+	background: url("../img/dropdown.png") no-repeat right 11px;
+	font-weight: 400;
+	color: #3c4147;
+}
+.accordio_box ol li.on h4{
+	background: url("../img/dropdown.png") no-repeat right 11px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

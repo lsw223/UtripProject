@@ -65,7 +65,10 @@
 			location.href="loginView.do";
 		</script>
 	</c:if>
+	
 	<div id="container">
+						<input type="hidden" name="next_notice_no" value="${requestScope.notice.next_notice_no} ">
+						<input type="hidden" name="pre_notice_no" value="${requestScope.notice.pre_notice_no} ">
 		<h2>글조회 페이지</h2>
 			<table>
 				<tr>
@@ -89,12 +92,15 @@
 				</tr>
 				<tr>
 					<th style="vertical-align: top;">내용</th>
-					<td>
+				</tr>
+				<tr >
+					<td colspan="2">
 						<textarea readonly="readonly">${requestScope.notice.content }</textarea>
 					</td>
+				
 				</tr>
 				<tr>
-					<td colspan="2">
+					<td colspan="2" style="text-align: center; margin-left: -30px">
 						첨부파일<br>
 						<c:forEach var="f" items="${requestScope.file }">
 							<a href="fileDownload.do?writer=${f.writer }&file=${f.fileName}">
@@ -129,8 +135,8 @@
 						<div class="comment_form">
 							<form id="comment">
 							<input type="hidden" name="notice_no" value="${requestScope.notice.notice_no }">
-							<input type="hidden" name="writer" value="${sessionScope.user.id }">
-							<span class="writer">${sessionScope.user.id }</span>
+							<input type="hidden" name="writer" value="${sessionScope.user.name }">
+							<span class="writer" style="text-align: center; margin-left: -30px">${sessionScope.user.name }</span>
 							<textarea name="content" maxlength="500"></textarea>
 							<input type="hidden" name="writeDate">
 							<p class="length">0/500</p><hr>
@@ -141,7 +147,31 @@
 				</tr>
 				</c:if>
 				<tr>
-					<th><a href="notice.do" class="btn">목록보기</a></th>
+					<th style="text-align: left;">
+						<a href="notice.do" class="btn">목록보기</a>
+					</th>
+					<c:choose>
+						<c:when test = "${requestScope.notice.pre_notice_no == null}">
+							<script>
+								alert("더이상 글이 없습니다.");
+								location.href="/notice.do";
+							</script>
+						</c:when>
+						<c:otherwise>
+						<th><a href="noticeView.do?notice_no=${requestScope.notice.pre_notice_no}" class="btn">이전글</a>
+						</c:otherwise>
+					</c:choose>
+					<c:choose>
+						<c:when test = "${requestScope.notice.next_notice_no eq null}">
+							<script>
+								alert("더이상 글이 없습니다.");
+								location.href="/notice.do";
+							</script>
+						</c:when>
+						<c:otherwise>
+							<a href="noticeView.do?notice_no=${requestScope.notice.next_notice_no}" class="btn">다음글</a></th>
+						</c:otherwise>
+					</c:choose>
 				</tr>
 				<tr>
 				

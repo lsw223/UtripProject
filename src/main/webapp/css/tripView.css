@@ -1,0 +1,170 @@
+@charset "UTF-8";
+html,body{
+	height:100%;
+}
+footer{
+	position: relative !important;
+}
+#container{
+	min-height:84%;
+	width:1010px;
+	margin:0 auto;
+}
+#top{
+	padding:50px 0 30px 0; 
+}
+#top small{
+	font-weight:400;
+	color:#898989;
+}
+#top h2{
+	padding:10px 0;	
+	font-weight: 700;
+	font-size: 37px;
+	color:#121212;
+}
+.trip{
+	display:block;
+	width:1000px;
+	height:200px;
+	margin:30px 0;
+	border:1px solid #d8d8d8; 
+	border-radius: 20px;
+	box-shadow: 1px 3px 2px #e8e8e8;
+	transition: all 0.2s;
+	outline: none;
+}
+.trip:hover{
+	box-shadow: 1px 3px 10px #20d5ac;
+}
+.trip img{
+	width:300px;
+	height:200px;
+	border-radius: 20px 0 0 20px;
+	float:left;
+}
+.info{
+	float:left;
+	width:700px;
+	height:200px;
+	padding:20px;
+	box-sizing: border-box;
+}
+.content{
+	width:650px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-wrap: break-word;
+	display: -webkit-box;
+	-webkit-line-clamp: 3; /* ellipsis line */
+	-webkit-box-orient: vertical;
+	line-height: 1.2em;
+	height: 3.6em;
+}
+.info small{
+	display:inline-block;
+	margin-bottom:10px;
+	color:#cccccc;
+	font-weight: 600;
+}
+.title{
+	margin-bottom:10px;
+	display: inline-block;
+}
+.rating{
+	color:#6a67ce;
+	font-weight:900;
+	font-size: 14px;
+	padding-left:10px;
+}
+#arrow_prev{
+	float:left;
+	display: block;
+	height:726px;
+	transition:all 0.6s;
+	border-radius: 50px  0 0 50px;
+	background-color: #7a77de;
+	opacity: 0.3;
+	margin-right:50px;
+}
+#arrow_prev:hover{
+	opacity: 0.7;
+}
+#arrow_prev img{
+	width:70px;
+	margin:0 15px;
+	line-height:726px;
+	margin-top:305px;
+}
+.for_slick{
+	width:1010px;
+	float:left;
+}
+#arrow_next{
+	float:left;
+	display: block;
+	height:726px;
+	transition:all 0.6s;
+	border-radius: 0 50px 50px 0;
+	background-color: #7a77de;
+	opacity: 0.3;
+	margin-left:50px;
+}
+#arrow_next:hover{
+	opacity: 0.7;
+}
+#arrow_next img{
+	width:70px;
+	margin:0 15px;
+	line-height:726px;
+	margin-top:305px;
+}
+footer{
+	clear:both;
+}
+.slide{
+	outline: none;
+}
+
+
+
+
+
+button{
+  background:#1AAB8A;
+  color:#fff;
+  border:none;
+  position:relative;
+  height:30px;
+  font-size:1;
+  padding:0 2em;
+  cursor:pointer;
+  transition:800ms ease all;
+  outline:none;
+  float:right;
+}
+button:hover{
+  background:#fff;
+  color:#1AAB8A;
+}
+button:before,button:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: #1AAB8A;
+  transition:400ms ease all;
+}
+button:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+button:hover:before,button:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
+

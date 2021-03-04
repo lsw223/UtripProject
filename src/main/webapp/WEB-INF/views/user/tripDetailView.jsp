@@ -97,10 +97,10 @@
 			<h3>여행 코스 길이</h3>
 			<div id="course_length"></div>
 			<c:forEach var="dto" items="${requestScope.tripList }">
-				<a href="#" onclick="setOption(${dto.course_no-1});return false;">${dto.place_name}</a>
+				<a href="#" onclick="setOption(${dto.course_no-1});return false;" class="button">${dto.place_name}</a>
 			</c:forEach>
 			<div id="map" style="width: 800px; height: 500px;"></div>
-			<button onclick="setBounds()" id="btn_zoom">전체 코스보기</button>
+			<button onclick="setBounds()" id="btn_zoom" class="button">전체 코스보기</button>
 			<p id="hotel">
 				<a href="hotelView.do?area=${requestScope.area}" class="button" id="btn_hotel">주변 호텔정보 보러가기</a>
 			</p>
@@ -138,12 +138,6 @@
 			<a href="#" class="button" >확인</a>
 		</div>
 
-			<div >
-			<c:if test="${sessionScope.user.role == 'ADMIN' }">
-				<a href="tripUpdateView.do?tripNo=${requestScope.dto.trip_no}">수정</a>
-				<a href="#" id="deleteTripInfo">삭제</a>
-			</c:if>
-			</div>
 		</div>
 
 	<script type="text/javascript"
@@ -393,3 +387,5 @@
 	<%@include file="../template/footer.jsp"%>
 </body>
 </html>
+
+

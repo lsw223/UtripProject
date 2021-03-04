@@ -17,14 +17,24 @@ public class CommentDTO {
 		this.id = id;
 		this.content = content;
 		this.writeDate = writeDate;
-	}
-
+	}	
+	
 	public CommentDTO(int boardNo, String id, String content) {
 		super();
 		this.boardNo = boardNo;
 		this.id = id;
 		this.content = content;
 	}
+
+	public CommentDTO(int commentNo, int boardNo, String id, String content) {
+		super();
+		this.commentNo = commentNo;
+		this.boardNo = boardNo;
+		this.id = id;
+		this.content = content;
+	}
+
+
 
 	public int getCommentNo() {
 		return commentNo;

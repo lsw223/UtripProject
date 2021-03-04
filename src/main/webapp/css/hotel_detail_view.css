@@ -1,0 +1,163 @@
+@charset "UTF-8";
+html,body{
+	height:100%;
+}
+#container{
+	min-height: 84%;
+}
+footer{
+	position: relative !important;
+}
+#container{
+	width:1200px;
+	margin:0 auto;
+	border-left:2px solid #e8e8e8 ;
+	border-right:2px solid #e8e8e8;
+	padding:30px 30px 0 30px;
+	box-sizing: border-box;
+}
+#head{
+	margin-top:30px;
+}
+#head small a:link,#head small a:visited{
+	text-decoration: none;
+	transition:all 0.1s;
+	color:#848c94;
+	font-weight:700;
+}
+#head small a:hover{
+	color:rgba(0,0,0,0.7);
+}
+#head h2{
+	font-size: 32px;
+	font-weight: 700;
+	color:#343a40;
+	margin:30px 0;
+}
+#content{
+	margin-top:50px;
+	padding:20px 0px;
+	position: relative;
+}
+#content h3{
+	padding-bottom: 15px;
+}
+.button{
+	text-decoration: none;
+	display:inline-block;
+	color:white !important;
+	background-color: #5a57bf;;
+	padding:5px 10px;
+	border-radius: 4px;
+	margin-top: 5px;
+	margin-bottom:16px;
+}
+.button:hover{
+	background-color: #6a67cf;
+}
+.button:active{
+	background-color: #4a47af;
+}
+#map{
+	margin:0 auto;
+	border-radius: 5px;
+}
+#content p:first-of-type{
+	margin-bottom:40px;
+}
+#btn_zoom{
+	margin-left:169px;
+}
+a#back_btn{
+	margin-right:163px;
+}
+#hotel{
+	padding:40px 0;
+	text-align: center;
+}
+#btn_hotel{
+	padding:15px 10px;
+}
+#like{
+	text-decoration: none;
+	display:inline-block;
+	transition:all 0.2s;
+	padding:3px;
+	border-radius: 4px;
+	margin-bottom: 10px;
+}
+#like:hover{
+	box-shadow: 0 0 3px black;
+}
+#like span{
+	color:#333333;
+}
+#like img{
+	width:20px;
+	margin-bottom:-3px;
+}
+#like+span{
+	color:#989898;
+	font-size: 16px;
+	font-weight: 600;
+	margin-left:3px;
+	margin-right:20px;
+}
+#go_back{
+	position:absolute;
+	right:5px;
+	display: inline-block;
+}
+#btns{
+	margin-bottom: 30px;
+}
+#rating{
+	margin-left:10px;
+	color:#333333;
+}
+#rating span{
+	color:#6a67ce;
+	font-weight: 900;
+}
+#rating+a{
+	color:#6a67ce;
+	font-weight: 600;
+}
+#course_length ul{
+	list-style-type: none;
+	margin-bottom: 30px;
+}
+#course_length li span:first-child{
+	font-weight: 600;
+	color:#666666;
+	margin-right:50px;
+}
+#course_length #walk{
+	margin-right: 64px;
+}
+#alert{
+	width:500px;
+	height:600px;
+	border:2px solid #e8e8e8;
+	top:400px;
+	left:500px;
+	position:fixed;
+	z-index: 3;
+	background-color: white;
+	box-shadow: 1px 1px 5px #6a67ce;
+	display: none;
+	padding:0;margin:0;
+}
+#close{
+	display: inline-block;
+	color:white;
+	padding:2px 10px 5px 10px;
+	background-color: #f44336;
+	position:absolute;
+	text-decoration:none;
+	border-radius:3px;
+	right:0;
+}
+#close:hover{
+	background-color: #ff5346;
+}

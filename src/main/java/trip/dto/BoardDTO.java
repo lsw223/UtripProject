@@ -12,6 +12,7 @@ public class BoardDTO {
 	private int boardLike;
 	private int boardCount;
 	private int commentCount;
+	
 
 	public BoardDTO(int boardNo, String id, String title, String content, String writeDate, int boardLike,
 			int boardCount, int commentCount) {
@@ -25,13 +26,8 @@ public class BoardDTO {
 		this.boardCount = boardCount;
 		this.commentCount = commentCount;
 	}
-
-	public BoardDTO(String id, String title, String content) {
-		super();
-		this.id = id;
-		this.title = title;
-		this.content = content;
-	}
+	
+	
 
 	public BoardDTO(int boardNo, String id, String title, String content, String writeDate, int boardLike,
 			int boardCount) {
@@ -43,6 +39,15 @@ public class BoardDTO {
 		this.writeDate = writeDate;
 		this.boardLike = boardLike;
 		this.boardCount = boardCount;
+	}
+
+
+
+	public BoardDTO(String id, String title, String content) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.content = content;
 	}
 
 	public BoardDTO(int boardNo, String id, String title, String content) {
@@ -117,6 +122,8 @@ public class BoardDTO {
 		this.boardCount = boardCount;
 	}
 
+
+
 	@Override
 	public String toString() {
 		return "BoardDTO [boardNo=" + boardNo + ", id=" + id + ", title=" + title + ", content=" + content
@@ -124,4 +131,5 @@ public class BoardDTO {
 				+ ", commentCount=" + commentCount + "]";
 	}
 
+	
 }

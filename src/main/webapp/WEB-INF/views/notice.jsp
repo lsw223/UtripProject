@@ -17,6 +17,8 @@
 <body>
 		<!-- header.jsp를 현재 문서에 포함 -->
 		<div id="container">
+		
+		<h1>공지사항</h1>
 		<table class="notice">
 			<tr>
 				<th class="notice_no">글번호</th>
@@ -33,7 +35,9 @@
 		</c:if>
 		<c:forEach var="dto" items="${requestScope.list }">
 			<tr>
-				<td>${dto.num }</td>
+				<td>${dto.num }
+				<input type="hidden" name="next_notice_no" value="${dto.next_notice_no} ">
+				</td>
 				<td>
 				<c:if test="${sessionScope.login == null || sessionScope.login == false  }">
 					<script>
@@ -54,18 +58,18 @@
 		</c:forEach>
 		   <tr>
 			<td colspan="7">
-					<div class="page_bar">
-						<c:if test="${pagging.previousPageGroup }">
-							<a href="notice.do?pageNo=${pagging.startPageOfPageGroup - 1 }">◀</a>
-						</c:if>
-						<c:forEach var="i" begin="${pagging.startPageOfPageGroup}" end="${pagging.endPageOfPageGroup}">
-							<a href="notice.do?pageNo=${i }">${ i}</a>
-						</c:forEach>
-					
-						<c:if test="${pagging.nextPageGroup }">
-							<a href="notice.do?pageNo=${pagging.endPageOfPageGroup + 1 }">▶</a>
-						</c:if>
-					</div>
+				<div class="page_bar">
+					<c:if test="${pagging.previousPageGroup }">
+						<a href="notice.do?pageNo=${pagging.startPageOfPageGroup - 1 }">◀</a>
+					</c:if>
+					<c:forEach var="i" begin="${pagging.startPageOfPageGroup}" end="${pagging.endPageOfPageGroup}">
+						<a href="notice.do?pageNo=${i }">${ i}</a>
+					</c:forEach>
+				
+					<c:if test="${pagging.nextPageGroup }">
+						<a href="notice.do?pageNo=${pagging.endPageOfPageGroup + 1 }">▶</a>
+					</c:if>
+				</div>
 			</tr>
 		</table>
 	</div>
