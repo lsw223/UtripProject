@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,114 +8,120 @@
 <script src="lib/jquery-3.5.1.min .js"></script>
 <title>QnA :: UTrip</title>
 </head>
+<link rel="stylesheet" href="css/qna_view.css">
 <%@include file="../template/header.jsp"%>
 <body>
 	<div id="container">
-		<a href="qnaFaqView.do" id="btn_faq_view" class="button">자주 묻는 질문</a> <a href="#"
-			id="btn_qna_view" class="button">문의하기</a> <a href="#"
-			id="btn_qna_list_view" class="button">문의조회</a>
-		<hr>
-		<table id="table_qna" class="hidden">
-			<tr>
-				<th>문의하기</th>
-			</tr>
-			<tr>
-				<th>제목</th>
-				<td><input type="text" name="title" id="title"></td>
-			</tr>
-			<tr>
-				<th>작성자</th>
-				<td><input type="hidden" name="user_id" id="user_id"
-					value="${sessionScope.user.id }"> ${sessionScope.user.id }</td>
-			</tr>
-			<tr>
-				<th style="vertical-align: top;">내용</th>
-				<td><textarea name="content" id="content"></textarea></td>
-			</tr>
-			<tr>
-				<th></th>
-				<td id="td_btn" style="text-align: right;">
-					<a href=# id="btn_submit" class="button">등록</a>
-				</td>
-			</tr>
-		</table>
-		<div id="qna_list">
+		<div id="top">
+			<p id="p_1">
+				<img id="img_1" src="img/qna_img.png" width="90" height="90"><span
+					id="sp_1" style="display: inline-block; height: 90px;">QnA</span><span
+					id="sp_2">문의사항</span>
+			</p>
 		</div>
+		<hr class="h_1">
+		<a href="qnaFaqView.do" id="btn_faq_view" class="button">>자주 묻는 질문
+			보러가기</a>
+		<c:if test="${requestScope.list == null}">
+			<div id="not_login">
+				<img id="img_2" src="img/qna_img_2.png"> <span id="sp_3">문의는
+					로그인 후 이용 가능합니다.</span>
+			</div>
+		</c:if>
+		<c:if test="${requestScope.list != null}">
+			<hr class="h_2">
+			<form id="sendQnA" action="sendQnA.do">
+				<h1>문의하기</h1>
+				<table id="table_qna">
+					<tr>
+						<th>제목</th>
+						<td><input type="text" name="title" id="title"></td>
+					</tr>
+					<tr>
+						<th>작성자</th>
+						<td><input type="hidden" name="user_id" id="user_id"
+							value="${sessionScope.user.id}"> ${sessionScope.user.id}</td>
+					</tr>
+					<tr>
+						<th style="vertical-align: top;">내용</th>
+						<td><textarea name="content" id="content"></textarea></td>
+					</tr>
+					<tr>
+						<th></th>
+						<td id="td_btn" style="text-align: right;"><button
+								id="btn_submit">등록</button>
+					</tr>
+				</table>
+			</form>
+			<hr class="h_2">
+			<h1 id="h1_1">MY 문의</h1>
+			<div id="qna_list">
+				<c:if test="${requestScope.list == null }">
+					<span>문의 내역이 없습니다</span>
+				</c:if>
+				<c:forEach var="list" items="${requestScope.list}">
+					<table class="result">
+						<tr>
+							<td>제목</td>
+							<td>${list.title }</td>
+						</tr>
+						<tr>
+							<td>내용</td>
+							<td>${list.content }</td>
+						</tr>
+						<tr>
+							<td>작성일</td>
+							<td>${list.write_date}</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td style="text-align: right;'"><a
+								href="deleteQna.do?qna_no=${list.qna_no }" id="btn_delete"
+								class="btn">삭제</a>
+							<td>
+						</tr>
+					</table>
+					<hr>
+					<c:choose>
+						<c:when test="${list.response_content ==null }">
+							<span id="no_response">현재 답변이 완료되지 않았습니다.</span>
+						</c:when>
+						<c:otherwise>
+							<span id="response_content">${list.response_content }</span>
+							<span id="response_date">${list.response_date}</span>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+			</div>
+		</c:if>
 	</div>
 	<script>
-		$("#btn_qna_view").click(function(){
-			if(${empty sessionScope.user}){
-				alert("로그인이 필요한 서비스입니다");
-			location.href="loginView.do";
-		}else{
-			$("table").toggleClass("hidden");
-		}
-		})
-		
-		$("#btn_submit").click(function(){
+		$("#btn_submit").click(function() {
 			var title = $("#title").val();
 			var user_id = $("#user_id").val();
 			var content = $("#content").val();
-			if(title.length==0){
+			if (title.length == 0) {
 				alert("제목을 입력하세요");
 				return false;
 			}
-			if(user_id.length==0){
+			if (user_id.length == 0) {
 				alert("아이디를 읽을 수 없음");
 				return false;
 			}
-			if(content.length==0){
+			if (content.length == 0) {
 				alert("내용을 입력하세요");
 				return false;
 			}
 			var data = {
-				"title":title,
-				"user_id":user_id,
-				"content":content
+				"title" : title,
+				"user_id" : user_id,
+				"content" : content
 			}
-			$.ajax({
-				method:"get",
-				url:"qna.do",
-				data:data,
-				dataType:"json",
-				success:function(response){
-					alert(response.responseMessage);
-					$("#table_qna input").val("");
-					$("#btn_qna_list_view").click();
-				}
-			})
 		})
-		
-		$("#btn_qna_list_view").click(function(){
-	if(${empty sessionScope.user}){
-		alert("로그인이 필요한 서비스입니다.");
-		location.href="loginView.do";
-		return false;
-	}
-	$.ajax({
-		method:"get",
-		url:"showQnaList.do",
-		data:{"user_id":"${sessionScope.user.id}"},
-		dataType:"json",
-		success:function(resp){
-			if(resp.responseCode==211){
-				alert(resp.responseMessage);
-			}else if(resp.responseCode==210){
-				var list = resp.result;
-				var str="<p><span>번호</span><span>제목</span>"
-								+"<span>작성자</span><span>작성일</span></p>";
-				for(i=0; i<list.length; i++){
-					str += "<p><span>"+list[i].qna_no+"</span>"
-								+"<span>"+list[i].title+"</span>"
-								+"<span>"+list[i].user_id+"</span>"
-								+"<span>"+list[i].write_date+"</span></p>";
-				}
-				$("#qna_list").html(str);
-			}
-		}
-	})
-})
-</script>
+	</script>
 </body>
 <%@include file="../template/footer.jsp"%>
 </html>

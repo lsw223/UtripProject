@@ -17,10 +17,12 @@ public interface AdminMapper {
 	List<QnaDTO> selectQnaList(String id);
 	QnaDTO selectQna(int qna_no);
 	int selectqnaCount();
-	int selectnoticeCount();
 	List<QnaDTO> selectQnaAdminList(int page);
+	int insertResponse(QnaDTO qnaDto);
+	int deleteResponse(int qna_no);
 	List<NoticeDTO> selectNoticeList(int page);
 	int newnno();
+	int selectnoticeCount();
 	int insertNotice(NoticeDTO dto);
 	void insertFileList(FileDTO fileDTO);
 	NoticeDTO selectNotice(int notice_no);

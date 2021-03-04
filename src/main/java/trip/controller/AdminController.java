@@ -28,6 +28,7 @@ import trip.dto.TripDTO;
 import trip.enums.RoleType;
 import trip.oauth.KakaoLogin;
 import trip.service.AdminService;
+import trip.service.QnaService;
 import trip.service.UserService;
 import trip.vo.PaggingVO;
 
@@ -43,6 +44,7 @@ public class AdminController {
 		this.adminService = adminService;
 		this.userService = userService;
 	}
+	//관리자용 QnA 리스트
 	@RequestMapping("adminQna.do")
 	public String qnaAdmin(HttpServletRequest request) {
 		String userId = (String) request.getSession().getAttribute("userId");
@@ -59,19 +61,36 @@ public class AdminController {
 		return "admin/admin_qna";
 	}
 	
-	@RequestMapping("/adminQnADtailView.do")
+	//관리자 QnA 리스트 화면에서 제목 눌렀을 시 이동
+	@RequestMapping("/adminQnAView.do")
 	public String adminQnaView(HttpServletRequest request) {
-		int qna_no = 0;
-		if(request.getParameter("qna_no") != null)
-			qna_no = Integer.parseInt(request.getParameter("qna_no"));
-		else
-			qna_no = (int) request.getAttribute("qno_no");
+		int qna_no = Integer.parseInt(request.getParameter("qna_no"));
+		System.out.println(qna_no);
 		QnaDTO dto = adminService.selectQna(qna_no);
 		QnaDTO response = adminService.selectQnaResponse(qna_no);
 		request.setAttribute("dto", dto);
+		System.out.println(dto);
 		request.setAttribute("response", response);
-		return "admin/admin_qna_detail_view"; 
+		return "admin/admin_qna_view"; 
 		}
+	
+	//Qna 답변 작성
+	@RequestMapping("/insertResponse.do")
+	public RedirectView insertResponse(HttpServletRequest request, HttpServletResponse response) {
+		int qna_no = Integer.parseInt(request.getParameter("qna_no"));
+		String response_content = request.getParameter("response_content");
+		System.out.println(qna_no);
+		System.out.println(response_content);
+		QnaDTO qnaDto = new QnaDTO(qna_no, response_content);
+		int count = adminService.insertResponse(qnaDto);
+		return new RedirectView("adminQnAView.do?qna_no="+qna_no);
+	}
+	@RequestMapping("/deleteResponse.do")
+	public RedirectView deleteResponse(HttpServletRequest request, HttpServletResponse response) {
+		int qna_no = Integer.parseInt(request.getParameter("qna_no"));
+		int count = adminService.deleteResponse(qna_no);
+		return new RedirectView("adminQnAView.do?qna_no="+qna_no);
+	}
 	
 	
 	@RequestMapping("/adminnotice.do")

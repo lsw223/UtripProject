@@ -12,7 +12,7 @@
 		response_date
 		from (select q.qna_no as
 		qna_no,q.user_id,q.title,q.content,q.write_date,r.response_content,r.response_date
-		from qna q, qna_response r where q.qna_no=r.qna_no order by qna_no
+		from qna q, qna_response r where q.qna_no=r.qna_no(+) order by qna_no
 		desc))
 		where page = #{pageNo}
 	</select>
@@ -23,11 +23,14 @@
 		select count(*) as cnt from qna
 	</select>
 	<select id="selectQnaResponse" parameterType="int" resultType="trip.dto.QnaDTO">
-	 	select * from qna_response where qna_no = #{qna_No}
+	 	select * from qna_response where qna_no = #{qna_no}
 	</select>
-	<insert id="insertQnaReponse" parameterType="trip.dto.QnaDTO">
-		insert into qna_response(qna_no, response_content, response_date) values (#{qna_no}, #{response_content}, #{response_date})
+	<insert id="insertResponse" parameterType="trip.dto.QnaDTO">
+		insert into qna_response(qna_no, response_content) values (#{qna_no}, #{response_content})
 	</insert>
+	<select id="newBoardNo" resultType="int">
+		select qna_seq.nextval from dual
+	</select>
 	<select resultType="trip.dto.NoticeDTO" parameterType="trip.dto.NoticeDTO" id="selectNoticeList">
 		select a.notice_no -- 글번호 
 			 , a.title -- 제목 
@@ -48,9 +51,10 @@
 	<select resultType="int" id="noticeno">
 		select notice_no_seq.nextval from dual 
 	</select>
-	<select resultType="int" id="newnno">
-		select nno_seq.nextval from dual 
-	</select>
+	<delete id="deleteResponse" parameterType="int">
+		delete from qna_response where
+		qna_no = #{qna_no}
+	</delete>
 	<insert parameterType="trip.dto.NoticeDTO" id="insertNotice">
 		insert into notice(
 			   notice_no

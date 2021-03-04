@@ -16,7 +16,7 @@ import trip.mapper.AdminMapper;
 @Service
 public class AdminService {
 	private AdminMapper mapper;
-	
+
 	public AdminService(AdminMapper mapper) {
 		super();
 		this.mapper = mapper;
@@ -25,18 +25,27 @@ public class AdminService {
 	public QnaDTO selectQna(int qna_no) {
 		return mapper.selectQna(qna_no);
 	}
-	
+
 	public int selectqnaCount() {
 		return mapper.selectqnaCount();
 	}
-	
-	public List<QnaDTO> selectAdminQnaList(int page){
+
+	public List<QnaDTO> selectAdminQnaList(int page) {
 		return mapper.selectQnaAdminList(page);
 	}
-	
+
+	public QnaDTO selectQnaResponse(int qna_no) {
+		return mapper.selectQnaResponse(qna_no);
+	}
+
+	public int insertResponse(QnaDTO qnaDto) {
+		return mapper.insertResponse(qnaDto);
+	}
+
 	public int selectnoticeCount() {
 		return mapper.selectnoticeCount();
 	}
+
 	public List<NoticeDTO> selectNoticeList(int page) {
 		return mapper.selectNoticeList(page);
 	}
@@ -47,11 +56,11 @@ public class AdminService {
 
 	public int insertNotice(NoticeDTO dto) {
 		return mapper.insertNotice(dto);
-		
+
 	}
 
 	public void insertFileList(ArrayList<FileDTO> fList) {
-		for(int i = 0;i<fList.size();i++)
+		for (int i = 0; i < fList.size(); i++)
 			mapper.insertFileList(fList.get(i));
 	}
 
@@ -62,8 +71,9 @@ public class AdminService {
 	public List<FileDTO> selectFileList(int notice_no) {
 		return mapper.selectFileList(notice_no);
 	}
+
 	public void updateFileList(ArrayList<FileDTO> fList) {
-		for(int i = 0;i<fList.size();i++)
+		for (int i = 0; i < fList.size(); i++)
 			mapper.updateFileList(fList.get(i));
 	}
 
@@ -71,17 +81,15 @@ public class AdminService {
 		return mapper.noticeno();
 	}
 
-	public QnaDTO selectQnaResponse(int qna_no) {
-		return mapper.selectQnaResponse(qna_no);
-	}
-
 	public void deleteNotice(NoticeDTO dto) {
 		mapper.deleteNotice(dto);
-		
+
 	}
+
 	public int updateNotice(NoticeDTO dto) {
 		return mapper.updateNotice(dto);
 	}
+
 	public List<CourseDTO> selectCourseList(String area_name) {
 		return mapper.selectCourseList(area_name);
 	}
@@ -90,26 +98,23 @@ public class AdminService {
 		return mapper.tripUpdateInfo(dto);
 	}
 
-	
-
 	public void courseUpdate(ArrayList<String> placeList, String trip_no) {
-		for(int i=0; i<placeList.size(); i++) {
+		for (int i = 0; i < placeList.size(); i++) {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("place_no", placeList.get(i));
-			map.put("course_no", i+1);
+			map.put("course_no", i + 1);
 			map.put("trip_no", trip_no);
 			mapper.courseUpdate(map);
 		}
-		
+
 	}
 
 	public int deleteTripInfo(String trip_no) {
 		return mapper.deleteTripInfo(trip_no);
 	}
 
-	
+	public int deleteResponse(int qna_no) {
+		return mapper.deleteResponse(qna_no);
+	}
 
 }
-
-
-

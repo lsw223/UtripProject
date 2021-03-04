@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import trip.dto.BoardDTO;
 import trip.dto.HotelRequestDTO;
 import trip.dto.QnaDTO;
 import trip.dto.ResponseDTO;
@@ -23,69 +24,65 @@ import trip.service.QnaService;
 public class QnaController {
 	@Autowired
 	private QnaService qnaService;
-	
+
 	@RequestMapping("qnaFaqView.do")
 	public String qnaFaqView() {
 		return "user/qna_faq_view";
 	}
-	
+
 	@RequestMapping("qnaView.do")
-	public String qnaView() {
-		return "user/qna_view";
+	public String qnaView(HttpSession session, HttpServletRequest request) {
+		if (session.getAttribute("user") == null) {
+			return "user/qna_view";
+		} else {
+			UserDTO userdto = (UserDTO) session.getAttribute("user");
+			String id = userdto.getId();
+			List<QnaDTO> list = qnaService.selectQnaList(userdto.getId());
+			request.setAttribute("list", list);
+			return "user/qna_view";
+
+		}
+
 	}
-	@RequestMapping("/qna.do")
-	public String qna(QnaDTO qnaDto,HttpServletResponse resp,HttpSession session) {
-		ResponseDTO<String> response = new ResponseDTO<>();
-		UserDTO user = (UserDTO)session.getAttribute("user");
-		if(user!=null) {
-			qnaDto.setuser_id(user.getId());
-		}
-		System.out.println(qnaDto);
-		int count = qnaService.insertQna(qnaDto);
-		if(count == 1) {
-			response.setResponseCode(210);
-			response.setResponseMessage("등록 성공");
-		}else {
-			response.setResponseCode(211);
-			response.setResponseMessage("등록 실패");
-		}
-		JSONObject json = new JSONObject(response);
-		try {
-			resp.setContentType("html/text;charset=utf-8");
-			resp.getWriter().write(json.toString());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-	@RequestMapping("/showQnaList.do")
-	public String showQnaList(String user_id,HttpServletResponse resp) {
+
+	@RequestMapping("/sendQnA.do")
+	public String sendQnA(HttpServletResponse response, HttpServletRequest request, HttpSession session) {
+		String title = request.getParameter("title");
+		String user_id = request.getParameter("user_id");
+		String content = request.getParameter("content");
+		System.out.println(title);
 		System.out.println(user_id);
-		ResponseDTO<String> respDto = new ResponseDTO<>();
-		List<QnaDTO> list = qnaService.selectQnaList(user_id);
-		System.out.println(list);
-		resp.setContentType("html/text;charset=utf-8");
-		if(list.size()==0) {
-			respDto.setResponseCode(211);
-			respDto.setResponseMessage("등록한 문의내역이 없습니다");
-			JSONObject json = new JSONObject(respDto);
+		System.out.println(content);
+		QnaDTO qnaDto = new QnaDTO(user_id, title, content);
+		int count = qnaService.insertQna(qnaDto);
+
+		if (count == 1) {
 			try {
-				resp.getWriter().write(json.toString());
-				System.out.println(json.toString());
+				response.setContentType("text/html; charset=UTF-8");
+				response.getWriter().write(count);
+				response.getWriter().println("<script>alert('정상적으로 등록 되었습니다'); location.href='qnaView.do';</script>");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			return null;
-		}
-		respDto.setResponseCode(210);
-		JSONObject json = new JSONObject(respDto);
-		json.put("result", list);
-		try {
-			resp.getWriter().write(json.toString());
-		} catch (IOException e) {
-			e.printStackTrace();
+
 		}
 		return null;
 	}
-	
+
+	@RequestMapping("/deleteQna.do")
+	public String deleteQna(HttpServletRequest request, HttpServletResponse response) {
+		int qna_no = Integer.parseInt(request.getParameter("qna_no"));
+		int count = qnaService.deleteQna(qna_no);
+		try {
+			response.setContentType("text/html; charset=UTF-8");
+			response.getWriter().write(count + "");
+			response.getWriter().println("<script>alert('문의글이 삭제 되었습니다'); location.href='qnaView.do';</script>");
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
 }
