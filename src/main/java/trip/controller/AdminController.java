@@ -410,8 +410,8 @@ public class AdminController {
 		TripDTO dto = new TripDTO(trip_no, title, content);
 		int count = adminService.tripUpdateInfo(dto);
 		System.out.println(count);
-
-		adminService.courseUpdate(placeList, trip_no);
+		adminService.courseDelete(trip_no);
+		adminService.courseInsertInfo(placeList, trip_no);
 		return new RedirectView("tripDetailView.do?trip_no=" + trip_no);
 	}
 

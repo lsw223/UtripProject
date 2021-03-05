@@ -1,6 +1,7 @@
 package trip.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import trip.oauth.KakaoLogin;
 import trip.dto.CourseDTO;
 import trip.dto.HotelDTO;
+import trip.dto.MbtiDTO;
 import trip.service.UserService;
 
 @Controller
@@ -190,6 +192,44 @@ public class MainController {
 		
 		
 		return null;
+	}
+	
+	@RequestMapping("mbtiTestView.do")
+	public String mbtiTestView(HttpServletRequest request) {
+		List<MbtiDTO> list = userService.getMbtiList();
+		request.setAttribute("list", list);
+		return "user/mbtiView";
+	}
+	
+	@RequestMapping("mbtiTest.do")
+	public String mbtiTest(HttpServletRequest request) {
+		System.out.println("A");
+		List<String> list = userService.getMbtiType();
+		int count = userService.getCount();
+		int sum=0;
+		String mbti="";
+		ArrayList<MbtiDTO> mList = new ArrayList<MbtiDTO>();
+		for(int i=1; i<=count/9; i++) {
+			for(int j=1; j<=9; j++) {
+			sum+=Integer.parseInt(request.getParameter(""+(j+(i-1)*9)));
+			}
+			mList.add(new MbtiDTO(list.get(i-1), sum));
+			sum=0;
+		}
+		
+		System.out.println("a"+mList.toString());
+		for(int i=0; i<mList.size(); i+=2) {
+			if(mList.get(i).getCount()>mList.get(i+1).getCount()) {
+				mbti+=mList.get(i).getMbti_type();
+			}else if(mList.get(i).getCount()<mList.get(i+1).getCount()){
+				mbti+=mList.get(i+1).getMbti_type();
+			}else {
+				mbti+=mList.get(i).getMbti_type();
+			}
+			
+		}
+		request.setAttribute("mbti", mbti);
+		return "user/mbtiResultView";
 	}
 	
 }

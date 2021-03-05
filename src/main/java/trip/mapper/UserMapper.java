@@ -10,6 +10,7 @@ import trip.dto.CourseDTO;
 import trip.dto.FileDTO;
 import trip.dto.HotelDTO;
 import trip.dto.HotelRequestDTO;
+import trip.dto.MbtiDTO;
 import trip.dto.NoticeCommentDTO;
 import trip.dto.NoticeDTO;
 import trip.dto.QnaDTO;
@@ -52,5 +53,8 @@ public interface UserMapper {
 	public int tripRatingCheck(Map<String, Object> map);
 	public void insertTripRatingUser(Map<String, Object> map);
 	public int nextnotice(int notice_no);
+	public List<MbtiDTO> getMbtiList();
+	public List<String> getMbtiType();
+	public int getCount();
 
 }
