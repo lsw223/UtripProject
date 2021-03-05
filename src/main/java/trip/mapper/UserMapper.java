@@ -26,7 +26,6 @@ public interface UserMapper {
 	List<TripDTO> selectPopulTripList();
 	TripDTO selectTripInfo(String tripNo);
 	List<CourseDTO> selectCourseInfo(String tripNo);
-	TripDTO selectMbtiTripInfo(String mbti);
 	public List<TripDTO> selectAreaList();
 	public List<HotelDTO> selectHotelInfo(String area_name);
 	public List<TripDTO> selectTripByArea(String area);
@@ -56,5 +55,6 @@ public interface UserMapper {
 	public List<MbtiDTO> getMbtiList();
 	public List<String> getMbtiType();
 	public int getCount();
+	public List<TripDTO> getMbtiTripList(String mbti);
 
 }

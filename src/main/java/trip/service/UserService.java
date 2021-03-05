@@ -54,9 +54,6 @@ public class UserService {
 		return userMapper.selectCourseInfo(tripNo);
 	}
 
-	public TripDTO selectMbtiTripInfo(String mbti) {
-		return userMapper.selectMbtiTripInfo(mbti);
-	}
 
 	public List<TripDTO> selectAreaList() {
 		return userMapper.selectAreaList();
@@ -189,6 +186,10 @@ public class UserService {
 
 	public int getCount() {
 		return userMapper.getCount();
+	}
+	
+	public List<TripDTO> getMbtiTripList(String mbti){
+		return userMapper.getMbtiTripList(mbti);
 	}
 	
 }
