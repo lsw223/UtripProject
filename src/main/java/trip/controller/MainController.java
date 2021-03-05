@@ -60,10 +60,8 @@ public class MainController {
 		
 		//String mbti="ENTJ";
 		List<TripDTO> list = userService.selectPopulTripList();
-		TripDTO dto = userService.selectMbtiTripInfo(userdto.getMbti());
 		List<TripDTO> areaList = userService.selectAreaList();
 		request.setAttribute("list", list);
-		request.setAttribute("dto", dto);
 		request.setAttribute("areaList", areaList);
 		return "user/tripView";
 	}
@@ -228,8 +226,17 @@ public class MainController {
 			}
 			
 		}
+		System.out.println(mbti);
 		request.setAttribute("mbti", mbti);
 		return "user/mbtiResultView";
+	}
+	
+	@RequestMapping("mbtiTripView.do")
+	public String mbtiTripView(HttpSession session, HttpServletRequest request) {
+		UserDTO userdto= (UserDTO) session.getAttribute("user");
+		List<TripDTO> list = userService.getMbtiTripList(userdto.getMbti());
+		request.setAttribute("list", list);
+		return "user/mbtiTripView";
 	}
 	
 }

@@ -177,8 +177,19 @@
 		
 		for (i = 0; i < list.length; i++) {
 			points[i] = new kakao.maps.LatLng(list[i].place_x, list[i].place_y);
+			var x = list[i].place_x;
+			var y = list[i].place_y;
+			var a = parseInt(x);
+			var b = parseInt((x-a)*60);
+			var c = ((x - a) * 60 - b ) * 60;
+			var str = a+"°"+b+"'"+c+'&quot;N';
+			a=parseInt(y);
+			b = parseInt((y-a)*60);
+			c = ((y - a) * 60 - b ) * 60;
+			str += "&#43;"+a+"°"+b+"'"+c+'&quot;E';
+			console.log(str);
 			content[i]= '<div class="customoverlay">'
-				+ '  <a href="https://map.kakao.com/link/map/11394059" target="_blank">'
+				+ '  <a href="https://www.google.co.kr/maps/place/'+str+'" target="_blank">'
 				+ '    <span class="title">'+list[i].course_no+'.'+list[i].place_name+'</span>' + '  </a>' + '</div>';
 		}
 
