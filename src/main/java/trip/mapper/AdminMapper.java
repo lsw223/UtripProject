@@ -40,5 +40,6 @@ public interface AdminMapper {
 	int tripInsertInfo(TripDTO dto);
 	void courseInsertInfo(HashMap<String, Object> map);
 	void courseDelete(String trip_no);
+	void updateFileList(FileDTO fileDTO);
 	
 }
