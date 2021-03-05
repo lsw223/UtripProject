@@ -11,6 +11,7 @@ import trip.dto.CourseDTO;
 import trip.dto.FileDTO;
 import trip.dto.HotelDTO;
 import trip.dto.HotelRequestDTO;
+import trip.dto.MbtiDTO;
 import trip.dto.NoticeCommentDTO;
 import trip.dto.NoticeDTO;
 import trip.dto.QnaDTO;
@@ -176,6 +177,18 @@ public class UserService {
 	}
 	public int nextnotice(int notice_no) {
 		return userMapper.nextnotice(notice_no);
+	}
+
+	public List<MbtiDTO> getMbtiList() {
+		return userMapper.getMbtiList();
+	}
+
+	public List<String> getMbtiType() {
+		return userMapper.getMbtiType();
+	}
+
+	public int getCount() {
+		return userMapper.getCount();
 	}
 	
 }

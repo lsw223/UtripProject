@@ -218,6 +218,15 @@
           from notice)
          where notice_no = #{notice_no}
 	</select>
+	<select id="getMbtiList" resultType="trip.dto.MbtiDTO">
+		select * from mbti_test
+	</select>
+	<select id="getMbtiType" resultType="String">
+		select mbti_type from mbti_test group by mbti_type order by sum(mbti_no)
+	</select>
+	<select id="getCount" resultType="int">
+		select max(mbti_no) from mbti_test
+	</select>
 </mapper>
 
 
