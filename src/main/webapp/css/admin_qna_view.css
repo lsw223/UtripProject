@@ -91,9 +91,6 @@
 	margin: 50px;
 }
 
-#qna_content_div{
-		
-}
 .qna_content {
 	margin: 0px 40px;
 	margin-bottom: 50px;
@@ -101,14 +98,15 @@
 	padding: 30px;
 	font-weight: bold;
 	font-size: 20px;
-}
-
-#response_form {
-	
+	display: inline-block;
+	color:  #506EA5;
+	word-break:break-all;
+	width: 650px;
 }
 
 #response_table {
 	margin: 20px auto;
+	width: 600px;
 }
 
 textarea {
@@ -133,9 +131,14 @@ textarea {
 #response_date{
 	color: #B4B4B4;
 }
-#Q{
+#A{
+	font-weight: bold;
+}
+
+#A_1{
 	font-size: 25px;
 	font-weight: bold;
+	color: #2478FF;
 }
 
 #btn_delete{
@@ -155,5 +158,16 @@ textarea {
 	background-color: #4e7be7;
 }
 #response{
-	margin: 20px;
+	width: 700px;
+	margin: 20px auto;
+}
+#response td{
+	width: 650px;
+	word-break:break-all;
+}
+
+#response_yet{
+	font-size: 20px;
+	margin: 50px;
+	color: #FF8224;
 }
