@@ -7,9 +7,9 @@
 <meta charset="UTF-8">
 <script src="lib/jquery-3.5.1.min .js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<link rel="stylesheet" href="css/hotel_request_view.css">
+<link rel="stylesheet" href="css/hotel_request_view.css" media="screen and (min-width:1024px)">
+<link rel="stylesheet" href="css/hotel_request_view_tab.css" media="screen and (max-width:1024px)">
 <title>호텔 제휴신청 :: UTrip</title>
-
 </head>
 <c:choose>
 	<c:when test="${sessionScope.user.role == 'ADMIN' }">
@@ -66,9 +66,7 @@
 				<td></td>
 			</tr>
 			<tr>
-				<td></td>
-				<td></td>
-				<td id="td_btn">
+				<td id="td_btn" colspan=3>
 					<a href=# id="btn_submit" class="button">신청하기</a>
 				</td>
 			</tr>
@@ -157,6 +155,9 @@ $("#btn_request_list_view").click(function(){
 								+"<span>"+list[i].request_date+"</span></p>";
 				}
 				$("#request_list").html(str);
+				if($(window).width()<1024){
+					$("#request_list span").css({"font-size":"12px"})
+				}
 			}
 		}
 	})

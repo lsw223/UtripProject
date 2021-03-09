@@ -95,17 +95,6 @@ public class AdminService {
 		return mapper.tripUpdateInfo(dto);
 	}
 
-	public void courseUpdate(ArrayList<String> placeList, String trip_no) {
-		for (int i = 0; i < placeList.size(); i++) {
-			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("place_no", placeList.get(i));
-			map.put("course_no", i + 1);
-			map.put("trip_no", trip_no);
-			mapper.courseUpdate(map);
-		}
-
-	}
-
 	public int deleteTripInfo(String trip_no) {
 		return mapper.deleteTripInfo(trip_no);
 	}
@@ -137,6 +126,15 @@ public class AdminService {
 			count++;
 		}
 		return count;
+	}
+
+	public void courseDelete(String trip_no) {
+		mapper.courseDelete(trip_no);
+	}
+
+	public void updateFileList(ArrayList<FileDTO> fList) {
+		for(int i = 0;i<fList.size();i++)
+			mapper.updateFileList(fList.get(i));
 	}
 	
 }

@@ -28,7 +28,6 @@ header{
 	transition:all 0.3s;
 	position:relative;
 	width:100%;
-	min-width: 1200px;
 	z-index:3;
 	border-bottom: 1px solid #e9e9e9;
 	background-color: white;
@@ -40,10 +39,13 @@ header div:first-child{
 	padding:15px 0;
 }
 /****************************/
-header ul{
+header>ul{
+	display:block;
 	width:45%;
+	min-width:503px;
 	float:left;
 	list-style-type: none;
+	box-sizing: border-box;
 }
 header>ul a:hover{
 	color:#816bff;
@@ -58,13 +60,13 @@ header li a{
 }
 /****************************/
 #info{
-	width:45%;
 	float:right;
 	padding:15px 25px;
 	box-sizing:border-box;
 	text-align: right;
 }
 #info ul{
+	list-style-type: none;
 	float:right;
 	background-color: #f1f1f1;
 	border-radius: 5px;
@@ -85,18 +87,55 @@ header #info li{
 	display: none;
 }
 </style>
-<script>
-	$(function(){
-		$("#user").click(function(){
-			$("#user_dropdown").toggleClass("hidden");
-		})
-	})
-</script>
+<!-- tablit, mobile -->
+<style media="screen and (min-width:0) and (max-width:1024px)">
+	header>ul{
+		width:100%;
+		display:none;
+		height:270px;
+		background-color: white;
+		border-radius: 0 0 10px 10px;
+	}
+	header>ul li{
+		width:100%;
+		text-align: center;
+	}
+	#info{
+		display: none;
+		float:left;
+		text-align: left;
+		background-color: white;
+	}
+	header>div:first-of-type{
+		width:100%;
+		text-align: center;
+	}
+	#menu{
+		display: block;
+		float:right;
+		position:absolute;
+		top:13px;
+		right:10px;
+	}
+	#btn_user{
+		display: block;
+		float:left;
+		position:absolute;
+		top:16px;
+		left:10px;
+	}
+</style>
 <body>
 	<header>
 		<div>
+		<a href="#"  class="hidden" id="btn_user">
+			<img alt="사용자 메뉴" src="img/user.png">
+		</a>
 			<a href="/">UTrip</a>
 		</div>
+		<a href="#" id="menu" class="hidden">
+			<img alt="메뉴" src="img/menu.png">
+		</a>
 		<ul>
 			<li><a href="notice.do">공지사항</a></li> <!-- 임시 -->
 			<li><a href="qnaView.do">QnA</a></li>
@@ -123,5 +162,32 @@ header #info li{
 			</ul>
 		</div>
 	</header>
-	
+	<script>
+	$(function(){
+		$("#user").click(function(){
+			$("#user_dropdown").toggleClass("hidden");
+		})
+		
+		$("#menu").click(function(e){
+			e.preventDefault();
+			$("#info").slideUp(400)
+			$("header>ul").slideToggle(400)
+		})
+		$("#btn_user").click(function(e){
+			e.preventDefault();
+			$("header>ul").slideUp(400)
+			$("#info").slideToggle(400)
+		})
+		
+		$(window).resize(function(){
+			if($(window).width() > 1026){
+				$("header>ul").css({"display":"block"});
+				$("#info").css({"display":"block"});
+			}else{
+				$("header>ul").css({"display":"none"});
+				$("#info").css({"display":"none"});
+			}
+		})
+	})
+	</script>
 </body>
