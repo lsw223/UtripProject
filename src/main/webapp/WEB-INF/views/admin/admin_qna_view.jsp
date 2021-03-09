@@ -26,14 +26,14 @@
 		<div id="select_qna">
 			<h2 class="qna_title">
 				<ul>
-					<li>제목 : ${requestScope.dto.title }</li>
-					<li>작성자 : ${requestScope.dto.user_id }</li>
-					<li>작성일 : ${requestScope.dto.write_date }</li>
+					<li>제목 <span>${requestScope.dto.title }</span></li>
+					<li>작성자 <span>${requestScope.dto.user_id }</span></li>
+					<li>작성일 <span>${requestScope.dto.write_date }</span></li>
 					<li>문의 내용</li>
 				</ul>
 			</h2>
 			<div id="qna_content_div">
-				<p class="qna_content">${requestScope.dto.content }</p>
+				<p class="qna_content"><span>${requestScope.dto.content }</span></p>
 			</div>
 			<hr>
 			<div id="response_form">
@@ -51,14 +51,16 @@
 							</tr>
 						</table>
 					</c:if>
-					<table>
+					<table id="response">
 						<c:choose>
 							<c:when test="${response.response_content ==null }">
-					현재 답변이 완료되지 않았습니다.
-				</c:when>
+								<p>
+									<span id="response_yet">현재 답변이 완료되지 않았습니다</span>
+								</p>
+							</c:when>
 							<c:otherwise>
 								<tr>
-									<td><span id="Q">Q.</span>${response.response_content }</td>
+									<td id="A"><span id="A_1">A.</span>${response.response_content }</td>
 								</tr>
 								<tr>
 									<td id="response_date">${response.response_date}</td>

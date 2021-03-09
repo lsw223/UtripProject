@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" name="viewport" content="width=device-width">
 <script src="lib/jquery-3.5.1.min .js"></script>
 <title>QnA :: UTrip</title>
 </head>
@@ -19,9 +19,10 @@
 					id="sp_2">문의사항</span>
 			</p>
 		</div>
-		<hr class="h_1">
-		<a href="qnaFaqView.do" id="btn_faq_view" class="button">>자주 묻는 질문
-			보러가기</a>
+		<div id="faq_div">
+			<a href="qnaFaqView.do" id="btn_faq_view" class="button">>자주 묻는
+				질문 보러가기</a>
+		</div>
 		<c:if test="${requestScope.list == null}">
 			<div id="not_login">
 				<img id="img_2" src="img/qna_img_2.png"> <span id="sp_3">문의는
@@ -29,13 +30,13 @@
 			</div>
 		</c:if>
 		<c:if test="${requestScope.list != null}">
-			<hr class="h_2">
 			<form id="sendQnA" action="sendQnA.do">
 				<h1>문의하기</h1>
 				<table id="table_qna">
 					<tr>
 						<th>제목</th>
-						<td><input type="text" name="title" id="title"></td>
+						<td><input type="text" name="title" id="title"
+							placeholder="한글 최대 20자"></td>
 					</tr>
 					<tr>
 						<th>작성자</th>
@@ -44,7 +45,8 @@
 					</tr>
 					<tr>
 						<th style="vertical-align: top;">내용</th>
-						<td><textarea name="content" id="content"></textarea></td>
+						<td><textarea name="content" id="content"
+								placeholder="한글 최대 500자"></textarea></td>
 					</tr>
 					<tr>
 						<th></th>
@@ -53,8 +55,9 @@
 					</tr>
 				</table>
 			</form>
-			<hr class="h_2">
-			<h1 id="h1_1">MY 문의</h1>
+			<div id="MY">
+				<h1>MY 문의</h1>
+			</div>
 			<div id="qna_list">
 				<c:if test="${requestScope.list == null }">
 					<span>문의 내역이 없습니다</span>
@@ -62,15 +65,15 @@
 				<c:forEach var="list" items="${requestScope.list}">
 					<table class="result">
 						<tr>
-							<td>제목</td>
+							<td id="result_1">제목</td>
 							<td>${list.title }</td>
 						</tr>
 						<tr>
-							<td>내용</td>
+							<td id="result_1">내용</td>
 							<td>${list.content }</td>
 						</tr>
 						<tr>
-							<td>작성일</td>
+							<td id="result_1">작성일</td>
 							<td>${list.write_date}</td>
 						</tr>
 						<tr>
@@ -78,20 +81,23 @@
 							<td></td>
 							<td></td>
 							<td></td>
-							<td style="text-align: right;'"><a
+							<td><a
 								href="deleteQna.do?qna_no=${list.qna_no }" id="btn_delete"
 								class="btn">삭제</a>
 							<td>
 						</tr>
 					</table>
-					<hr>
 					<c:choose>
 						<c:when test="${list.response_content ==null }">
-							<span id="no_response">현재 답변이 완료되지 않았습니다.</span>
+							<div id="response_yet">
+								<span id="response_yet_span">현재 답변이 완료되지 않았습니다.</span>
+							</div>
 						</c:when>
 						<c:otherwise>
-							<span id="response_content">${list.response_content }</span>
-							<span id="response_date">${list.response_date}</span>
+							<div id="response">
+								<span id="response_content">A.${list.response_content }</span><br>
+								<span id="response_date">${list.response_date}</span>
+							</div>
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
