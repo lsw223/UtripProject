@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="css/area_view.css">
+<link rel="stylesheet" href="css/area_view_tab.css" media="screen and (max-width:1024px)">
 <title>지역별 여행정보 :: UTrip</title>
 <script src="lib/jquery-3.5.1.min .js"></script>
 <script>

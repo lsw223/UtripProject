@@ -56,5 +56,9 @@ public interface UserMapper {
 	public List<String> getMbtiType();
 	public int getCount();
 	public List<TripDTO> getMbtiTripList(String mbti);
-
+	public List<TripDTO> selectMbtiTripList(String mbti);
+	public List<TripDTO> selectPopulByLike();
+	public int amountB(String mb);
+	public int amountC(String mb);
+	public List<String> getEmailList(String mbti);
 }
