@@ -1,24 +1,21 @@
 @charset "UTF-8";
 
-@media only screen and (min-width:960px) { /* 960px 이상의 브라우저 */
+@media only screen and (max-width:480px) { 
+	/* mobile*/
 }
-
-@media only screen and (min-width:1440px) { /* 1440px 이상의 브라우저 */
+@media only screen and (min-width:480px) and ( max-with:1024px){
+	/* tablit */
 }
-
-@media only screen and (min-width:2000px) { /* 2000px 이상의 브라우저 mac용 */
+@media only screen and (min-width:1024px) { 
+	/* pc */
 }
-
-@media only screen and (max-device-width:480px) {
-	/*  480px 이하 iPhone용 */
-}
-
-@media only screen and (device-width:768px) { /* iPad용*/
-}
-
 
 body{
+	min-width: 1200px;
 }
+
+
+
 #container {
 	margin: 0 auto;
 	width: 80%;
