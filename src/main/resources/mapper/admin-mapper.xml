@@ -118,7 +118,7 @@
 	<insert id="courseInsertInfo" parameterType="map">
 		insert into course values(#{trip_no},#{course_no},#{place_no})
 	</insert>
-	<delete id="courseDelete">
+	<delete id="courseDelete" parameterType="String">
 		delete from course where trip_no like #{trip_no}
 	</delete>
 	<update parameterType="trip.dto.FileDTO" id="updateFileList">

@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+p { margin:20px 0px; }
+
+.btn-group.btn-group-toggle {
+    width: 100%;
+    text-align: center;
+}
+label{
+	width:100%;
+}
+#close{
+	margin:0 auto;
+	position:absolute;
+	right:5%;
+	box-sizing: border-box;
+}

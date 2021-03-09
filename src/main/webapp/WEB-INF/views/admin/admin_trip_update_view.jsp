@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>글쓰기 페이지</title>
 <link rel="stylesheet" href="css/admin_trip_insert_view.css">
 <script src="lib/jquery-3.5.1.min .js"></script>
