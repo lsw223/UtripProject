@@ -15,7 +15,7 @@
 		<form action="kakaoRegister.do" id="frm_register" method="post">
 			<p id="p_mbti">
 			<small>MBTI</small><br>
-				<select name="mbti" >
+				<select name="mbti" id="mbti">
 					<option value="INTP">INTP</option>
 					<option value="ENTP">ENTP</option>
 					<option value="ISTP">ISTP</option>
@@ -35,7 +35,7 @@
 				</select>
 				<small>
 					 본인의 MBTI 타입을 모른다면?
-					<a href="https://www.16personalities.com/ko/%EB%AC%B4%EB%A3%8C-%EC%84%B1%EA%B2%A9-%EC%9C%A0%ED%98%95-%EA%B2%80%EC%82%AC" target="_blank">클릭</a>
+					<a href="#" onclick="window.open('mbtiTestView.do','mbti','width=500px, height=600px, left=0, top=0, resizable = no')">클릭</a>
 				</small> 
 			</p>
 			<button>회원가입</button>
