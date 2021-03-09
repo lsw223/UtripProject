@@ -1,0 +1,5 @@
+package trip.enums;
+
+public enum MBTIType {
+	ISTJ,ISTP,ISFJ,ISFP,INFJ,INFP,INTJ,INTP,ESTP,ESTJ,ESFP,ESFJ,ENFP,ENFJ,ENTP,ENTJ
+}

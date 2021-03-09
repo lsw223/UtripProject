@@ -512,4 +512,6 @@ public class AdminController {
 		return new RedirectView("tripDetailView.do?trip_no=" + trip_no);
 	}
 
+	
+	
 }
