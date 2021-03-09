@@ -26,7 +26,6 @@ public class UserService {
 	private UserMapper userMapper;
 	
 	public int register(UserDTO user) {
-		System.out.println(user); 
 		return userMapper.register(user);
 	}
 
@@ -191,5 +190,25 @@ public class UserService {
 	public List<TripDTO> getMbtiTripList(String mbti){
 		return userMapper.getMbtiTripList(mbti);
 	}
-	
+
+	public List<TripDTO> selectMbtiTripList(String mbti) {
+		return userMapper.selectMbtiTripList(mbti);
+	}
+
+	public List<TripDTO> selectPopulByLike() {
+		return userMapper.selectPopulByLike();
+	}
+
+	public int amountB(String mb) {
+		return userMapper.amountB(mb);
+	}
+
+	public int amountC(String mb) {
+		return userMapper.amountC(mb);
+	}
+
+	public List<String> getEmailList(String mbti) {
+		return userMapper.getEmailList(mbti);
+	}
+
 }

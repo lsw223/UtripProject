@@ -90,7 +90,7 @@ public class UserController {
 		}
 		session.setAttribute("login", true);
 		session.setAttribute("user", user);
-		return "/TripMain";
+		return "redirect:/";
 	}
 	// 로그아웃
 	@RequestMapping("/logout.do")

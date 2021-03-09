@@ -26,10 +26,11 @@
 		select * from utrip_user where id like #{user_id}
 	</select>
 	<select id="selectPopulTripList" resultType="trip.dto.TripDTO">
-		select area_name, trip_no, title, substr(content,1,30), video_url,
-		rating from
+		select area_name, t.trip_no, title, substr(content,1,30) as content, video_url,
+		rating, total from
 		(select area_name, t.* from area a, trip t where substr(t.trip_no,1,2) like
-		a.area order by rating desc) t where rownum<![CDATA[<]]>=5
+		a.area order by rating desc) t, trip_like l 
+		where rownum<![CDATA[<]]>=5 and t.trip_no like l.trip_no
 	</select>
 	<select id="selectTripInfo" parameterType="String"
 		resultType="trip.dto.TripDTO">
@@ -50,6 +51,13 @@
 		trip, area where substr(trip_no,1,2) like area and trip_no like
 		(select trip_no from (select * from trip_like order by #{mbti})
 		where rownum = 1)
+	</select>
+		<select id="selectMbtiTripList" parameterType="String" resultType="trip.dto.TripDTO">
+		select area_name, t.trip_no, title, substr(content,0,20), video_url,
+		rating,${mbti} as total from
+		trip t, area,trip_like l  where t.trip_no like l.trip_no and substr(t.trip_no,1,2) like area and t.trip_no in
+		(select trip_no from (select rownum, ti.* from (select * from trip_like order by intj desc)ti)
+		where rownum <![CDATA[<]]>= 5) order by ${mbti} desc
 	</select>
 	<select id="selectAreaList" resultType="trip.dto.TripDTO">
 		select a.area_name,
@@ -282,45 +290,24 @@
 			</when>
 		</choose> 
 		) t where rownum <![CDATA[ < ]]> 6) b on a.trip_no = b.trip_no
+	<select id="selectPopulByLike" resultType="trip.dto.TripDTO">
+		select t.trip_no,title,rating,total,area_name from trip t, area a,
+		(select trip_no,total from
+		(select rownum, trip_no,total from (select * from trip_like order by total desc))
+		where rownum <![CDATA[<]]>= 5) r
+		where t.trip_no like r.trip_no and area like substr(t.trip_no,0,2)
+	</select>
+	<select id="amountB" parameterType="String" resultType="int">
+		select count(mbti) from
+		(select user_id,mbti from board,utrip_user where id = user_id and write_date > sysdate-30)
+		where mbti like #{mb}
+	</select>
+	<select id="amountC" parameterType="String" resultType="int">
+		select count(mbti) from
+		(select user_id,mbti from board_comment , utrip_user where id = user_id and write_date > sysdate-30)
+		where mbti like #{mb}
+	</select>
+	<select id="getEmailList" parameterType="String" resultType="String">
+		select email from utrip_user where mbti like #{mbti}
 	</select>
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
