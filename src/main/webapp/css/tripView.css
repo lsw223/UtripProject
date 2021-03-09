@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@media screen and (min-width : 481px){
 html,body{
 	height:100%;
 }
@@ -126,10 +127,6 @@ footer{
 	outline: none;
 }
 
-
-
-
-
 button{
   background:#1AAB8A;
   color:#fff;
@@ -168,4 +165,140 @@ button:hover:before,button:hover:after{
   width:100%;
   transition:800ms ease all;
 }
+}
 
+@media screen and (max-width : 480px){
+	html,body{
+	height:100%;
+	}
+footer{
+	position: relative !important;
+}
+#container{
+	min-height:84%;
+	width:100%;
+	margin:0 auto;
+}
+#top{
+	padding:0; 
+	
+}
+#top small{
+	font-weight:400;
+	color:#898989;
+}
+#top h2{
+	padding:10px 0;	
+	font-weight: 700;
+	font-size: 20px;
+	color:#121212;
+	margin-bottom: 0px;
+}
+.trip{
+	display:block;
+	width:100%;
+	height:130px;
+	margin:30px 0;
+	border:1px solid #d8d8d8; 
+	border-radius: 20px;
+	box-shadow: 1px 3px 2px #e8e8e8;
+	transition: all 0.2s;
+	outline: none;
+}
+.trip:hover{
+	box-shadow: 1px 3px 10px #20d5ac;
+}
+.trip img{
+	width:40%;
+	height:100%;
+	border-radius: 20px 0 0 20px;
+	float:left;
+	top:0px;
+}
+.info{
+	float:left;
+	width:55%;
+	height:100%;
+	padding:20px;
+	box-sizing: border-box;
+}
+.content{
+	width:60%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-wrap: break-word;
+	display: none;
+	-webkit-line-clamp: 3; /* ellipsis line */
+	-webkit-box-orient: vertical;
+	line-height: 1.2em;
+	height: 3.6em;
+}
+.info small{
+	display:inline-block;
+	margin-bottom:10px;
+	color:#cccccc;
+	font-weight: 600;
+}
+.title{
+	margin-bottom:10px;
+	display: inline-block;
+	font-size: small;
+}
+.rating{
+	color:#6a67ce;
+	font-weight:900;
+	font-size: 14px;
+	padding-left:10px;
+}
+.for_slick{
+	width:100%;
+	float:left;
+}
+}
+footer{
+	clear:both;
+}
+.slide{
+	outline: none;
+	margin-bottom: 10px;
+}
+
+button{
+  background:#1AAB8A;
+  color:#fff;
+  border:none;
+  position:relative;
+  height:40px;
+  font-size:xx-small;
+  padding:0 2em;
+  cursor:pointer;
+  transition:800ms ease all;
+  outline:none;
+  float:right;
+  margin-right: 10px;
+}
+button:hover{
+  background:#fff;
+  color:#1AAB8A;
+}
+button:before,button:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: #1AAB8A;
+  transition:400ms ease all;
+}
+button:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+button:hover:before,button:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
+}

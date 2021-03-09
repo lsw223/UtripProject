@@ -235,6 +235,61 @@
 	<select id="getCount" resultType="int">
 		select max(mbti_no) from mbti_test
 	</select>
+	<select id="getMbtiTripList" parameterType="String" resultType="trip.dto.TripDTO">
+		select a.* from (select area_name, trip_no, title, substr(content,0,20), video_url,	rating from	trip, area where substr(trip_no,1,2) like area) a join 
+		(select t.trip_no from (select * from trip_like
+		<choose>
+			<when test="mbti.equals('INTP')">
+			order by INTP desc
+			</when>
+			<when test="mbti.equals('ENTP')">
+			order by ENTP desc
+			</when>
+			<when test="mbti.equals('ISTP')">
+			order by ISTP desc
+			</when>
+			<when test="mbti.equals('INFP')">
+			order by INFP desc
+			</when>
+			<when test="mbti.equals('INTJ')">
+			order by INTJ desc
+			</when>
+			<when test="mbti.equals('ESTP')">
+			order by ESTP desc
+			</when>
+			<when test="mbti.equals('INFJ')">
+			order by INFJ desc
+			</when>
+			<when test="mbti.equals('ISFP')">
+			order by ISFP desc
+			</when>
+			<when test="mbti.equals('ISFJ')">
+			order by ISFJ desc
+			</when>
+			<when test="mbti.equals('ESFP')">
+			order by ESFP desc
+			</when>
+			
+			<when test="mbti.equals('ESTJ')">
+			order by ESTJ desc
+			</when>
+			<when test="mbti.equals('ENFJ')">
+			order by ENFJ desc
+			</when>
+			<when test="mbti.equals('ESFJ')">
+			order by ESFJ desc
+			</when>
+			<when test="mbti.equals('ENTJ')">
+			order by INFJ desc
+			</when>
+			<when test="mbti.equals('ENFP')">
+			order by ENFP desc
+			</when>
+			<when test="mbti.equals('ISTJ')">
+			order by ISTJ desc
+			</when>
+		</choose> 
+		) t where rownum <![CDATA[ < ]]> 6) b on a.trip_no = b.trip_no
 	<select id="selectPopulByLike" resultType="trip.dto.TripDTO">
 		select t.trip_no,title,rating,total,area_name from trip t, area a,
 		(select trip_no,total from
@@ -256,43 +311,3 @@
 		select email from utrip_user where mbti like #{mbti}
 	</select>
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

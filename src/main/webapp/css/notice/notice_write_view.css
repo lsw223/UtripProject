@@ -54,7 +54,7 @@ h2 {
 
 .btn:hover {
 	background-color: #282828;
-	color: #FFFFFF
+	color: #FFFFFF !important;
 }
 
 textarea {
