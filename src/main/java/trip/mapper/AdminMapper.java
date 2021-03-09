@@ -34,11 +34,12 @@ public interface AdminMapper {
 	int updateNotice(NoticeDTO dto);
 	List<CourseDTO> selectCourseList(String area_name);
 	int tripUpdateInfo(TripDTO dto);
-	void courseUpdate(HashMap<String, Object> map);
 	int deleteTripInfo(String trip_no);
 	List<String> selectAreaList();
 	String searchTripNo(String area);
 	int tripInsertInfo(TripDTO dto);
 	void courseInsertInfo(HashMap<String, Object> map);
+	void courseDelete(String trip_no);
+	void updateFileList(FileDTO fileDTO);
 	
 }

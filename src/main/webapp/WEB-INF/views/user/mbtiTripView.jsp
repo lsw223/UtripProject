@@ -30,10 +30,8 @@
 					추가</button>
 			</c:when>
 		</c:choose>
-			<c:if test="${sessionScope.user.mbti != null}">
-				<button onclick="javascript:location.href='/mbtiTripView.do';">${sessionScope.user.mbti} 추천 여행정보 확인</button>
-			</c:if>
-					<h2>인기 투어</h2>
+				<button onclick="javascript:location.href='/tripView.do';">인기 여행정보 확인</button>
+					<h2>${sessionScope.user.mbti} 추천 투어</h2>
 			</div>
 			<div class="for_slick single-item">
 				<c:forEach var="list" items="${requestScope.list }">

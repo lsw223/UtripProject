@@ -141,7 +141,13 @@ public class AdminController {
 	}
 
 	@RequestMapping("/updateNoticeview.do")
-	public String updateNotice() {
+	public String updateNotice(HttpServletRequest request) {
+		int notice_no = Integer.parseInt(request.getParameter("notice_no"));
+		List<FileDTO> fList = adminService.selectFileList(notice_no);
+		NoticeDTO detail = adminService.selectNotice(notice_no);
+		request.setAttribute("file", fList);
+		request.setAttribute("detail", detail);
+		
 		return "admin/admin_notice_update_view";
 	}
 
@@ -160,104 +166,97 @@ public class AdminController {
 
 	@RequestMapping("/noticeWriteAction.do")
 	public RedirectView noticeWriteAction(MultipartHttpServletRequest request) {
-		// 글번호 먼저 발급
-		int notice_no = adminService.noticeno();
-
-		String title = request.getParameter("title");
-		String nwriter = request.getParameter("nwriter");
-		String content = request.getParameter("content");
-		String write_date = request.getParameter("write_date");
-		adminService.insertNotice(new NoticeDTO(notice_no, title, nwriter, content, write_date));
-		request.setAttribute("notice_no", notice_no);
-
-		List<MultipartFile> fileList = request.getFiles("file");
-		System.out.println(fileList.size());
-		String path = "c:\\fileupload\\" + nwriter + "\\";
-		ArrayList<FileDTO> fList = new ArrayList<FileDTO>();
-
-		int nno = adminService.newnno();
-		String writer = request.getParameter("nwriter");
-		if (writer == null) {
-			writer = "test";
-		}
-
-		for (MultipartFile mf : fileList) {
-			String originalFileName = mf.getOriginalFilename();
-			long fileSize = mf.getSize();
-			if (fileSize == 0)
-				continue;
-			System.out.println("originalFileName : " + originalFileName);
-			System.out.println("fileSize : " + fileSize);
-			System.err.println(mf.getContentType());
-
-			try {
-				// 파일 업로드
-				String safeFile = path + originalFileName;
-				fList.add(new FileDTO(nno, writer, originalFileName));
-				File parentPath = new File(path);
-				if (!parentPath.exists())
-					parentPath.mkdirs();// 경로 생성
-				mf.transferTo(new File(safeFile));
-
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-		}
-		adminService.insertFileList(fList);
-		return new RedirectView("adminnotice.do?notice_no=" + notice_no);
+		//글번호 먼저 발급
+				int notice_no = adminService.noticeno();
+				
+				String title = request.getParameter("title");
+				String nwriter = request.getParameter("nwriter");
+				String content = request.getParameter("content");
+				String write_date = request.getParameter("write_date");
+				adminService.insertNotice(new NoticeDTO(notice_no, title, nwriter, content, write_date));
+				request.setAttribute("notice_no", notice_no);
+				
+				List<MultipartFile> fileList = request.getFiles("file"); 
+				System.out.println(fileList.size());
+				String path = "c:\\fileupload\\"+nwriter+"\\";
+				ArrayList<FileDTO> fList =new  ArrayList<FileDTO>();
+				
+				int nno = adminService.newnno();
+				String writer = request.getParameter("nwriter");
+				if(writer == null) {
+					writer = "test";
+				}
+				
+				for(MultipartFile mf : fileList) {
+					String originalFileName = mf.getOriginalFilename();
+					long fileSize = mf.getSize();
+					if(fileSize == 0) continue;
+					System.out.println("originalFileName : " + originalFileName);
+					System.out.println("fileSize : "+ fileSize);
+					System.err.println(mf.getContentType());
+					
+					try {
+					//파일 업로드
+					String safeFile = path + originalFileName;
+					fList.add(new FileDTO(nno, notice_no, writer, originalFileName));
+					File parentPath = new File(path);
+					if(!parentPath.exists()) parentPath.mkdirs();//경로 생성
+						mf.transferTo(new File(safeFile));	
+					
+					} catch (IllegalStateException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					
+				}
+				adminService.insertFileList(fList);
+				return new RedirectView("adminnotice.do?notice_no="+notice_no);
 	}
-
 	@RequestMapping("/noticeUpdateAction.do")
-	public RedirectView noticeUodateAction(MultipartHttpServletRequest request) {
-		// 글번호 먼저 발급
+	public RedirectView noticeUpdateAction(MultipartHttpServletRequest request,
+			NoticeDTO dto, FileDTO fileDTO ) {
 		int notice_no = Integer.parseInt(request.getParameter("notice_no"));
-		String title = request.getParameter("title");
-		String nwriter = request.getParameter("nwriter");
-		String content = request.getParameter("content");
-		String write_date = request.getParameter("write_date");
-		adminService.updateNotice(new NoticeDTO(notice_no, title, nwriter, content, write_date));
-
-		List<MultipartFile> fileList = request.getFiles("file");
-		System.out.println(fileList.size());
-		String path = "c:\\fileupload\\" + nwriter + "\\";
-		ArrayList<FileDTO> fList = new ArrayList<FileDTO>();
-
-		int nno = adminService.newnno();
 		String writer = request.getParameter("nwriter");
-		if (writer == null) {
+		String nwriter = request.getParameter("writer");
+		adminService.updateNotice(dto);
+		
+		List<MultipartFile> fileList = request.getFiles("file"); 
+		System.out.println(fileList.size());
+		if(writer == null) {
 			writer = "test";
 		}
-
-		for (MultipartFile mf : fileList) {
+		String path = "c:\\fileupload\\"+writer+"\\";
+		ArrayList<FileDTO> fList =new  ArrayList<FileDTO>();
+		
+		int nno = Integer.parseInt(request.getParameter("nno"));
+		
+		System.out.println("nno : " + nno);
+		
+		for(MultipartFile mf : fileList) {
 			String originalFileName = mf.getOriginalFilename();
 			long fileSize = mf.getSize();
-			if (fileSize == 0)
-				continue;
+			if(fileSize == 0) continue;
 			System.out.println("originalFileName : " + originalFileName);
-			System.out.println("fileSize : " + fileSize);
+			System.out.println("fileSize : "+ fileSize);
 			System.err.println(mf.getContentType());
-
+			
 			try {
-				// 파일 업로드
+			//파일 업로드
 				String safeFile = path + originalFileName;
-				fList.add(new FileDTO(nno, writer, originalFileName));
+				fList.add(new FileDTO(nno, notice_no, writer, originalFileName));
 				File parentPath = new File(path);
-				if (!parentPath.exists())
-					parentPath.mkdirs();// 경로 생성
-				mf.transferTo(new File(safeFile));
-
+			if(!parentPath.exists()) parentPath.mkdirs();//경로 생성
+				mf.transferTo(new File(safeFile));	
 			} catch (IllegalStateException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
+			
 		}
-		adminService.insertFileList(fList);
-		return new RedirectView("adminnoticeView.do?notice_no=" + notice_no);
+		adminService.updateFileList(fList);
+		return new RedirectView("adminnoticeView.do?notice_no="+notice_no);
 	}
 
 	@RequestMapping("/fileDownload.do")
@@ -329,24 +328,28 @@ public class AdminController {
 
 	@RequestMapping("/adminnoticeView.do")
 	public String adminnoticeView(HttpServletRequest request) {
-		// 게시글 하나 읽음
-		// 1. request에서 게시글 번호 읽어옴
-		int notice_no = 0;
-		if (request.getParameter("notice_no") != null)
-			notice_no = Integer.parseInt(request.getParameter("notice_no"));
-		else
-			notice_no = (int) request.getAttribute("notice_no");
-		// 2. DB 해당 게시글 정보 읽어옴
-		NoticeDTO dto = adminService.selectNotice(notice_no);
-		// 2-2. 첨부파일 로드 부분
-		List<FileDTO> fList = adminService.selectFileList(notice_no);
-		System.out.println(fList.toString());
-		request.setAttribute("notice", dto);
-		request.setAttribute("file", fList);
-
-		return "admin/admin_notice_view";
-	}
-
+		//게시글 하나 읽음
+				//1. request에서 게시글 번호 읽어옴
+				int notice_no = 0;
+				if(request.getParameter("notice_no") != null)
+					notice_no = Integer.parseInt(request.getParameter("notice_no"));
+				else
+					notice_no = (int)request.getAttribute("notice_no");
+				
+				System.out.println("notice_no : " + notice_no);
+				
+				//2. DB 해당 게시글 정보 읽어옴
+				NoticeDTO dto = adminService.selectNotice(notice_no);
+				//2-2. 첨부파일 로드 부분
+				List<FileDTO> fList = adminService.selectFileList(notice_no);
+				request.setAttribute("notice", dto);
+				request.setAttribute("file", fList);
+				
+				System.out.println("req : " + request.getAttribute("file"));
+				
+				
+				return "admin/admin_notice_view";
+			}
 	// 조성일 추가내용
 	@RequestMapping("tripUpdateView.do")
 	public String tripUpdateView(HttpServletRequest request, HttpServletResponse response, String tripNo) {
@@ -410,8 +413,8 @@ public class AdminController {
 		TripDTO dto = new TripDTO(trip_no, title, content);
 		int count = adminService.tripUpdateInfo(dto);
 		System.out.println(count);
-
-		adminService.courseUpdate(placeList, trip_no);
+		adminService.courseDelete(trip_no);
+		adminService.courseInsertInfo(placeList, trip_no);
 		return new RedirectView("tripDetailView.do?trip_no=" + trip_no);
 	}
 
@@ -509,4 +512,6 @@ public class AdminController {
 		return new RedirectView("tripDetailView.do?trip_no=" + trip_no);
 	}
 
+	
+	
 }

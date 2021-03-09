@@ -1,3 +1,4 @@
+<%@page import="trip.dto.TripDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -8,6 +9,7 @@
 <meta charset="utf-8">
 <script src="lib/jquery-3.5.1.min .js"></script>
 <link rel="stylesheet" href="css/trip_detail_view.css">
+<link rel="stylesheet" href="css/trip_detail_view_tab.css" media="screen and (max-width:1024px)">
 <title>여행 코스 :: UTrip</title>
 <style>
 .customoverlay {
@@ -86,7 +88,9 @@
 			</c:if>
 			<span id="rating">
 				평점 
-				<span>${requestScope.dto.rating }</span> 
+				<span>
+					<%=Math.min(((TripDTO)request.getAttribute("dto")).getRating(),5) %>
+				</span> 
 			</span>
 			<a href="#">평가하기</a>
 		</div>
@@ -110,7 +114,7 @@
 					<a href="#" id="deleteTripInfo"class="button">삭제</a>
 				</c:if>
 				<span id="go_back">
-					<a href="#" class="button" onclick="history.back()">목록보기</a>
+					<a href="areaView.do?area=${fn:substring(requestScope.dto.trip_no,0,2)}" class="button" >목록보기</a>
 				</span>
 			</p>
 		</div>
@@ -177,8 +181,19 @@
 		
 		for (i = 0; i < list.length; i++) {
 			points[i] = new kakao.maps.LatLng(list[i].place_x, list[i].place_y);
+			var x = list[i].place_x;
+			var y = list[i].place_y;
+			var a = parseInt(x);
+			var b = parseInt((x-a)*60);
+			var c = ((x - a) * 60 - b ) * 60;
+			var str = a+"°"+b+"'"+c+'&quot;N';
+			a=parseInt(y);
+			b = parseInt((y-a)*60);
+			c = ((y - a) * 60 - b ) * 60;
+			str += "&#43;"+a+"°"+b+"'"+c+'&quot;E';
+			console.log(str);
 			content[i]= '<div class="customoverlay">'
-				+ '  <a href="https://map.kakao.com/link/map/11394059" target="_blank">'
+				+ '  <a href="https://www.google.co.kr/maps/place/'+str+'" target="_blank">'
 				+ '    <span class="title">'+list[i].course_no+'.'+list[i].place_name+'</span>' + '  </a>' + '</div>';
 		}
 
@@ -334,6 +349,7 @@
 	 
 	 // 별점 나타내기
 	 var rating = Math.round(${requestScope.dto.rating});
+	 if(rating > 5) rating = 5;
 	 var str = "";
 	for(i=0; i<rating; i++){
 		str += "💜"; 

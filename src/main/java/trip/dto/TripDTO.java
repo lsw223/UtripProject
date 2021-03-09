@@ -7,7 +7,8 @@ public class TripDTO {
 	private String content;
 	private String video_url;
 	private double rating;
-	public TripDTO(String area_name, String trip_no, String title, String content, String video_url, double rating) {
+	private int total;
+	public TripDTO(String area_name, String trip_no, String title, String content, String video_url, double rating,int total) {
 		super();
 		this.area_name = area_name;
 		this.trip_no = trip_no;
@@ -15,8 +16,8 @@ public class TripDTO {
 		this.content = content;
 		this.video_url = video_url;
 		this.rating = rating;
+		this.total = total;
 	}
-	
 	public TripDTO(String area_name, String trip_no, String title, String content) {
 		super();
 		this.area_name = area_name;
@@ -24,14 +25,21 @@ public class TripDTO {
 		this.title = title;
 		this.content = content;
 	}
-
+	public TripDTO() {}
+	
 	public TripDTO(String trip_no, String title, String content) {
 		super();
 		this.trip_no = trip_no;
 		this.title = title;
 		this.content = content;
 	}
-
+	
+	public int getTotal() {
+		return total;
+	}
+	public void setTotal(int total) {
+		this.total = total;
+	}
 	public String getArea_name() {
 		return area_name;
 	}
@@ -71,7 +79,6 @@ public class TripDTO {
 	@Override
 	public String toString() {
 		return "TripDTO [area_name=" + area_name + ", trip_no=" + trip_no + ", title=" + title + ", content=" + content
-				+ ", video_url=" + video_url + ", rating=" + rating + "]";
+				+ ", video_url=" + video_url + ", rating=" + rating + ", total=" + total + "]";
 	}
-	
 }

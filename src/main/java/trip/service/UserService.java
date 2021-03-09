@@ -11,6 +11,7 @@ import trip.dto.CourseDTO;
 import trip.dto.FileDTO;
 import trip.dto.HotelDTO;
 import trip.dto.HotelRequestDTO;
+import trip.dto.MbtiDTO;
 import trip.dto.NoticeCommentDTO;
 import trip.dto.NoticeDTO;
 import trip.dto.QnaDTO;
@@ -25,7 +26,6 @@ public class UserService {
 	private UserMapper userMapper;
 	
 	public int register(UserDTO user) {
-		System.out.println(user); 
 		return userMapper.register(user);
 	}
 
@@ -53,9 +53,6 @@ public class UserService {
 		return userMapper.selectCourseInfo(tripNo);
 	}
 
-	public TripDTO selectMbtiTripInfo(String mbti) {
-		return userMapper.selectMbtiTripInfo(mbti);
-	}
 
 	public List<TripDTO> selectAreaList() {
 		return userMapper.selectAreaList();
@@ -177,5 +174,41 @@ public class UserService {
 	public int nextnotice(int notice_no) {
 		return userMapper.nextnotice(notice_no);
 	}
+
+	public List<MbtiDTO> getMbtiList() {
+		return userMapper.getMbtiList();
+	}
+
+	public List<String> getMbtiType() {
+		return userMapper.getMbtiType();
+	}
+
+	public int getCount() {
+		return userMapper.getCount();
+	}
 	
+	public List<TripDTO> getMbtiTripList(String mbti){
+		return userMapper.getMbtiTripList(mbti);
+	}
+
+	public List<TripDTO> selectMbtiTripList(String mbti) {
+		return userMapper.selectMbtiTripList(mbti);
+	}
+
+	public List<TripDTO> selectPopulByLike() {
+		return userMapper.selectPopulByLike();
+	}
+
+	public int amountB(String mb) {
+		return userMapper.amountB(mb);
+	}
+
+	public int amountC(String mb) {
+		return userMapper.amountC(mb);
+	}
+
+	public List<String> getEmailList(String mbti) {
+		return userMapper.getEmailList(mbti);
+	}
+
 }

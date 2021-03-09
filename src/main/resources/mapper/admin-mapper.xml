@@ -51,6 +51,9 @@
 	<select resultType="int" id="noticeno">
 		select notice_no_seq.nextval from dual 
 	</select>
+	<select resultType="int" id="newnno">
+		select nno_seq.nextval from dual 
+	</select>
 	<delete id="deleteResponse" parameterType="int">
 		delete from qna_response where
 		qna_no = #{qna_no}
@@ -70,9 +73,13 @@
 			 , #{nwriter}
 			 ) 
 	 </insert>
-	<insert parameterType="trip.dto.NoticeDTO" id="insertFileList">
-		insert into notice_file_list values(#{nno},#{writer},#{fileName}) 
-	</insert>
+	<insert parameterType="trip.dto.FileDTO" id="insertFileList">
+		insert into notice_file_list values(
+		       #{nno}
+		     , #{writer}
+		     , #{fileName}
+		     , #{notice_no}) 
+    </insert>
 	<delete parameterType="trip.dto.NoticeDTO" id="deleteNotice">
 		delete from notice where notice_no = #{notice_no}
 	</delete>
@@ -80,7 +87,7 @@
 		select * from notice where notice_no = #{notice_no} 
 	</select>
 	<select resultType="trip.dto.FileDTO" parameterType="int" id="selectFileList">
-		select * from notice_file_list where nno = #{nno}
+		select * from notice_file_list where notice_no = #{notice_no}
 	</select>
 	<update parameterType="trip.dto.NoticeDTO" id="updateNotice">
 		update notice set
@@ -94,9 +101,6 @@
 	 </select>
 	 <update id="tripUpdateInfo" parameterType="trip.dto.TripDTO">
 	 	update trip set title=#{title}, content=#{content} where trip_no = #{trip_no}
-	 </update>
-	 <update id="courseUpdate" parameterType="map">
-	 	update course set place_no=#{place_no} where trip_no=#{trip_no} and course_no=#{course_no}
 	 </update>
 	 <delete id="deleteTripInfo" parameterType="String">
 	 	delete trip where trip_no=#{trip_no}
@@ -114,6 +118,16 @@
 	<insert id="courseInsertInfo" parameterType="map">
 		insert into course values(#{trip_no},#{course_no},#{place_no})
 	</insert>
+	<delete id="courseDelete" parameterType="String">
+		delete from course where trip_no like #{trip_no}
+	</delete>
+	<update parameterType="trip.dto.FileDTO" id="updateFileList">
+		update notice_file_list 
+		   set nno = #{nno}
+			 , writer = #{writer}
+			 , filename = #{fileName} 
+	     where notice_no = #{notice_no}
+	</update>
 </mapper>
 
 
