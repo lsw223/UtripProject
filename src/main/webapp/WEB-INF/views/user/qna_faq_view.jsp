@@ -4,87 +4,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" name="viewport" content="width=device-width">
 <script src="lib/jquery-3.5.1.min .js"></script>
 <script src="lib/jquery-ui.js"></script>
 <link rel="stylesheet" href="css/qna_faq_view.css">
 <title>자주 묻는 질문 :: UTrip</title>
-<style>
-#container {
-	margin: 0 auto;
-	width: 80%;
-	min-width: 1100px;
-	min-height: 500px;
-	padding-top: 100px;
-}
-
-#top {
-	height: 100px;
-	box-sizing: border-box;
-}
-
-#p_1 {
-	position: absolute;
-	left: 170px;
-	width: 400px;
-	box-sizing: border-box;
-}
-
-#sp_1 {
-	width: 160px;
-	font-size: 70px;
-	box-sizing: border-box;
-	text-align: center;
-}
-
-#sp_2 {
-	position: absolute;
-	width: 140px;
-	font-size: 20px;
-	color: #969696;
-	font-weight: bold;
-	box-sizing: border-box;
-	text-align: center;
-	top: 55px;
-}
-
-.h_1 {
-	border: 0;
-	height: 5px;
-	background: #1E3269;
-	margin-bottom: 60px;
-}
-
-#faq {
-	margin-bottom: 200px;
-}
-
-.accordion {
-	background-color: #eee;
-	color: #444;
-	cursor: pointer;
-	padding: 18px;
-	width: 100%;
-	text-align: left;
-	border: none;
-	outline: none;
-	transition: 0.4s;
-}
-
-.active, .accordion:hover {
-	background-color: #ccc;
-}
-
-.panel {
-	padding: 0 18px;
-	background-color: white;
-	display: none;
-	overflow: hidden;
-	height: 50px;
-	padding-top: 23px;
-	border: 1px solid #dcdcdc;
-}
-</style>
 </head>
 <c:choose>
 	<c:when test="${sessionScope.user.role == 'ADMIN' }">
@@ -103,7 +27,6 @@
 					id="sp_2">자주 묻는 질문</span>
 			</p>
 		</div>
-		<hr class="h_1">
 		<div id="faq">
 			<button class="accordion">
 				<strong>Q.</strong> Mbti 설정을 변경하고 싶어요.
@@ -138,11 +61,35 @@
 				</p>
 			</div>
 			<button class="accordion">
-				<strong>Q.</strong> QnA 답변은 얼마나 걸릴까요?
+				<strong>Q.</strong> QnA 답변은 얼마나 걸리나요?
 			</button>
 			<div class="panel">
 				<p>
 					<strong>A.</strong> 최소 1~2일 정도 소요됩니다.
+				</p>
+			</div>
+			<button class="accordion">
+				<strong>Q.</strong> 이메일을 변경하고 싶어요.
+			</button>
+			<div class="panel">
+				<p>
+					<strong>A.</strong> '정보 변경'에서 변경하실 수 있습니다.
+				</p>
+			</div>
+			<button class="accordion">
+				<strong>Q.</strong> 개명 했을 시 어떻게 해야하나요? 
+			</button>
+			<div class="panel">
+				<p>
+					<strong>A.</strong> 이름의 경우에는 별도의 인증 절차가 없으며 '정보 변경'에서 제한 없이 변경하실 수 있습니다.
+				</p>
+			</div>
+			<button class="accordion">
+				<strong>Q.</strong> 활동 랭킹의 기준이 무엇인가요?
+			</button>
+			<div class="panel">
+				<p>
+					<strong>A.</strong> 게시글과 댓글의 작성을 기준으로 순위를 나타냅니다.
 				</p>
 			</div>
 		</div>

@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" name="viewport" content="width=device-width">
 <title>관리자 QnA :: UTrip</title>
 <link rel="stylesheet" href="css/admin_qna_view.css">
 <script src="lib/jquery-3.5.1.min .js"></script>
@@ -19,10 +19,10 @@
 					id="sp_2">문의사항 전체 조회</span>
 			</p>
 		</div>
-		<hr class="h_1">
-		<a href="qnaFaqView.do" id="btn_faq_view" class="button">>자주 묻는 질문
-			보러가기</a>
-		<hr class="h_2">
+		<div id="faq_div">
+			<a href="qnaFaqView.do" id="btn_faq_view" class="button">>자주 묻는
+				질문 보러가기</a>
+		</div>
 		<div id="select_qna">
 			<h2 class="qna_title">
 				<ul>
