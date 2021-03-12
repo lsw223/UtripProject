@@ -1,4 +1,3 @@
-<%@page import="trip.dto.TripDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -7,63 +6,10 @@
 <html>
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="lib/jquery-3.5.1.min .js"></script>
 <link rel="stylesheet" href="css/trip_detail_view.css">
-<link rel="stylesheet" href="css/trip_detail_view_tab.css" media="screen and (max-width:1024px)">
 <title>여행 코스 :: UTrip</title>
-<style>
-.customoverlay {
-	position: relative;
-	bottom: 85px;
-	border-radius: 6px;
-	border: 1px solid #ccc;
-	border-bottom: 2px solid #ddd;
-	float: left;
-}
-
-.customoverlay:nth-of-type(n) {
-	border: 0;
-	box-shadow: 0px 1px 2px #888;
-}
-
-.customoverlay a {
-	display: block;
-	text-decoration: none;
-	color: #000;
-	text-align: center;
-	border-radius: 6px;
-	font-size: 14px;
-	font-weight: bold;
-	overflow: hidden;
-	background: #d95050;
-	background: #d95050
-		url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png)
-		no-repeat right 14px center;
-}
-
-.customoverlay .title {
-	display: block;
-	text-align: center;
-	background: #fff;
-	margin-right: 35px;
-	padding: 10px 15px;
-	font-size: 14px;
-	font-weight: bold;
-}
-
-.customoverlay:after {
-	content: '';
-	position: absolute;
-	margin-left: -12px;
-	left: 50%;
-	bottom: -12px;
-	width: 22px;
-	height: 12px;
-	background:
-		url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')
-}
-</style>
-
 </head>
 <body>
 	<c:choose>
@@ -88,9 +34,7 @@
 			</c:if>
 			<span id="rating">
 				평점 
-				<span>
-					<%=Math.min(((TripDTO)request.getAttribute("dto")).getRating(),5) %>
-				</span> 
+				<span>${requestScope.dto.rating }</span> 
 			</span>
 			<a href="#">평가하기</a>
 		</div>
@@ -103,7 +47,7 @@
 			<c:forEach var="dto" items="${requestScope.tripList }">
 				<a href="#" onclick="setOption(${dto.course_no-1});return false;" class="button">${dto.place_name}</a>
 			</c:forEach>
-			<div id="map" style="width: 800px; height: 500px;"></div>
+			<div id="map" ></div>
 			<button onclick="setBounds()" id="btn_zoom" class="button">전체 코스보기</button>
 			<p id="hotel">
 				<a href="hotelView.do?area=${requestScope.area}" class="button" id="btn_hotel">주변 호텔정보 보러가기</a>
@@ -114,7 +58,7 @@
 					<a href="#" id="deleteTripInfo"class="button">삭제</a>
 				</c:if>
 				<span id="go_back">
-					<a href="areaView.do?area=${fn:substring(requestScope.dto.trip_no,0,2)}" class="button" >목록보기</a>
+					<a href="#" class="button" onclick="history.back()">목록보기</a>
 				</span>
 			</p>
 		</div>
@@ -349,7 +293,6 @@
 	 
 	 // 별점 나타내기
 	 var rating = Math.round(${requestScope.dto.rating});
-	 if(rating > 5) rating = 5;
 	 var str = "";
 	for(i=0; i<rating; i++){
 		str += "💜"; 
@@ -399,8 +342,7 @@
 		 })
 	 })
 	</script>
-
-	<%@include file="../template/footer.jsp"%>
+<%@include file="../template/footer.jsp"%>
 </body>
 </html>
 
