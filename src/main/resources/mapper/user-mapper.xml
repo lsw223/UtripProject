@@ -290,6 +290,7 @@
 			</when>
 		</choose> 
 		) t where rownum <![CDATA[ < ]]> 6) b on a.trip_no = b.trip_no
+		</select>
 	<select id="selectPopulByLike" resultType="trip.dto.TripDTO">
 		select t.trip_no,title,rating,total,area_name from trip t, area a,
 		(select trip_no,total from

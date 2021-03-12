@@ -6,7 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>글쓰기 페이지</title>
-<link rel="stylesheet" href="css/admin_board_view.css">
+<link rel="stylesheet" href="css/notice/admin_notice.css" media="screen and (min-width:1024px)">
+<link rel="stylesheet" href="css/notice/admin_notice_tab.css" media="screen and (max-width:1024px)">
 <script src="lib/jquery-3.5.1.min .js"></script>
 <!-- <script src="js/board_view.js"></script> -->
 <script type="text/javascript">
