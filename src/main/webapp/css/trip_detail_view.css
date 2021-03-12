@@ -343,6 +343,7 @@ footer{
 #rating{
 	margin-left:10px;
 	color:#333333;
+	font-size:small;
 }
 #rating span{
 	color:#6a67ce;
@@ -351,6 +352,7 @@ footer{
 #rating+a{
 	color:#6a67ce;
 	font-weight: 600;
+	
 }
 #course_length ul{
 	list-style-type: none;

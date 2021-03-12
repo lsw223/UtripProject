@@ -6,7 +6,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<link rel="stylesheet" href="css/notice/notice_write_view.css">
+<link rel="stylesheet" href="css/notice/notice_write_view.css" media="screen and (min-width:1024px)">
+<link rel="stylesheet" href="css/notice/notice_write_view_tab.css" media="screen and (max-width:1024px)">
 <script src="lib/jquery-3.5.1.min .js"></script>
 <script>
 	$(function(){
@@ -31,7 +32,8 @@
 			<table>
 				<tr>
 					<th>제목</th>
-					<td><input type="text" name="title"></td>
+					<td><input type="text" name="title" style="background-color: rgba(255,255,255,0.4);
+	"></td>
 				</tr>
 				<tr>
 					<th>작성자</th>
@@ -48,7 +50,7 @@
 					<th></th>
 					<td colspan="2" id="file_form">
 						<p><input type="file" name="file"> 
-						<button type="button" id="plus">+</button> <button type="button" id="minus">-</button></p>
+						<button type="button" id="plus" style="width: 25px; height: 25px; float: right;">+</button> <button type="button" id="minus" style="width: 25px; height: 25px; float: right;">-</button></p>
 						<p><input type="file" name="file"></p>
 						<p><input type="file" name="file"></p>
 					</td>

@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="css/notice/notice_update_view.css">
+<link rel="stylesheet" href="css/notice/notice_update_view.css" media="screen and (min-width:1024px)">
+<link rel="stylesheet" href="css/notice/notice_update_view_tab.css" media="screen and (max-width:1024px)">
 <script src="lib/jquery-3.5.1.min .js"></script>
 <script>
 	$(function(){
@@ -27,7 +28,6 @@
 </head>
 <body>
 	<div id="container">
-		<div id="container">
 			<h2>글수정 페이지</h2>
 			<form action="noticeUpdateAction.do" enctype="multipart/form-data" method="post">
 				<input type="hidden" name="notice_no"	value="${requestScope.detail.notice_no }">
@@ -35,7 +35,8 @@
 				<table>
 					<tr>
 						<th>제목</th>
-						<td><input type="text" name="title" value="${requestScope.detail.title }"></td>
+						<td><input type="text" name="title" style="background-color: rgba(255,255,255,0.4);
+	" value="${requestScope.detail.title }"></td>
 					</tr>
 					<tr>
 						<th>작성자</th>
@@ -51,7 +52,7 @@
 						<th></th>
 						<td colspan="2" id="file_form">
 							<p><input type="file" name="file"> 
-							<button type="button" id="plus">+</button> <button type="button" id="minus">-</button></p>
+							<button type="button" id="plus" style="width: 25px; height: 25px; float: right;">+</button> <button type="button" id="minus" style="width: 25px; height: 25px; float: right;">-</button></p>
 							<p><input type="file" name="file"></p>
 							<p><input type="file" name="file"></p>
 						</td>
@@ -66,7 +67,6 @@
 				</table>
 			</form>
 		</div>
-	</div>
 </body>
 	<%@ include file="../template/footer.jsp" %>
 </html>

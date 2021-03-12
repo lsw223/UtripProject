@@ -128,6 +128,13 @@
 			 , filename = #{fileName} 
 	     where notice_no = #{notice_no}
 	</update>
+	<insert id="createTripLike" parameterType="String">
+		Insert into TRIP_LIKE values 
+		(#{trip_no},0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
+	</insert>
+	<insert id="createTripRating" parameterType="String">
+		insert into trip_rating values(#{trip_no},0,0)
+	</insert>
 </mapper>
 
 

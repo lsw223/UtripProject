@@ -6,7 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="css/notice/admin_notice_view.css">
+<link rel="stylesheet" href="css/notice/admin_notice_view.css" media="screen and (min-width:1024px)">
+<link rel="stylesheet" href="css/notice/admin_notice_view_tab.css" media="screen and (max-width:1024px)">
 <script src="lib/jquery-3.5.1.min .js"></script>
 <script>
 	
@@ -15,9 +16,9 @@
 	<%@include file="../template/header_admin.jsp" %>
 <body>
 	<div id="container">
-		<h2>글조회 페이지</h2>
 			<table>
 				<tr>
+		<h2>글조회 페이지</h2>
 					<th>제목</th>
 					<td>
 						<!-- 조회한 내용 -->
@@ -38,7 +39,9 @@
 				</tr>
 				<tr>
 					<th style="vertical-align: top;">내용</th>
-					<td>
+				</tr>
+				<tr>
+					<td colspan="2">
 						<textarea readonly="readonly">${requestScope.notice.content }</textarea>
 					</td>
 				</tr>

@@ -2,7 +2,7 @@
 
 #container {
 	/* background-color: lime; */
-	width: 100%;
+	width:80%;
 	height: 100%;
 	padding-top:100px;
 	margin: 0 auto;
@@ -14,6 +14,7 @@
 	height:100%;
 	content: "";
 	background: url("/img/notice/write.jpg");
+	border-radius:10px;
 	background-size: cover;
 	background-repeat:no-repeat;
 	position: absolute;
@@ -22,8 +23,9 @@
 	z-index: -1;
 	opacity: 0.5;
 }
+
 #container table {
-	width: 600px;
+	width: 100%;
 	border-collapse: collapse;
 	margin: 0 auto;
 }
@@ -79,8 +81,9 @@ textarea {
 	background-color: rgba(255,255,255,0.4);
 	font-weight: bold;
 }
+
 p input {
-	width: 50% !important;
+	width: 90% !important;
 }
 #file_form{
 	width: 100%;
