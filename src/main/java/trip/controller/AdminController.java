@@ -509,6 +509,8 @@ public class AdminController {
 		System.out.println(count);
 
 		int count1 = adminService.courseInsertInfo(placeList, trip_no);
+		int count2 = adminService.createTripLike(trip_no);
+		int count3 = adminService.createTripRating(trip_no);
 		return new RedirectView("tripDetailView.do?trip_no=" + trip_no);
 	}
 

@@ -56,6 +56,7 @@
 						</c:if>
 						<a href="adminnoticeWriteView.do" class="btn_writer">글쓰기</a>
 					</div>
+					</td>
 			</tr>
 		</table>
 	</div>

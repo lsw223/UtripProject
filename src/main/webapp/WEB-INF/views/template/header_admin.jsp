@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="lib/jquery-3.5.1.min .js"></script>
+<head>
 <style>
  @font-face { 
 	font-family: 'Noto Sans KR'; 
@@ -92,24 +94,34 @@ header #info li{
 }
 </style>
 
-<!-- tablit, mobile -->
-<style media="screen and (min-width:0) and (max-width:1024px)">
+
+<!-- tablit -->
+<style media="screen and (min-width:480px) and (max-width:1024px)">
+	header{
+		width:100%;
+	}
 	header>ul{
 		width:100%;
 		display:none;
 		height:270px;
 		background-color: #2f3042;
 		border-radius: 0 0 10px 10px;
+		min-width:100%;
 	}
 	header>ul li{
 		width:100%;
 		text-align: center;
+		min-width:100%;
 	}
 	#info{
 		display: none;
+		width:100%;
 		float:left;
 		text-align: left;
 		background-color: #2f3042;
+	}
+	#info ul{
+		width:100%;
 	}
 	header>div:first-of-type{
 		width:100%;
@@ -122,23 +134,86 @@ header #info li{
 		top:13px;
 		right:10px;
 	}
+	#menu img{
+		display:inline-block;
+		width:27px;
+		margin-bottom:-10px;
+	}
 	#btn_user{
 		display: block;
 		float:left;
 		position:absolute;
-		top:16px;
+		top:13px;
 		left:10px;
 	}
+	#btn_user img{
+		width:33px;
+	}
 </style>
-	
-	
+
+<!-- mobile -->
+<style media="screen and (min-width:0px) and (max-width:480px)">
+	header{
+		width:100%;
+	}
+	header>ul{
+		width:100%;
+		display:none;
+		height:270px;
+		background-color: #2f3042;
+		border-radius: 0 0 10px 10px;
+		min-width:100%;
+	}
+	header>ul li{
+		width:100%;
+		text-align: center;
+		min-width:100%;
+	}
+	#info{
+		display: none;
+		width:100%;
+		float:left;
+		text-align: left;
+		background-color: #2f3042;
+	}
+	#info ul{
+		width:100%;
+	}
+	header>div:first-of-type{
+		width:100%;
+		text-align: center;
+	}
+	#menu{
+		display: block;
+		float:right;
+		position:absolute;
+		top:13px;
+		right:10px;
+	}
+	#menu img{
+		display:inline-block;
+		width:20px;
+		margin-bottom:-10px;
+	}
+	#btn_user{
+		display: block;
+		float:left;
+		position:absolute;
+		top:18px;
+		left:10px;
+	}
+	#btn_user img{
+		width:25px;
+	}
+</style>
+
 <body>
 	<header>
 		<div>
 			<a href="#"  class="hidden" id="btn_user">
-				<img alt="사용자 메뉴" src="img/user.png">
+				<img alt="사용자 메뉴" src="img/user_white.png">
 			</a>
-			<a href="/">UTrip 관리자</a>
+			<a id="logo" href="/">UTrip 관리자</a>
 		</div>
 		<a href="#" id="menu" class="hidden">
 			<img alt="메뉴" src="img/menu_white.png">

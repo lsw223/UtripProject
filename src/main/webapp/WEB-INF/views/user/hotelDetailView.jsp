@@ -5,76 +5,28 @@
 <html>
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>지도 범위 재설정 하기</title>
 <link rel="stylesheet" href="css/hotel_detail_view.css">
 <style>
-.customoverlay {
-	position: relative;
-	bottom: 85px;
-	border-radius: 6px;
-	border: 1px solid #ccc;
-	border-bottom: 2px solid #ddd;
-	float: left;
-}
 
-.customoverlay:nth-of-type(n) {
-	border: 0;
-	box-shadow: 0px 1px 2px #888;
-}
-
-.customoverlay a {
-	display: block;
-	text-decoration: none;
-	color: #000;
-	text-align: center;
-	border-radius: 6px;
-	font-size: 14px;
-	font-weight: bold;
-	overflow: hidden;
-	background: #d95050;
-	background: #d95050
-		url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png)
-		no-repeat right 14px center;
-}
-
-.customoverlay .title {
-	display: block;
-	text-align: center;
-	background: #fff;
-	margin-right: 35px;
-	padding: 10px 15px;
-	font-size: 14px;
-	font-weight: bold;
-}
-
-.customoverlay:after {
-	content: '';
-	position: absolute;
-	margin-left: -12px;
-	left: 50%;
-	bottom: -12px;
-	width: 22px;
-	height: 12px;
-	background:
-		url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')
-}
 </style>
 </head>
 <body>
 <c:choose>
-	<c:when test="${sessionScope.user.role == 'ADMIN' }">
-		<%@include file="../template/header_admin.jsp" %>
-	</c:when>
-	<c:otherwise>
-		<%@include file="../template/header.jsp" %>
-	</c:otherwise>
-</c:choose>
+		<c:when test="${sessionScope.user.role == 'ADMIN' }">
+			<%@include file="../template/header_admin.jsp"%>
+		</c:when>
+		<c:otherwise>
+			<%@include file="../template/header.jsp"%>
+		</c:otherwise>
+	</c:choose>
 	<div id="container">
 	<div id="content">
 	<h2>호텔정보</h2>
-	<div id="map" style="width: 800px; height: 500px;"></div>
+	<div id="map" ></div>
 	<p class="back_btn">
-		<button onclick="setBounds()" id="btn_zoom" class="button">지도 범위 재설정 하기</button>
+		<button onclick="setBounds()" id="btn_zoom" class="button">재설정 하기</button>
 		<span id="go_back">
 					<a href="#" id="back_btn" class="button" onclick="history.back()">뒤로가기</a>
 		</span>
@@ -148,7 +100,6 @@
 		}
 		setBounds();
 	</script>
-	
 	<%@include file="../template/footer.jsp"%>
 </body>
 </html>

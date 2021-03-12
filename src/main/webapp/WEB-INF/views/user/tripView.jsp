@@ -5,26 +5,30 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
 <script src="lib/jquery-3.5.1.min .js"></script>
 <link rel="stylesheet" href="css/tripView.css">
 </head>
 
-<c:choose>
-	<c:when test="${sessionScope.user.role == 'ADMIN' }">
-		<%@include file="../template/header_admin.jsp"%>
-	</c:when>
-	<c:otherwise>
-		<%@include file="../template/header.jsp"%>
-	</c:otherwise>
-</c:choose>
+ 
+ 
 		
 <body>
+	<c:choose>
+		<c:when test="${sessionScope.user.role == 'ADMIN' }">
+			<%@include file="../template/header_admin.jsp"%>
+		</c:when>
+		<c:otherwise>
+			<%@include file="../template/header.jsp"%>
+		</c:otherwise>
+	</c:choose>
 	<div id="container">
 			
 			<div id="top">
 					<small>UTrip 투어</small>
-					<c:choose>
+					<h2>인기 투어</h2>
+			<c:choose>
 			<c:when test="${sessionScope.user.role == 'ADMIN' }">
 				<button onclick="javascript:location.href='/tripInsertView.do';">여행정보
 					추가</button>
@@ -33,7 +37,6 @@
 			<c:if test="${sessionScope.user.mbti != null}">
 				<button onclick="javascript:location.href='/mbtiTripView.do';">${sessionScope.user.mbti} 추천 여행정보 확인</button>
 			</c:if>
-					<h2>인기 투어</h2>
 			</div>
 			<div class="for_slick single-item">
 				<c:forEach var="list" items="${requestScope.list }">
@@ -51,6 +54,7 @@
 				</c:forEach>
 			</div>
 	</div>
+	<%@include file="../template/footer.jsp"%>
 </body>
-<%@include file="../template/footer.jsp"%>
+
 </html>

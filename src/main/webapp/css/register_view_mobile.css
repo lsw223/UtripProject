@@ -1,0 +1,86 @@
+@charset "UTF-8";
+ @font-face { 
+	font-family: 'Noto Sans KR'; 
+	font-weight:normal;
+	font-style:normal;
+	src: 'Noto Sans KR',url(/font/NotoSansKR-Bold.otf) format('truetype'); 
+} 
+*{
+	font-family: 'Noto Sans KR'; 
+	margin:0;
+	padding:0;
+}
+a:visited,a:link{
+	color:black;
+	text-decoration: none;
+}
+header{
+	text-align: center;
+	font-size: 14px;	
+	padding:10px;
+}
+header a{
+	font-size: 18px;
+	margin-right:10px;
+}
+/*frm_register******************************/
+#frm_register{
+	width:65%;
+	margin:0 auto;
+	margin-top:50px;
+	border:2px solid #e8e8e8;
+	padding:20px 40px;
+}
+#frm_register p{
+	margin-bottom: 15px;
+	border-bottom:2px solid #e8e8e8;
+}
+#frm_register input{
+	border:none;
+	outline: none;
+	padding:5px 10px;
+	width: 100%;
+	box-sizing: border-box;
+}
+#p_email{
+	width:100%;
+	float:left;
+	padding-bottom: 1px;
+}
+#p_domain{
+	width:100%;
+	float:left;
+}
+#p_domain input{
+	width:50%;
+}
+#p_domain select{
+	padding:4px;
+	outline: none;
+}
+small{
+	clear:both;
+}
+#p_mbti select{
+	padding:4px;
+	border:none;
+	outline: none;
+}
+#p_mbti a{
+	text-decoration: underline;
+}
+#frm_register button{
+	padding:5px 10px;
+}
+.alert{
+	padding-left: 10px;
+	font-weight: normal; 
+	}
+.red{
+	color:red;
+	font-size:12px;
+}
+.blue{
+	color: blue;
+	font-size:12px;
+}

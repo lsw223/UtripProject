@@ -1,17 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="css/board.css">
+<link rel="stylesheet" href="css/board.css"/>
+<link rel="stylesheet" media="(max-width:480px)" href="css/mobile_board.css"/>
 <script src="lib/jquery-3.5.1.min .js"></script>
 <title>커뮤니티 :: UTrip</title>
 </head>
 <body>
 	<%@ include file="../template/header.jsp"%>
+	<div class="backimg">
+		<h1>커뮤니티</h1>
+		<p>여러분의 여행이야기를 들려주세요</p>
+	</div>
 	<div id="container">
 		<table class="board">
 			<tr>
