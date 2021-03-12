@@ -1,15 +1,31 @@
 @charset "UTF-8";
-
 #container {
 	/* background-color: lime; */
-	width: 1200px;
-	height: 650px;
-	padding-top: 100px;
+	width: 100%;
 	margin: 0 auto;
+	position: relative;
+	z-index: 1;
+}
+#container:after{
+	width:100%;
+	height:100%;
+	content: "";
+	background: url("/img/notice/adminview.jpg");
+	background-size: cover;
+	background-repeat:no-repeat;
+	position: absolute;
+	top: 0;
+  	left: 0;
+	z-index: -1;
+	opacity: 0.5;
+}
+h2 {
+	padding-top: 50px;
+	text-align: center;
 }
 
 #container table {
-	width: 600px;
+	width: 60%;
 	border-collapse: collapse;
 	margin: 0 auto;
 }
@@ -34,14 +50,14 @@
 	border-radius: 5px;
 }
 #container textarea {
-	width: 100%;
+	width: 60%;
 	height: 300px;
 	resize: none;
 	box-sizing: border-box;
-}
-
-h2 {
-	text-align: center;
+	background-color: rgba(255,255,255,0.4);
+	font-weight: bold;
+	margin-right:200px;
+	margin-left:200px;
 }
 
 .btn {

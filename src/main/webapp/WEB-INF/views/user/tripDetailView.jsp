@@ -6,6 +6,11 @@
 <html>
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="lib/jquery-3.5.1.min .js"></script>
+<link rel="stylesheet" href="css/trip_detail_view.css" media="screen and (min-width:1024px)">
+<link rel="stylesheet" href="css/trip_detail_view_tab.css" media="screen and (min-width:480px) and (max-width:1024px)">
+<link rel="stylesheet" href="css/trip_detail_view_mobile.css" media="screen and  (max-width:480px)">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="lib/jquery-3.5.1.min .js"></script>
 <link rel="stylesheet" href="css/trip_detail_view.css">

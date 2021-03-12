@@ -5,17 +5,14 @@ html,body{
 #container{
 	min-height:83%;
 	margin:0 auto;
-	width:1650px;
 }
 .top{
 	position: relative;
-	padding:30px 0;
-}
-.top:first-child{
-	padding-top:100px;
+	padding:30px 15px;
+	border-top:2px solid #e8e8e8;
 }
 .top span{
-	font-size: 40px;
+	font-size: 25px;
 	font-weight:400;
 	color:#333333;
 	text-shadow: 2px 2px 2px #e8e8e8;
@@ -24,19 +21,19 @@ footer{
 	position:relative !important;
 	clear:both;
 }
-.card:first-child{
-	margin-left:30px;
-}
 .card{
 	position:relative;
-	width:250px;
-	height:333px; 
+	width: 80%;
+	height:280px; 
 	box-sizing:border-box;
 	border-radius:10px;
 	display:inline-block;
-	margin:20px 25px;
+	margin:20px auto;
 	box-shadow: 1px 10px 10px #d8d8d8;
 	transition:all 0.3s;
+}
+.card a{
+	outline:none;
 }
 .card img{
 	width:100%;
@@ -45,9 +42,6 @@ footer{
 }
 .card:hover{
 	box-shadow: 1px 10px 10px black;
-}
-.card a{
-	outline:none;
 }
 .area{
 	color:white;
@@ -59,28 +53,26 @@ footer{
 	text-shadow: 3px 9px 9px #333333;
 }
 .slider{
-	width:1550px;
+	width:80%;
 	float:left;
-	margin:0 auto;
 }
 .slide{
 	width:100%;
-	margin:0 auto;
 	text-align: center;
 	height:400px;
 	outline:none;
 }
 #arrow_prev img,#arrow_next img{
 	width:14px;
-	margin-top:145px;
+	margin-top:130px;
 }
 #arrow_prev,#arrow_next{
 	background-color: rgba(0,0,0,0.1);
 	display: block;
-	width:50px;
-	height:333px;
+	width:10%;
+	height:300px;
 	float:left;
-	margin-top:20px;
+	margin-top:400px;
 	border-radius: 3px;
 	text-align: center;
 	transition:all 0.3s;
@@ -94,15 +86,17 @@ footer{
 	padding-top:100px;
 }
 /**인기투어***********************************************************/
+#popul{
+	text-align: center;
+}
 .popul img{
-	width:277px;
+	width:100%;
 	height:300px;
 	border-radius: 5px 5px 0 0;
 }
 .popul{
-	width:280px;
-	float:left;
-	margin:5px 20px;
+	width:80%;
+	margin: 0 auto;
 	margin-bottom:50px;
 	border:2px solid #e8e8e8;
 	height:430px;
@@ -118,9 +112,6 @@ footer{
 }
 .popul:hover{
 	box-shadow: 1px 10px 10px black;
-}
-.popul:first-child{
-	margin-left:70px;
 }
 .popul a{
 	text-decoration: none;
@@ -148,13 +139,11 @@ footer{
 	clear:both;
 	display: block;
 }
-header{
-	position:fixed !important;
-}
 #by{
-	outline:none;border:none;font-size:18px;
+	outline:none;border:none;font-size:14px;
 	margin-left:20px;
 }
+#by option{font-size:14px;}
 #active{
 	clear:both;
 	text-align: center;
@@ -165,6 +154,7 @@ header{
 	box-shadow: 1px 2px 8px #e8e8e8;
 	margin-bottom:50px;
 	border-collapse: collapse;
+	width:85%;
 }
 #active th{
 	background-color: #886ce2;
@@ -174,10 +164,13 @@ header{
 	padding:10px;
 	text-align: center;
 	border-bottom: 1px solid #e8e8e8;
+	font-size: 14px;
 }
 #active td:nth-child(2){
-	width:800px;
-	font-size: 25px;
+	width:80%;
+}
+#active img{
+	width:30px;
 }
 .button{
 	text-decoration: none;
@@ -194,7 +187,4 @@ header{
 }
 .button:active{
 	background-color: #4a47af;
-}
-footer{
-	min-width:1700px;
 }

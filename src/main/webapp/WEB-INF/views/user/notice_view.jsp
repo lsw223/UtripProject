@@ -6,7 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="css/notice/notice_view.css">
+<link rel="stylesheet" href="css/notice/notice_view.css" media="screen and (min-width:1024px)">
+<link rel="stylesheet" href="css/notice/notice_view_tab.css" media="screen and (max-width:1024px)">
 <script src="lib/jquery-3.5.1.min .js"></script>
 <script>
 	$(function(){
@@ -148,19 +149,8 @@
 				</c:if>
 				<tr>
 					<th style="text-align: left;">
-						<a href="notice.do" class="btn">목록보기</a>
+						<a href="notice.do" class="btn" style="float: left;">목록보기</a>
 					</th>
-					<c:choose>
-						<c:when test = "${requestScope.notice.pre_notice_no == null}">
-							<script>
-								alert("더이상 글이 없습니다.");
-								location.href="/notice.do";
-							</script>
-						</c:when>
-						<c:otherwise>
-						<th><a href="noticeView.do?notice_no=${requestScope.notice.pre_notice_no}" class="btn">이전글</a>
-						</c:otherwise>
-					</c:choose>
 					<c:choose>
 						<c:when test = "${requestScope.notice.next_notice_no eq null}">
 							<script>
@@ -169,7 +159,18 @@
 							</script>
 						</c:when>
 						<c:otherwise>
-							<a href="noticeView.do?notice_no=${requestScope.notice.next_notice_no}" class="btn">다음글</a></th>
+							<th><a href="noticeView.do?notice_no=${requestScope.notice.next_notice_no}" class="btn" style="float: right;">다음글</a>
+						</c:otherwise>
+					</c:choose>
+					<c:choose>
+						<c:when test = "${requestScope.notice.pre_notice_no == null}">
+							<script>
+								alert("더이상 글이 없습니다.");
+								location.href="/notice.do";
+							</script>
+						</c:when>
+						<c:otherwise>
+							<a href="noticeView.do?notice_no=${requestScope.notice.pre_notice_no}" class="btn" style="float: right;">이전글</a></th>
 						</c:otherwise>
 					</c:choose>
 				</tr>
@@ -180,7 +181,7 @@
 					<c:forEach var="noticecomment" items="${requestScope.noticecomment }">
 						<table class="comment">	
 							<tr>
-								<th>작성자</th>
+								<th style="text-align: center;">작성자</th>
 								<th>작성일</th>
 								<th>좋아요</th>
 								<th>싫어요</th>

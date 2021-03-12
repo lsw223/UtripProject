@@ -4,8 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>카카오계정 연동 :: UTrip</title>
 <link rel="stylesheet" href="css/kakaoRegisterView.css">
+<link rel="stylesheet" href="css/kakaoRegisterViewM.css">
 </head>
 <body>
 	<header>

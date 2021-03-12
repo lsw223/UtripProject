@@ -1,103 +1,271 @@
 @charset "UTF-8";
 
-body{
-	min-width: 1200px;
-	min-height: 640px;
+@media screen and (min-width:480px) {
+	html, body {
+		height: 100%;
+	}
+	footer {
+		position: relative !important;
+	}
+	#container {
+		margin: 0 auto;
+		width: 80%;
+		min-height: 100%;
+		padding-top: 100px;
+	}
+	#top {
+		height: 100px;
+		box-sizing: border-box;
+		border-bottom: 5px solid #1E3269;
+	}
+	#img_1 {
+		box-sizing: border-box;
+		float: left;
+	}
+	#p_1 {
+		position: absolute;
+		left: 170px;
+		width: 400px;
+		box-sizing: border-box;
+	}
+	#sp_1 {
+		width: 160px;
+		font-size: 70px;
+		box-sizing: border-box;
+		text-align: center;
+	}
+	#sp_2 {
+		position: absolute;
+		width: 140px;
+		font-size: 20px;
+		color: #969696;
+		font-weight: bold;
+		box-sizing: border-box;
+		text-align: center;
+		top: 55px;
+	}
+	#faq {
+		width: 70%;
+		margin: 100px auto;
+	}
+	.accordion {
+		background-color: #eee;
+		color: #444;
+		cursor: pointer;
+		padding: 18px;
+		width: 100%;
+		text-align: left;
+		border: none;
+		outline: none;
+		transition: 0.4s;
+		font-size: 18px;
+	}
+	.active, .accordion:hover {
+		background-color: #ccc;
+	}
+	.panel {
+		padding: 0 18px;
+		background-color: white;
+		display: none;
+		overflow: hidden;
+		height: 50px;
+		padding-top: 23px;
+		border: 1px solid #dcdcdc;
+	}
+	.title_faq {
+		color: fff;
+		position: relative;
+	}
+	title_faq strong {
+		font-size: 25px;
+		padding-right: 10px;
+	}
+	title_faq span {
+		font-size: 14px;
+		font-weight: 400;
+	}
+	title_faq:before {
+		content: "";
+		display: block;
+		position: absolute;
+		width: 120px;
+		height: 150px;
+		background: url(../img/speach_bubble.png) no-repeat;
+		right: 0px;
+		top: 36px;
+	}
+	.content_wrap {
+		margin-top: 30px;
+	}
+	.accordio_box {
+		margin-top: 50px;
+	}
+	.accordio_box ol li {
+		width: 100%;
+		background-color: #fff;
+		border-top: 4px solid #30e5bc;;
+	}
+	.accordio_box ol li h4 {
+		display: block;
+		padding: 0px 20px 20px 0px;
+		margin: 20px 20px 0 30px;
+		cursor: pointer;
+		background: url("../img/dropdown.png") no-repeat right 11px;
+		font-weight: 400;
+		color: #3c4147;
+	}
+	.accordio_box ol li.on h4 {
+		background: url("../img/dropdown.png") no-repeat right 11px;
+	}
+	.accordio_box ol li h4 span {
+		display: inline-block;
+		margin-right: 10px;
+		font-weight: 900;
+	}
+	.accordio_box ol li p {
+		height: 0;
+		visibility: hidden;
+		opacity: 0;
+	}
+	.accordio_box ol li.on p {
+		height: auto;
+		padding: 30px 100px 70px 200px;
+		background-color: #eee;
+		background-size: 100px auto;
+		background-repeat: no-repeat;
+		visibility: visible;
+		opacity: 1;
+	}
 }
 
-
-
-#container {
-	margin: 0 auto;
-	width: 80%;
-	min-width: 1200px;
-	min-height: 500px;
-	padding-top: 100px;
+@media screen and (max-width:480px) {
+	html, body {
+		height: 100%;
+	}
+	footer {
+		position: relative !important;
+	}
+	#container {
+		width: 100%;
+		margin: 0 auto;
+	}
+	#top {
+		box-sizing: border-box;
+		border-bottom: 5px solid #1E3269;
+		padding: 10px;
+		margin-top: 40px;
+	}
+	#img_1 {
+		box-sizing: border-box;
+		float: left;
+		width: 23%;
+		height: 25%;
+	}
+	#sp_1 {
+		width: 160px;
+		font-size: 70px;
+		box-sizing: border-box;
+		text-align: center;
+	}
+	#sp_2 {
+		position: absolute;
+		font-size: 18px;
+		color: #969696;
+		font-weight: bold;
+		box-sizing: border-box;
+		text-align: center;
+		top: 140px;
+		padding: 5px;
+	}
+	
+	#faq {
+		width: 100%;
+	}
+	.accordion {
+		background-color: #eee;
+		color: #444;
+		cursor: pointer;
+		padding: 18px;
+		width: 100%;
+		text-align: left;
+		border: none;
+		outline: none;
+		transition: 0.4s;
+	}
+	.active, .accordion:hover {
+		background-color: #ccc;
+	}
+	.panel {
+		padding: 0 18px;
+		background-color: white;
+		display: none;
+		overflow: hidden;
+		height: 50px;
+		padding-top: 23px;
+		border: 1px solid #dcdcdc;
+	}
+	.title_faq {
+		color: fff;
+		position: relative;
+	}
+	title_faq strong {
+		font-size: 25px;
+		padding-right: 10px;
+	}
+	title_faq span {
+		font-size: 14px;
+		font-weight: 400;
+	}
+	title_faq:before {
+		content: "";
+		display: block;
+		position: absolute;
+		width: 120px;
+		height: 150px;
+		background: url(../img/speach_bubble.png) no-repeat;
+		right: 0px;
+		top: 36px;
+	}
+	.content_wrap {
+		margin-top: 30px;
+	}
+	.accordio_box {
+		margin-top: 50px;
+	}
+	.accordio_box ol li {
+		width: 100%;
+		background-color: #fff;
+		border-top: 4px solid #30e5bc;;
+	}
+	.accordio_box ol li h4 {
+		display: block;
+		padding: 0px 20px 20px 0px;
+		margin: 20px 20px 0 30px;
+		cursor: pointer;
+		background: url("../img/dropdown.png") no-repeat right 11px;
+		font-weight: 400;
+		color: #3c4147;
+	}
+	.accordio_box ol li.on h4 {
+		background: url("../img/dropdown.png") no-repeat right 11px;
+	}
+	.accordio_box ol li h4 span {
+		display: inline-block;
+		margin-right: 10px;
+		font-weight: 900;
+	}
+	.accordio_box ol li p {
+		height: 0;
+		visibility: hidden;
+		opacity: 0;
+	}
+	.accordio_box ol li.on p {
+		height: auto;
+		padding: 30px 100px 70px 200px;
+		background-color: #eee;
+		background-size: 100px auto;
+		background-repeat: no-repeat;
+		visibility: visible;
+		opacity: 1;
+	}
 }
-
-.title_faq{
-	color: fff;
-	position: relative;
-}
-title_faq strong{
-	font-size: 25px;
-	padding-right: 10px;
-}
-title_faq span{
-	font-size: 14px;
-	font-weight: 400;
-}
-title_faq:before{
-	content: "";
-	display: block;
-	position: absolute;
-	width: 120px;
-	height: 150px;
-	background: url(../img/speach_bubble.png) no-repeat;
-	right: 0px;
-	top: 36px;
-}
-
-.content_wrap{
-	margin-top: 30px;
-}
-
-.accordio_box{
-	margin-top: 50px;
-}
-.accordio_box ol li {
-	width: 100%;
-	background-color: #fff;
-	border-top: 4px solid #30e5bc;;
-}
-.accordio_box ol li h4{
-	display: block;
-	padding: 0px 20px 20px 0px;
-	margin: 20px 20px 0 30px;
-	cursor: pointer;
-	background: url("../img/dropdown.png") no-repeat right 11px;
-	font-weight: 400;
-	color: #3c4147;
-}
-.accordio_box ol li.on h4{
-	background: url("../img/dropdown.png") no-repeat right 11px;
-}
-.accordio_box ol li h4 span{
-	display: inline-block;
-	margin-right: 10px;
-	font-weight: 900; 
-}
-.accordio_box ol li p{
-	height: 0;
-	visibility: hidden;
-	opacity: 0;
-}
-.accordio_box ol li.on p{
-	height: auto;
-	padding: 30px 100px 70px 200px;
-	background-color: #eee;
-	background-size: 100px auto;
-	background-repeat: no-repeat;
-	visibility: visible;
-	opacity: 1;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
