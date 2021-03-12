@@ -49,7 +49,7 @@
 								placeholder="한글 최대 500자"></textarea></td>
 					</tr>
 					<tr>
-						<th></th>
+						<th id="th_1"></th>
 						<td id="td_btn" style="text-align: right;"><button
 								id="btn_submit">등록</button>
 					</tr>
@@ -59,31 +59,32 @@
 				<h1>MY 문의</h1>
 			</div>
 			<div id="qna_list">
-				<c:if test="${requestScope.list == null }">
-					<span>문의 내역이 없습니다</span>
+				<c:if test="${requestScope.list.size() == 0 }">
+					<div id="no_qna_list">
+						<span id="no_qna_list_span">문의 내역이 없습니다</span>
+					</div>
 				</c:if>
 				<c:forEach var="list" items="${requestScope.list}">
 					<table class="result">
 						<tr>
 							<td id="result_1">제목</td>
-							<td>${list.title }</td>
+							<td id="result_2">${list.title }</td>
 						</tr>
 						<tr>
 							<td id="result_1">내용</td>
-							<td>${list.content }</td>
+							<td id="result_2">${list.content }</td>
 						</tr>
 						<tr>
 							<td id="result_1">작성일</td>
-							<td>${list.write_date}</td>
+							<td id="result_2">${list.write_date}</td>
 						</tr>
 						<tr>
 							<td></td>
 							<td></td>
 							<td></td>
 							<td></td>
-							<td><a
-								href="deleteQna.do?qna_no=${list.qna_no }" id="btn_delete"
-								class="btn">삭제</a>
+							<td><a href="deleteQna.do?qna_no=${list.qna_no }"
+								id="btn_delete" class="btn">삭제</a>
 							<td>
 						</tr>
 					</table>
