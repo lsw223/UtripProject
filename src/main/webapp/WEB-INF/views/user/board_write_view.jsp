@@ -59,12 +59,11 @@
 				 $("#title").focus();
 				 return false;
 			 }
-			 if($("#content").val()==""){
+			 if($(".ck ck-editor__main").val()==""){
 				 alert("내용을 입력해주십시오")
 				 $("#content").focus();
 				 return false;
 			 }
-
 		});
 		</script>
 	</div>

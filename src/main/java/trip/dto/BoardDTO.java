@@ -12,7 +12,26 @@ public class BoardDTO {
 	private int boardLike;
 	private int boardCount;
 	private int commentCount;
-	
+	private int prevNum; //이전글의 글번호를 담을 필드
+	private int nextNum; //다음글의 글번호를 담을 필드
+		
+
+	public BoardDTO(int boardNo, String id, String title, String content, String writeDate, int boardLike,
+			int boardCount, int commentCount, int prevNum, int nextNum) {
+		super();
+		this.boardNo = boardNo;
+		this.id = id;
+		this.title = title;
+		this.content = content;
+		this.writeDate = writeDate;
+		this.boardLike = boardLike;
+		this.boardCount = boardCount;
+		this.commentCount = commentCount;
+		this.prevNum = prevNum;
+		this.nextNum = nextNum;
+	}
+
+
 
 	public BoardDTO(int boardNo, String id, String title, String content, String writeDate, int boardLike,
 			int boardCount, int commentCount) {
@@ -122,7 +141,21 @@ public class BoardDTO {
 		this.boardCount = boardCount;
 	}
 
+	public int getPrevNum() {
+		return prevNum;
+	}
 
+	public void setPrevNum(int prevNum) {
+		this.prevNum = prevNum;
+	}
+
+	public int getNextNum() {
+		return nextNum;
+	}
+
+	public void setNextNum(int nextNum) {
+		this.nextNum = nextNum;
+	}
 
 	@Override
 	public String toString() {
@@ -130,6 +163,7 @@ public class BoardDTO {
 				+ ", writeDate=" + writeDate + ", boardLike=" + boardLike + ", boardCount=" + boardCount
 				+ ", commentCount=" + commentCount + "]";
 	}
+	
 
 	
 }
