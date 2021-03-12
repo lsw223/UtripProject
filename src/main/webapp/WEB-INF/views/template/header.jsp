@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="lib/jquery-3.5.1.min .js"></script>
 <style>
  @font-face { 
@@ -87,17 +88,22 @@ header #info li{
 	display: none;
 }
 </style>
-<!-- tablit, mobile -->
-<style media="screen and (min-width:0) and (max-width:1024px)">
-	header>ul{
+<!-- tablit -->
+<style media="screen and (min-width:480px) and (max-width:1024px)">
+	header{
 		width:100%;
+	}
+	header>ul{
 		display:none;
+		width:100%;
 		height:270px;
 		background-color: white;
 		border-radius: 0 0 10px 10px;
+		min-width:0;
 	}
 	header>ul li{
 		width:100%;
+		min-width:0;
 		text-align: center;
 	}
 	#info{
@@ -105,6 +111,10 @@ header #info li{
 		float:left;
 		text-align: left;
 		background-color: white;
+		width:100%;
+	}
+	#info ul{
+		width:100%;
 	}
 	header>div:first-of-type{
 		width:100%;
@@ -122,6 +132,53 @@ header #info li{
 		float:left;
 		position:absolute;
 		top:16px;
+		left:10px;
+	}
+</style>
+<!-- mobile -->
+<style media="screen and (min-width:0) and (max-width:480px)">
+	header{
+		width:100%;
+	}
+	header>ul{
+		display:none;
+		width:100%;
+		height:270px;
+		background-color: white;
+		border-radius: 0 0 10px 10px;
+		min-width:0;
+	}
+	header>ul li{
+		width:100%;
+		min-width:0;
+		text-align: center;
+	}
+	#info{
+		display: none;
+		float:left;
+		text-align: left;
+		background-color: white;
+		width:100%;
+	}
+	#info ul{
+		width:100%;
+	}
+	header>div:first-of-type{
+		width:100%;
+		text-align: center;
+	}
+	#menu{
+		display: block;
+		float:right;
+		position:absolute;
+		top:13px;
+		right:10px;
+	}
+	#btn_user{
+		display: block;
+		float:left;
+		position:absolute;
+		top:18px;
 		left:10px;
 	}
 </style>

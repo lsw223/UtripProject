@@ -1,10 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>정보 변경 :: UTrip</title>
 <link rel="stylesheet" href="css/infoChangeView.css">
+<link rel="stylesheet" href="css/info_change_view_mobile.css"
+media="screen and (max-width:480px)">
 <script src="lib/jquery-3.5.1.min .js"></script>
 <script>
 	$(function(){
@@ -47,7 +51,14 @@
 </script>
 </head>
 <body>
-	<%@include file="../template/header.jsp"%>
+	<c:choose>
+		<c:when test="${sessionScope.user.role == 'ADMIN' }">
+			<%@include file="../template/header_admin.jsp"%>
+		</c:when>
+		<c:otherwise>
+			<%@include file="../template/header.jsp"%>
+		</c:otherwise>
+	</c:choose>
 	<div id="container">
 		<div id="user_info">
 			<p>계정정보</p>

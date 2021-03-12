@@ -5,9 +5,13 @@ html,body{
 footer{
 	position: relative !important;
 }
+html{
+	width:100%;
+	margin:0;	
+}
 #container{
 	min-height:84%;
-	width:95%;
+	width:100%;
 	margin:0 auto;
 	clear:both;
 	position: relative;
@@ -78,7 +82,6 @@ footer{
 	color:#6a67ce;
 	font-weight:900;
 	font-size: 14px;
-	padding-left:10px;
 }
 #arrow_prev,#arrow_next{
 	float:left;
@@ -95,13 +98,15 @@ footer{
 #arrow_next{
 	border-radius: 0 50px  50px 0;
 	float:right;
-	position:absolute;
+	top:168px;
 	right:0;
+	position:absolute;
 }
 .for_slick{
-	width:100%;
+	width:80% !important;
 	box-sizing: border-box;
-	display: inline-block;
+	display:inline-block;
+	margin:0 auto;
 	position: relative;
 }
 #arrow_next:hover,#arrow_prev:hover{
@@ -109,7 +114,6 @@ footer{
 }
 #arrow_prev+div{
 	width:75%;
-	left:-20px;
 }
 #arrow_next img,#arrow_prev img{
 	width:50%;
@@ -126,4 +130,5 @@ footer{
 	outline: none;
 	width:100%;
 	display: inline-block;
+	text-align: left;
 }

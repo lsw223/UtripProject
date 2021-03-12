@@ -4,8 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>회원가입 :: UTrip</title>
-<link rel="stylesheet" href="css/registerView.css" >
+<link rel="stylesheet" href="css/registerView.css" media="screen and (min-width:480px)" >
+<link rel="stylesheet" href="css/register_view_mobile.css"  media="screen and (max-width:480px)">
 <script src="lib/jquery-3.5.1.min .js"></script>
 </head>
 <body>

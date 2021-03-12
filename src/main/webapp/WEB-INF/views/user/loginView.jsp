@@ -4,8 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>로그인 :: UTrip</title>
-<link rel="stylesheet" href="css/loginView.css">
+<link rel="stylesheet" href="css/loginView.css" media="screen and (min-width:480px)">
+<link rel="stylesheet" href="css/login_view_mobile.css" media="screen and (max-width:480px)">
 </head>
 <body>
 	<div id="login">
