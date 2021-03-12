@@ -136,5 +136,13 @@ public class AdminService {
 		for(int i = 0;i<fList.size();i++)
 			mapper.updateFileList(fList.get(i));
 	}
+
+	public int createTripLike(String trip_no) {
+		return mapper.createTripLike(trip_no);
+	}
+
+	public int createTripRating(String trip_no) {
+		return mapper.createTripRating(trip_no);
+	}
 	
 }

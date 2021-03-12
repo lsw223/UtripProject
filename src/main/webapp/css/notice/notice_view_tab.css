@@ -2,7 +2,7 @@
 
 #container {
 	/* background-color: lime; */
-	width: 100%;
+	width:80%;
 	padding-top: 100px;
 	margin: 0 auto;
 	position: relative;
@@ -31,14 +31,14 @@
 	font-weight: bold;
 }
 #container table {
-	width: 600px;
+	width: 100%;
 	border-collapse: collapse;
 	margin: 0 auto;
 }
 
 #container th {
 	width: 150px !important;
-	text-align: right;
+	text-align: left;
 	padding: 5px;
 }
 
@@ -46,7 +46,9 @@
 	width: 500px;
 	padding: 5px;
 	height: 40px;
+	text-align: left;
 }
+
 #container input {
 	width: 100%;
 	height: 40px;
@@ -57,6 +59,12 @@
 
 h2 {
 	text-align: center;
+}
+.href :last-child{
+	float: right;
+	width: 80px;
+	display: inline-block;
+	padding: 5px 0px;
 }
 
 .btn {
@@ -71,6 +79,8 @@ h2 {
 	color: black;
 	font-size: 14px;
 	box-sizing: border-box;
+	float: left;
+	
 }
 
 .btn:hover {
@@ -78,22 +88,31 @@ h2 {
 	color: #FFFFFF
 }
 
-.hate {
-	transform: rotate(0.5turn);
-}
 
 .text_center {
-	text-align: center;
-	width: 100%;
+	text-align: right;
+	margin: 0 auto;
 }
 
+.hate {
+	transform: rotate(0.5turn);
+	
+}
 .btn_like {
 	width: 64px;
+	text-align:center;
 	display: inline-block;
 	color: black;
 	text-decoration: none;
 }
-
+.btn_like:last-child {
+	width: 64px;
+	text-align:center;
+	display: inline-block;
+	color: black;
+	text-decoration: none;
+	float: right;
+}
 .comment_form {
 	width: 100%;
 	border: 1px solid black;
@@ -144,11 +163,9 @@ hr {
 .comment_form p {
 	margin: 0;
 }
-
 .comment {
 	border-radius: 10px;
 	background-color: rgba(255,255,255,0.4);
-	font-weight: bold;
 }
 
 .comment td, .comment th {
