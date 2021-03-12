@@ -1,11 +1,34 @@
 @charset "UTF-8";
 
+.backimg {
+	width: 100%;
+	height: 180px;
+	text-align: center;
+	line-height:75px;
+	position: relative;
+	font-size: 20px;
+	font-weight:bold;	
+	z-index: 1;
+}
+
+.backimg::after {
+	width: 100%;
+	height: 180px;
+	content: "";
+	background: url("../img/community.jpg");
+	background-size: cover;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: -1;
+	opacity: 0.5;
+}
+
 #container {
-	padding-top: 100px;
+	padding-top: 60px;
 	height: 600px;
 	/* background-color: lime; */
 }
-
 .board {
 	margin: 20px auto;
 	border-collapse: collapse;
@@ -17,8 +40,8 @@
 }
 
 .board th {
-	border-top: 2px solid black;
-	border-bottom: 2px solid black;
+	border-top: 3px solid black;
+	border-bottom: 3px solid black;
 }
 
 .board td {
@@ -60,11 +83,12 @@
 	margin-right: 10px;
 }
 
-.page_bar a:hover{
+.page_bar a:hover {
 	font-weight: bold;
 	color: red;
 }
-.page_bar a:focus{
+
+.page_bar a:focus {
 	font-weight: bold;
 	color: red;
 }

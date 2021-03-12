@@ -1,0 +1,126 @@
+@charset "UTF-8";
+
+.backimg {
+	width: 100%;
+	height: 60px;
+	text-align: center;
+	line-height:25px;
+	position: relative;
+	font-size: 12px;
+	font-weight:bold;	
+	z-index: 1;
+}
+
+.backimg::after {
+	width: 100%;
+	height: 60px;
+	content: "";
+	background: url("../img/community.jpg");
+	background-size: cover;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: -1;
+	opacity: 0.5;
+}
+
+#container {
+	padding-top: 30px;
+	width:480px;
+	height: 300px;
+	margin-bottom: 100px;
+	/* background-color: lime; */
+}
+.board {
+	margin: 20px auto;
+	border-collapse: collapse;
+}
+
+.board th, .board td {
+	padding: 1px;
+	text-align: center;
+}
+
+.board th {
+	border-top: 3px solid black;
+	border-bottom: 3px solid black;
+	font-size: 13px;
+}
+
+.board td {
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	font-size: 10px;
+}
+
+.board tr:last-child>td {
+	border-bottom: 2px solid black;
+}
+
+.title {
+	width: 210px;
+}
+
+.userid {
+	width: 75px;
+}
+
+.writeDate {
+	width: 75px;
+}
+
+#pagging {
+	margin: 0 auto;
+	width: 480px;
+}
+
+.page_bar {
+	position: relative;
+	text-align: center;
+	margin-left: 60px;
+}
+
+.page_bar a:link, .page_bar a:visited {
+	color: black;
+	text-decoration: none;
+	font-size: 14px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.page_bar a:hover {
+	font-weight: bold;
+	color: red;
+}
+
+.page_bar a:focus {
+	font-weight: bold;
+	color: red;
+}
+
+.btn_writer {
+	float: right;
+}
+
+#search_bar {
+	width: 480px;
+	box-sizing: border-box;
+	text-align: center;
+}
+
+#search_bar>select {
+	width: 40px;
+	padding: 5px;
+	margin-right: 2px;
+}
+
+#search_bar>input {
+	width: 40px;
+	padding: 10px;
+	margin-right: 3px;
+}
+
+#search_bar>button {
+	width: 50px;
+	padding: 5px;
+}

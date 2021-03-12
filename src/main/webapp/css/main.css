@@ -5,7 +5,7 @@ html,body{
 #container{
 	min-height:83%;
 	margin:0 auto;
-	width:1700px;
+	width:1650px;
 }
 .top{
 	position: relative;
@@ -59,7 +59,7 @@ footer{
 	text-shadow: 3px 9px 9px #333333;
 }
 .slider{
-	width:1600px;
+	width:1550px;
 	float:left;
 	margin:0 auto;
 }
@@ -194,4 +194,7 @@ header{
 }
 .button:active{
 	background-color: #4a47af;
+}
+footer{
+	min-width:1700px;
 }

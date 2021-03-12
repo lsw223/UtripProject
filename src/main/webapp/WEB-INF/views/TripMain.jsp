@@ -7,10 +7,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>당신의 여행 스타일 UTrip</title>
 <script src="lib/jquery-3.5.1.min .js"></script>
 <link rel="stylesheet" media="screen and (min-width:1024px)" href="css/main.css">
-<link rel="stylesheet" media="screen and (min-width:0) and (max-width:1024px)" href="css/main_tab.css">
+<link rel="stylesheet" media="screen and (min-width:480px) and (max-width:1024px)" href="css/main_tab.css">
+<link rel="stylesheet" media="screen and (max-width:480px)" href="css/main_mobile.css">
 </head>
 <c:choose>
 	<c:when test="${sessionScope.user.role == 'ADMIN' }">
@@ -205,8 +207,8 @@
 	</div>
 </div>
 
-</body>
 <%@ include file="template/footer.jsp" %>
+</body>
 <script type="text/javascript" src="lib/slick.min.js"></script>
 <link rel="stylesheet" href="css/slick.css">
 <script
@@ -365,17 +367,17 @@ $(function(){
 	// 관리자 계정일때 메일 보내기 기능 추가
 	if(${sessionScope.user.role == 'ADMIN'}){
 		$("#active tr").eq(1).append(
-			'<td><a href="#" class="button">축하메일 보내기</a></td>'		
+			'<td><a href="#" class="button">감사메일 보내기</a></td>'		
 		)
 		$("#active tr").eq(2).append(
-			'<td><a href="#" class="button">축하메일 보내기</a></td>'		
+			'<td><a href="#" class="button">감사메일 보내기</a></td>'		
 		)
 		$("#active tr").eq(3).append(
-			'<td><a href="#" class="button">축하메일 보내기</a></td>'		
+			'<td><a href="#" class="button">감사메일 보내기</a></td>'		
 		)
 	}
 	
-	// 축하메일 보내기
+	// 감사메일 보내기
 	$("#active td a").click(function(e){
 		e.preventDefault();
 		var index = $("#active td a").index($(this));

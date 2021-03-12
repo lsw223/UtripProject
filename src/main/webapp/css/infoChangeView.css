@@ -7,7 +7,7 @@ html,body{
 	padding-top:150px;
 }
 #user_info{
-	width:800px;
+	width:735px;
 	height:400px;
 	border:1px solid #c8c8c8;
 	margin:0 auto;
@@ -19,6 +19,9 @@ html,body{
 	font-size: 25px;
 	color:#333333;
 	border-bottom: 1px solid #c8c8c8;
+}
+td{
+	padding:15px 0px;
 }
 td:first-of-type{
 	width:100px;
