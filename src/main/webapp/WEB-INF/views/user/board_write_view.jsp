@@ -10,6 +10,7 @@
 <link rel="stylesheet" media="(max-width:480px)" href="css/mobile_board_write_view.css"/>
 <script src="lib/jquery-3.5.1.min .js"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/26.0.0/classic/ckeditor.js"></script>
+<%-- <script src="<%=ctx%>/vendor/ckeditor/ckfinder/ckfinder.js"></script> --%>
 </head>
 <body>
 	<%@ include file="../template/header.jsp"%>
@@ -49,10 +50,13 @@
 		</form>
 		<script>
 	    ClassicEditor
-	        .create( document.querySelector( '#content' ) )
-	        .catch( error => {
-	            console.error( error );
-	        });
+	        .create( document.querySelector( '#content' ) , {
+	        	toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|', 'blockQuote','insertTable','|','undo',
+	        		'redo'],
+	    	} )
+	    	.catch( error => {
+	    	    console.error( error );
+	    	} );
 		 $("#write_btn").click(function() {
 			 if($("#title").val()==""){
 				 alert("제목을 입력해주십시오")

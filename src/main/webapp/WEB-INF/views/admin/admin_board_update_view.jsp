@@ -48,11 +48,26 @@
 			</table>
 		</form>
 		<script>
-	    ClassicEditor
-	        .create( document.querySelector( '#content' ) )
+			ClassicEditor
+	        .create( document.querySelector( '#content' ) , {
+	        	toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|', 'blockQuote','insertTable','|','undo',
+	        		'redo'],
+	    	} )
 	        .catch( error => {
 	            console.error( error );
 	        });
+	    $("#write_btn").click(function() {
+			 if($("#title").val()==""){
+				 alert("제목을 입력해주십시오")
+				 $("#title").focus();
+				 return false;
+			 }
+			 if($(".ck ck-editor__main").val()==""){
+				 alert("내용을 입력해주십시오")
+				 $("#content").focus();
+				 return false;
+			 }
+		});
 		</script>
 	</div>
 	<%@include file="../template/footer.jsp"%>

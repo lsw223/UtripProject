@@ -66,3 +66,6 @@ textarea {
 p input {
 	width: 80% !important;
 }
+.ck-editor__editable {
+    min-height: 300px;
+}
