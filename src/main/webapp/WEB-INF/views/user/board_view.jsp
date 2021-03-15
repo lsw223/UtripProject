@@ -135,6 +135,14 @@ $(function() {
 								</tr>
 								<tr>
 									<td colspan="4"><c:if test="${user.id eq comment.id }">
+										<div class="comment-update-form">
+											<input type="hidden" name="commentno" value="${comment.commentNo }" />
+											<input type="hidden" name="boardno" value="${requestScope.board.boardNo }">
+											<input type="hidden" name="id" value="${comment.id}">
+											<textarea name="content">${comment.content }</textarea>
+											<button class="comment_update_content_btn">수정</button>
+											<a type="button" class='comment_update_content_btn' id="close_update_comment_btn">닫기</a>
+										</div>
 									<div class="comment-update-form">
 										<input type="hidden" name="commentno" value="${comment.commentNo }" />
 										<input type="hidden" name="boardno" value="${requestScope.board.boardNo }">
