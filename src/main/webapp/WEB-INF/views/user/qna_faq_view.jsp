@@ -41,7 +41,7 @@
 			</button>
 			<div class="panel">
 				<p>
-					<strong>A.</strong> '정보 변경'에서 변경하실 수 있습니다.
+					<strong>A.</strong> '정보 변경'에서 하실 수 있습니다.
 				</p>
 			</div>
 			<button class="accordion">
@@ -49,7 +49,7 @@
 			</button>
 			<div class="panel">
 				<p>
-					<strong>A.</strong> 회원가입 후 로그인 하시면 메뉴 QnA에서 문의 하실 수 있습니다.
+					<strong>A.</strong> 로그인 후 QnA에서 문의 하실 수 있습니다.
 				</p>
 			</div>
 			<button class="accordion">
@@ -57,7 +57,7 @@
 			</button>
 			<div class="panel">
 				<p>
-					<strong>A.</strong> 18:00~ 이후 신청시 다음날 18:00시 내에 승인됩니다.
+					<strong>A.</strong> 18:00시~ 이후의 신청은 다음날 18:00시 내에 승인됩니다.
 				</p>
 			</div>
 			<button class="accordion">
@@ -77,7 +77,7 @@
 				</p>
 			</div>
 			<button class="accordion">
-				<strong>Q.</strong> 개명 했을 시 어떻게 해야하나요? 
+				<strong>Q.</strong> 개명 했을 시에 어떻게 해야하나요? 
 			</button>
 			<div class="panel">
 				<p>
