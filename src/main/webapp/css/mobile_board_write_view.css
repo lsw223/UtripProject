@@ -1,8 +1,7 @@
 @charset "UTF-8";
 
 #container {
-	/* background-color: lime; */
-	width: 480px;
+	width: 450px;
 	padding-top:100px;
 	font-size: 10px;
 }
@@ -19,7 +18,7 @@
 }
 
 #container input {
-	width : 480px !important;
+	width : 450px !important;
 	height: 40px;
 	box-sizing: border-box;
 	border-width: 1px;
@@ -48,17 +47,7 @@ h2 {
 	color: #FFFFFF
 }
 
-textarea {
-	width : 480px !important;
-	resize: none;
-	box-sizing: border-box;
-}
-
 td div{
-	width : 480px !important;
+	width : 450px !important;
 	box-sizing: border-box;
 }
-
-/* p input {
-	width: 80% !important;
-} */
