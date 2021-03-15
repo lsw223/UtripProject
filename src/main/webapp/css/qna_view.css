@@ -160,14 +160,14 @@
 	#MY h1 {
 		color: white;
 	}
-	#no_qna_list{
+	#no_qna_list {
 		display: block;
 		padding: 50px;
 		border-top: 1px solid black;
 		border-bottom: 3px solid #1E3269;
 		text-align: center;
 	}
-	#no_qna_list_span{
+	#no_qna_list_span {
 		font-size: 20px;
 		color: #FF8224;
 		text-align: center;
@@ -199,7 +199,6 @@
 		text-align: center;
 		word-break: break-all;
 	}
-	
 	#response {
 		display: block;
 		padding: 50px;
@@ -214,7 +213,7 @@
 		font-size: 20px;
 	}
 	#response_date {
-		color: #BDBDBD;
+		color: #B4B4B4;
 	}
 }
 
@@ -370,20 +369,19 @@
 		text-align: center;
 		color: white;
 	}
-	#no_qna_list{
+	#no_qna_list {
 		display: block;
 		padding: 50px;
 		border-top: 1px solid black;
 		border-bottom: 3px solid #1E3269;
 		text-align: center;
 	}
-	#no_qna_list_span{
+	#no_qna_list_span {
 		font-size: 20px;
 		color: #FF8224;
 		text-align: center;
 		word-break: break-all;
 	}
-	
 	.result {
 		width: 100%;
 		padding: 20px;
@@ -397,7 +395,7 @@
 	}
 	#result_2 {
 		width: 80%;
-		word-break:break-all;
+		word-break: break-all;
 		padding: 10px
 	}
 	#response_yet {
