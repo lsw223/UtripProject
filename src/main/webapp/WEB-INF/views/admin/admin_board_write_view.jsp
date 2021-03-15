@@ -46,8 +46,10 @@
 			</table>
 		</form>
 		<script>
-	    ClassicEditor
-	        .create( document.querySelector( '#content' ) )
+		    ClassicEditor
+	        .create( document.querySelector( '#content' ) , {
+	        	toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|', 'blockQuote','insertTable','|','undo','redo'],
+	    	} )
 	        .catch( error => {
 	            console.error( error );
 	        });
