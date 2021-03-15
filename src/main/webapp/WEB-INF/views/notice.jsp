@@ -15,9 +15,14 @@
 </head>
 	<%@include file="template/header.jsp" %>
 <body>
+	<c:if test="${sessionScope.login == null || sessionScope.login == false  }">
+		<script>
+			alert("로그인을 하셔야 이용할수 있습니다.");
+			location.href="loginView.do";
+		</script>
+	</c:if>
 		<!-- header.jsp를 현재 문서에 포함 -->
 		<div id="container">
-		
 		<h1>공지사항</h1>
 		<table class="notice">
 			<tr>
@@ -39,12 +44,6 @@
 				<input type="hidden" name="next_notice_no" value="${dto.next_notice_no} ">
 				</td>
 				<td>
-				<c:if test="${sessionScope.login == null || sessionScope.login == false  }">
-					<script>
-						alert("로그인을 하셔야 이용할수 있습니다.");
-						location.href="loginView.do";
-					</script>
-				</c:if>
 				<a href="noticeView.do?notice_no=${dto.notice_no }"> ${dto.title }
 				</a></td>
 				<td>${dto.nwriter}</td>
