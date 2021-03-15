@@ -1,7 +1,6 @@
 @charset "UTF-8";
 
 #container {
-	/* background-color: lime; */
 	width: 1200px;
 	padding-top:100px;
 	margin: 0 auto;
@@ -65,4 +64,7 @@ textarea {
 
 p input {
 	width: 80% !important;
+}
+.ck-editor__editable {
+    min-height: 300px;
 }

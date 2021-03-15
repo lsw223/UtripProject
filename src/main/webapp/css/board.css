@@ -64,6 +64,13 @@
 .writeDate {
 	width: 200px;
 }
+td a:hover{
+	text-decoration: none;	
+}
+td a:link , td a:visited{
+	color: black;
+	text-decoration: none;
+}
 
 #pagging {
 	margin: 0 auto;
@@ -98,7 +105,7 @@
 }
 
 #search_bar {
-	width: 1200px;
+	width: 1150px;
 	box-sizing: border-box;
 	text-align: center;
 }
