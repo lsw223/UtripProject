@@ -1,7 +1,31 @@
 @charset "UTF-8";
 
+.backimg {
+	width: 100%;
+	height: 180px;
+	text-align: center;
+	line-height:75px;
+	position: relative;
+	font-size: 20px;
+	font-weight:bold;	
+	z-index: 1;
+}
+
+.backimg::after {
+	width: 100%;
+	height: 180px;
+	content: "";
+	background: url("../img/community.jpg");
+	background-size: cover;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: -1;
+	opacity: 0.5;
+}
+
 #container {
-	padding-top: 100px;
+	padding-top: 60px;
 	height: 600px;
 	/* background-color: lime; */
 }
@@ -42,6 +66,17 @@
 	width: 200px;
 }
 
+td a{
+	text-decoration: none;	
+}
+td a:hover{
+	text-decoration: none;	
+}
+td a:link , td a:visited{
+	color: black;
+	text-decoration: none;
+}
+
 #pagging {
 	margin: 0 auto;
 	width: 1012px;
@@ -74,7 +109,7 @@
 }
 
 #search_bar {
-	width: 1200px;
+	width: 1150px;
 	box-sizing: border-box;
 	text-align: center;
 }

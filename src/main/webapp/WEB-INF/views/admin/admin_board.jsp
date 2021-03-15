@@ -1,16 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="css/admin_board.css">
+<link rel="stylesheet" media="(max-width:480px)" href="css/mobile_board.css" />
 <title>커뮤니티 :: UTrip</title>
 </head>
 <body>
-<%@ include file="../template/header_admin.jsp"%>
+	<%@ include file="../template/header_admin.jsp"%>
+		<div class="backimg">
+		<h1>커뮤니티</h1>
+		<p>여러분의 여행이야기를 들려주세요</p>
+	</div>
 	<div id="container">
 		<table class="board">
 			<tr>
@@ -43,15 +48,18 @@
 			<form>
 				<div class="page_bar">
 					<c:if test="${pagging.previousPageGroup }">
-						<a href="adminBoardSerach.do?pageNo=${pagging.startPageOfPageGroup - 1 }&kind=${requestScope.kind}&search=${requestScope.search}">◀</a>
+						<a
+							href="adminBoardSerach.do?pageNo=${pagging.startPageOfPageGroup - 1 }&kind=${requestScope.kind}&search=${requestScope.search}">◀</a>
 					</c:if>
 					<c:forEach var="i" begin="${pagging.startPageOfPageGroup}"
 						end="${pagging.endPageOfPageGroup}">
-						<a href="adminBoardSerach.do?pageNo=${i }&kind=${requestScope.kind}&search=${requestScope.search}">${ i}</a>
+						<a
+							href="adminBoardSerach.do?pageNo=${i }&kind=${requestScope.kind}&search=${requestScope.search}">${ i}</a>
 					</c:forEach>
 
 					<c:if test="${pagging.nextPageGroup }">
-						<a href="adminBoardSerach.do?pageNo=${pagging.endPageOfPageGroup + 1 }&kind=${requestScope.kind}&search=${requestScope.search}">▶</a>
+						<a
+							href="adminBoardSerach.do?pageNo=${pagging.endPageOfPageGroup + 1 }&kind=${requestScope.kind}&search=${requestScope.search}">▶</a>
 					</c:if>
 					<a href="adminBoardWriteView.do" class="btn_writer">글쓰기</a>
 				</div>
@@ -60,15 +68,26 @@
 		<div id="search_bar">
 			<form action="adminBoardSerach.do" id="search">
 				<select name="kind">
-					<option value="title" <c:if test="${kind eq 'title'}">selected</c:if>>제목</option>
+					<option value="title"
+						<c:if test="${kind eq 'title'}">selected</c:if>>제목</option>
 					<option value="id" <c:if test="${kind eq 'id'}">selected</c:if>>아이디</option>
-					<option value="content" <c:if test="${kind eq 'content'}">selected</c:if>>내용</option>
-				</select> <input type="text" name="search" value="${search}">
+					<option value="content"
+						<c:if test="${kind eq 'content'}">selected</c:if>>내용</option>
+				</select> <input type="text" name="search" value="${search}" id="keyword">
 				<button id="btn_submit">검색</button>
 			</form>
+			<script>
+				$("#btn_submit").click(function() {
+					if ($("#keyword").val() == "") {
+						alert("검색는 최소 한글자 이상부터 가능합니다")
+						$("#keyword").focus();
+						return false;
+					}
+
+				});
+			</script>
 		</div>
 	</div>
-	<!-- <script src="js/board.js"></script> -->
 	<%@include file="../template/footer.jsp"%>
 </body>
 </html>

@@ -38,7 +38,7 @@ h2 {
 	font-weight: normal;
 	border: 1px solid #585858;
 	text-align: center;
-	color: black;
+	color: black !important;
 	font-size: 10px;
 	box-sizing: border-box;
 }
