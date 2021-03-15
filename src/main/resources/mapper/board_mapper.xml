@@ -5,7 +5,7 @@
 <mapper namespace="trip.mapper.BoardMapper">
 
 	<select id="selectBoardList" parameterType="int" resultType="trip.dto.BoardDTO">
-		select board_no,user_id,title,content,write_date,board_like,board_count,comment_count
+		select board_no,user_id,title,content,to_char(write_date, 'yyyy-mm-dd') as write_date,board_like,board_count,comment_count
     	from (select ceil (rownum /7) as pagenum,board_no,user_id,title,content,write_date,board_like,board_count,comment_count
    	 	from (select b.*, nvl(c.comment_count,0) as comment_count 
     	from board b,(select board_no, count(*) as comment_count 
@@ -41,14 +41,22 @@
 		</choose> 
 	</select>
 
-	<select id="selectBoard" parameterType="int" resultType="trip.dto.BoardDTO">
+	<!-- <select id="selectBoard" parameterType="int" resultType="trip.dto.BoardDTO">
 		select * from board where board_no = #{boardNo}
+	</select> -->
+	<select id="selectBoard" parameterType="int" resultType="trip.dto.BoardDTO">
+		select a.board_no, a.user_id,a.title, a.content, a.write_date, a.board_like, a.board_count, b.num,b.next_board_no,b.pre_board_no
+		from BOARD a inner join (
+		select rownum as num , board_no, 
+		lead(board_no,1,0) over(order by board_no) next_board_no,
+		lag(board_no,1,0) over(order by board_no) pre_board_no
+		from BOARD) b on a.board_no = b.board_no
+		where a.board_no = #{pageNo} 
 	</select>
 
 	<select id="selectBoardComment" parameterType="int" resultType="comment">
 		select * from board_comment where board_no = #{boardNo}
 	</select>
-
 
 	<insert id="insertBoard" parameterType="trip.dto.BoardDTO">
 		insert into board(board_no,user_id,title,content) values(#{boardNo},#{id},#{title},#{content})
@@ -78,7 +86,7 @@
 	</update> 
 	
 	<select id="selectSearchBoard" parameterType="map" resultType="trip.dto.BoardDTO">
-		select board_no,user_id,title,content,write_date,board_like,board_count,comment_count
+		select board_no,user_id,title,content,to_char(write_date, 'yyyy-mm-dd') as write_date,board_like,board_count,comment_count
     	from (select ceil (rownum /7) as pagenum,board_no,user_id,title,content,write_date,board_like,board_count,comment_count
    	 	from (select b.*, nvl(c.comment_count,0) as comment_count 
     	from board b,(select board_no, count(*) as comment_count 
@@ -108,4 +116,9 @@
 	<update id="updateBoard" parameterType="trip.dto.BoardDTO">
 		update board set title=#{title}, content=#{content} where board_no=#{boardNo} and user_id = #{id}
 	</update>
+	
+	<select id="commentCount" resultType="int">
+		select count(*) from board_comment where board_no = #{boardNo}
+	</select>
+	
 </mapper>

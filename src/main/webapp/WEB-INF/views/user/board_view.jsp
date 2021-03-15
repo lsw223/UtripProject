@@ -29,23 +29,18 @@ $(function() {
 			});
 		});
 		//댓글 수정 창 보여주기
-		$(document).on("click","#comment_update_btn",function(){ 
-			var commentno=$(this).parent().parent().find("input[name=commentno]").val();
-			$("#comment_update_btn").hide();
-		    $(this).parent().parent().after("<tr><td colspan='3' style='text-align: center';>"
-		    				+"<input type='hidden' name='commentno' value='"+commentno+"'>"
-		    				+"<input style='width : 330px;' type='text' class='comment_update_content' name='content'></td>"
-		    				+"<td colspan='1'><button href='#' class='comment_update_content_btn' id='update_comment'>수정</button>"
-							+"<a href='#' class='comment_update_content_btn' id='close_update_comment_btn'>닫기</a></td></tr>");
-				    //댓글 수정 창 닫기
-					$("#close_update_comment_btn").click(function(){
-						$(this).parent().parent().remove();
-					    $("#comment_update_btn").show(); 	
-					});
+		$(document).on("click","#comment_update_btn",function(){
+		    $(this).parent().parent().parent().find(".comment-update-form").show();
+		    
+		    
 		});
+		//댓글 수정 창 닫기
+	    $(document).on("click","#close_update_comment_btn",function(){
+	    	$(this).parent().parent().parent().find(".comment-update-form").hide();
+		});
+
 		/*좋아요 추가*/
-		$(".btn_like").click(
-				function() {
+		$(".btn_like").click(function() {
 					var obj = $(this);
 					d = "boardno=${requestScope.board.boardNo}&mode="
 							+ $(this).index();
@@ -89,22 +84,20 @@ $(function() {
 		</script>
 	</c:if>
 	<div id="container">
-	
 		<table>
 			<tr>
 				<th>제목</th>
 				<td>${requestScope.board.title }</td>
-				<th>작성일</th>
-				<td>${requestScope.board.writeDate }</td>
 			</tr>
 			<tr>
 				<th>작성자</th>	
 				<td>${requestScope.board.id }</td>
-				<th>조회수</th>	
-				<td>${requestScope.board.boardCount }</td>
+				<th>작성일</th>
+				<td>${requestScope.board.writeDate }</td>
 			</tr>
 			<tr>
-				<th>내용</th>
+				<th>조회수</th>	
+				<td>${requestScope.board.boardCount }</td>
 			</tr>
 			<tr>
 				<td colspan="4">${requestScope.board.content }</td>
@@ -115,6 +108,48 @@ $(function() {
 				<img src="${pageContext.request.contextPath }/img/like.png"> <!-- 좋아요 개수 -->
 				<span>${requestScope.board.boardLike }</span>
 				</a></td>
+			</tr>
+			<tr>
+				<td colspan="2"><p>댓글</p></td>
+			</tr>
+			<tr>
+				<td colspan="4"><c:forEach var="comment" items="${requestScope.comment }">
+						<form id="comment_list" action="updateComment.do">
+							<table class="comment">
+								<tr>
+									<td colspan="2" id="comment_id">
+									<input type="hidden" class="comment_update_content" name="commentno" value="${comment.commentNo }">${comment.id }</td>
+									<td><p id="comment_date">${comment.writeDate }</p></td>								
+									<c:choose>
+										<c:when test="${user.id eq comment.id }">
+											<td style="width: 100px;"><a href="#" class="comment_btn" id="comment_update_btn">수정</a> 
+											<a href="deleteComment.do?commentno=${comment.commentNo }&boardno=${requestScope.board.boardNo }" class="comment_btn">삭제</a></td>
+										</c:when>
+										<c:otherwise>
+											<td></td>
+										</c:otherwise>
+									</c:choose>
+								</tr>
+								<tr>
+								<td colspan="4"><div id="comment_content"><p>${comment.content }</p></div></td>
+								</tr>
+								<tr>
+									<td colspan="4"><c:if test="${user.id eq comment.id }">
+									<div class="comment-update-form">
+										<input type="hidden" name="commentno" value="${comment.commentNo }" />
+										<input type="hidden" name="boardno" value="${requestScope.board.boardNo }">
+										<input type="hidden" name="id" value="${comment.id}">
+										<textarea name="content">${comment.content }</textarea>
+										<button class="comment_update_content_btn">수정</button>
+										<a class='comment_update_content_btn' id="close_update_comment_btn">닫기</a>
+									</div>
+									</c:if>
+									</td>
+								</tr>
+							</table>
+						</form>
+					</c:forEach>
+				</td>
 			</tr>
 			<tr>
 				<td colspan="4">
@@ -134,41 +169,35 @@ $(function() {
 			</tr>
 			<tr>
 				<td colspan="2"><a href="board.do" class="btn">목록보기</a></td>
-				<td colspan="2" style="text-align: right;"><c:if test="${user.id eq board.id }">
+				<td colspan="2" style="text-align: right; width:300px;"><c:if test="${user.id eq board.id }">
 						<a href="updateBoardView.do?boardno=${requestScope.board.boardNo }"
 							class="btn">수정</a>
 						<a href="deleteBoard.do?boardno=${requestScope.board.boardNo }"
 							class="btn">삭제</a>
-					</c:if> <!-- 	<a href="#" class="btn">이전글</a> 
-						<a href="#" class="btn">다음글</a> --></td>
-			</tr>
-			<tr>
-
-				<td colspan="4"><c:forEach var="comment" items="${requestScope.comment }">
-						<form id="comment_list" action="updateComment.do">
-							<table class="comment">
-								<tr>
-									<td id="comment_id">
-									<input type="hidden" class="comment_update_content" name="commentno" value="${comment.commentNo }">${comment.id }</td>
-									<td id="comment_date">${comment.writeDate }</td>
-									<td id="comment_content">${comment.content }</td>
-									<c:choose>
-										<c:when test="${user.id eq comment.id }">
-											<td style="width: 30px;"><a href="#" class="comment_btn" id="comment_update_btn">수정</a> 
-											<a href="deleteComment.do?commentno=${comment.commentNo }&boardno=${requestScope.board.boardNo }" class="comment_btn">삭제</a></td>
-										</c:when>
-										<c:otherwise>
-											<td></td>
-										</c:otherwise>
-									</c:choose>
-								</tr>
-								<tr>
-									<td><input type="hidden" name="boardno" value="${requestScope.board.boardNo }">
-									<input type="hidden" name="id" value="${comment.id}"></td>
-								</tr>
-							</table>
-						</form>
-					</c:forEach></td>
+					</c:if> 	
+					<c:choose>
+						<c:when test = "${requestScope.board.prevNum == null}">
+							<script>
+								alert("더이상 글이 없습니다.");
+								history.back();
+							</script>
+						</c:when>
+						<c:otherwise>
+						<a href="boardView.do?boardno=${requestScope.board.prevNum}" class="btn">이전글</a>
+						</c:otherwise>
+					</c:choose>
+					<c:choose>
+						<c:when test = "${requestScope.board.nextNum eq null}">
+							<script>
+								alert("더이상 글이 없습니다.");
+								history.back();
+							</script>
+						</c:when>
+						<c:otherwise>
+							<a href="boardView.do?boardno=${requestScope.board.nextNum}" class="btn">다음글</a>
+						</c:otherwise>
+					</c:choose>
+					</td>
 			</tr>
 		</table>
 	</div>

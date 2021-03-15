@@ -76,7 +76,7 @@
 						</tr>
 						<tr>
 							<td id="result_1">작성일</td>
-							<td id="result_2">${list.write_date}</td>
+							<td id="result_2">${list.write_date }</td>
 						</tr>
 						<tr>
 							<td></td>
